@@ -7,7 +7,7 @@
  *  2. Breezeway Bad Day Detector — scrape for platform health status
  *  3. EIA API — weekly US gas prices
  *  4. StatusGator — Meta platform outage incidents
- *  5. Claude API + web search — auto-curated macro events
+ *  5. Gemini API + web search — auto-curated macro events
  */
 
 import { mkdir, writeFile, readFile } from 'fs/promises';
@@ -17,7 +17,7 @@ import { scrapeBreezeway } from './scrape-breezeway.mjs';
 const TW_API_KEY = process.env.TW_API_KEY;
 const TW_SHOP_DOMAIN = process.env.TW_SHOP_DOMAIN || 'gardners-wisconsin-cheese.myshopify.com';
 const EIA_API_KEY = process.env.EIA_API_KEY;
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const STATUSGATOR_API_KEY = process.env.STATUSGATOR_API_KEY;
 
 // Date range: current month to today
@@ -203,34 +203,20 @@ async function scrapeMetaStatus() {
 }
 
 // ============================================================
-// 5. CLAUDE API — Auto-curate Macro Events
+// 5. GEMINI API — Auto-curate Macro Events
 // ============================================================
 async function fetchMacroEvents() {
-  console.log('🌍 Generating macro events via Claude API...');
-  if (!ANTHROPIC_API_KEY) {
-    console.warn('⚠️  ANTHROPIC_API_KEY not set, skipping macro events');
+  console.log('🌍 Generating macro events via Gemini API...');
+  if (!GEMINI_API_KEY) {
+    console.warn('⚠️  GEMINI_API_KEY not set, skipping macro events');
     return null;
   }
 
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{
-          role: 'user',
-          content: `You are analyzing macro events that could affect US e-commerce ad performance for a specialty food brand (artisan cheese shipped nationally).
+  const prompt = `You are analyzing macro events that could affect US e-commerce ad performance for a specialty food brand (artisan cheese shipped nationally).
 
 For the date range ${startDate} to ${endDate}, identify the major events in each of these categories:
 1. WALLET IMPACT (💰) — gas prices, CPI/inflation data, consumer confidence, tariffs, retail spending shifts
-2. FEED DOMINATION (📱) — news events that dominated social media feeds (political, cultural, disasters, celebrity deaths) 
+2. FEED DOMINATION (📱) — news events that dominated social media feeds (political, cultural, disasters, celebrity deaths)
 3. PLATFORM ISSUE (🔴) — any known Meta/Facebook/Instagram ad platform outages or issues
 
 For each event, provide:
@@ -240,25 +226,30 @@ For each event, provide:
 - The category icon
 
 Respond ONLY with a JSON array, no markdown, no preamble:
-[{"date":"YYYY-MM-DD","description":"...","intensity":1-3,"category":"wallet|feed|platform","icon":"💰|📱|🔴","source":"..."}]`
-        }],
-      }),
-    });
+[{"date":"YYYY-MM-DD","description":"...","intensity":1-3,"category":"wallet|feed|platform","icon":"💰|📱|🔴","source":"..."}]`;
+
+  try {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.3, maxOutputTokens: 2000 },
+          tools: [{ googleSearch: {} }],
+        }),
+      }
+    );
 
     if (!res.ok) {
-      console.error(`Claude API error ${res.status}`);
+      console.error(`Gemini API error ${res.status}`);
       return null;
     }
 
     const data = await res.json();
-    
-    // Extract text from response content blocks
-    const text = data.content
-      .filter(b => b.type === 'text')
-      .map(b => b.text)
-      .join('');
+    const text = data.candidates[0].content.parts.map(p => p.text).join('');
 
-    // Parse JSON from response
     const jsonMatch = text.match(/\[[\s\S]*\]/);
     if (jsonMatch) {
       const events = JSON.parse(jsonMatch[0]);
@@ -266,10 +257,10 @@ Respond ONLY with a JSON array, no markdown, no preamble:
       return events;
     }
 
-    console.warn('  ⚠️  Could not parse macro events from Claude response');
+    console.warn('  ⚠️  Could not parse macro events from Gemini response');
     return null;
   } catch (err) {
-    console.error('Claude API fetch failed:', err.message);
+    console.error('Gemini API fetch failed:', err.message);
     return null;
   }
 }

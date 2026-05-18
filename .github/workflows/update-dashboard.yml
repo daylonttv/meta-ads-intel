@@ -34,7 +34,7 @@ jobs:
           TW_API_KEY: ${{ secrets.TW_API_KEY }}
           TW_SHOP_DOMAIN: ${{ secrets.TW_SHOP_DOMAIN }}
           EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           STATUSGATOR_API_KEY: ${{ secrets.STATUSGATOR_API_KEY }}
         run: node scripts/fetch-data.mjs
 
