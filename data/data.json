@@ -1,9 +1,9 @@
 {
   "meta": {
-    "updatedAt": "2026-05-18T17:00:00Z",
+    "updatedAt": "2026-05-18T21:29:07.459Z",
     "dateRange": {
       "start": "2026-05-01",
-      "end": "2026-05-17"
+      "end": "2026-05-18"
     },
     "monthLabel": "May 2026"
   },
@@ -39,7 +39,7 @@
       "metaSpend": 4107.81,
       "metaRoas": 2.88,
       "metaCpa": 26.5,
-      "metaCpm": 10.0
+      "metaCpm": 10
     },
     {
       "date": "2026-05-04",
@@ -90,7 +90,7 @@
       "revenue": 16854.45,
       "orders": 206,
       "adSpend": 5624.14,
-      "blendedRoas": 3.0,
+      "blendedRoas": 3,
       "metaSpend": 3733.01,
       "metaRoas": 2.67,
       "metaCpa": 31.37,
@@ -321,7 +321,7 @@
       "n_biz": 44,
       "dow": "Thu",
       "incident_source": "Breezeway",
-      "incident_description": "Meta has recently experienced an unusually long stretch of \"bad days.\"  At the same time, the company is reportedly preparing to lay off roughly 10% of its workforce next week despite record revenue performance.\r\n\r\nThat combination could have implications beyond internal operations. Large-scale layoffs often impact morale, focus, and organizational stability \u2014 and when morale inside Meta suffers, advertisers on the platform may feel the downstream effects through increased volatility, slower issue resolution, or reduced platform consistency."
+      "incident_description": "Meta has recently experienced an unusually long stretch of \"bad days.\"  At the same time, the company is reportedly preparing to lay off roughly 10% of its workforce next week despite record revenue performance.\r\n\r\nThat combination could have implications beyond internal operations. Large-scale layoffs often impact morale, focus, and organizational stability — and when morale inside Meta suffers, advertisers on the platform may feel the downstream effects through increased volatility, slower issue resolution, or reduced platform consistency."
     },
     {
       "date": "2026-05-15",
@@ -353,24 +353,52 @@
   ],
   "gasPrices": [
     {
-      "date": "2026-04-21",
-      "price": 4.1
-    },
-    {
-      "date": "2026-04-28",
-      "price": 4.19
-    },
-    {
-      "date": "2026-05-05",
-      "price": 4.35
-    },
-    {
-      "date": "2026-05-12",
+      "date": "2026-05-11",
       "price": 4.5
     },
     {
-      "date": "2026-05-19",
-      "price": 4.51
+      "date": "2026-05-04",
+      "price": 4.452
+    },
+    {
+      "date": "2026-04-27",
+      "price": 4.123
+    },
+    {
+      "date": "2026-04-20",
+      "price": 4.044
+    },
+    {
+      "date": "2026-04-13",
+      "price": 4.123
+    },
+    {
+      "date": "2026-04-06",
+      "price": 4.12
+    },
+    {
+      "date": "2026-03-30",
+      "price": 3.99
+    },
+    {
+      "date": "2026-03-23",
+      "price": 3.961
+    },
+    {
+      "date": "2026-03-16",
+      "price": 3.72
+    },
+    {
+      "date": "2026-03-09",
+      "price": 3.502
+    },
+    {
+      "date": "2026-03-02",
+      "price": 3.015
+    },
+    {
+      "date": "2026-02-23",
+      "price": 2.937
     }
   ],
   "outages": [],
@@ -380,7 +408,7 @@
       "description": "Gas avg $4.53/gal (+40% vs last year). Spirit Airlines shuts down. May Day protests trend.",
       "intensity": 3,
       "category": "wallet",
-      "icon": "\ud83d\udcb0",
+      "icon": "💰",
       "source": "AAA"
     },
     {
@@ -388,15 +416,15 @@
       "description": "Kentucky Derby dominates feeds (first female-trained winner).",
       "intensity": 2,
       "category": "feed",
-      "icon": "\ud83d\udcf1",
+      "icon": "📱",
       "source": "Britannica"
     },
     {
       "date": "2026-05-05",
-      "description": "Meta Ads outage confirmed. Supreme Court guts Voting Rights Act \u2014 massive reaction.",
+      "description": "Meta Ads outage confirmed. Supreme Court guts Voting Rights Act — massive reaction.",
       "intensity": 3,
       "category": "platform",
-      "icon": "\ud83d\udd34",
+      "icon": "🔴",
       "source": "IsDown/NPR"
     },
     {
@@ -404,7 +432,7 @@
       "description": "Consumer sentiment hits ALL-TIME LOW: 48.2 (U of Michigan).",
       "intensity": 2,
       "category": "wallet",
-      "icon": "\ud83d\udcb0",
+      "icon": "💰",
       "source": "CNBC"
     },
     {
@@ -412,7 +440,7 @@
       "description": "UAE intercepts Iranian missiles. Strait of Hormuz oil flow down 30%.",
       "intensity": 3,
       "category": "feed",
-      "icon": "\ud83d\udcf1",
+      "icon": "📱",
       "source": "Wiki/NPR"
     },
     {
@@ -420,7 +448,7 @@
       "description": "April CPI at 3.8%. Energy up 17.9%. Gas up 28.4%.",
       "intensity": 3,
       "category": "wallet",
-      "icon": "\ud83d\udcb0",
+      "icon": "💰",
       "source": "CNBC/BLS"
     },
     {
@@ -428,7 +456,7 @@
       "description": "Trump-Xi summit dominates feeds (no deals). Retail data shows pullback.",
       "intensity": 3,
       "category": "feed",
-      "icon": "\ud83d\udcf1",
+      "icon": "📱",
       "source": "NPR/CNN"
     },
     {
@@ -436,7 +464,7 @@
       "description": "Worst performance day. Fuel + platform instability combined.",
       "intensity": 3,
       "category": "platform",
-      "icon": "\ud83d\udd34",
+      "icon": "🔴",
       "source": "TW"
     },
     {
@@ -444,7 +472,7 @@
       "description": "Recovery. Preakness Stakes + Eurovision = lighter feeds.",
       "intensity": 1,
       "category": "feed",
-      "icon": "\ud83d\udcf1",
+      "icon": "📱",
       "source": "BofA"
     }
   ]
