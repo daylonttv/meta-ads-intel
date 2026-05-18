@@ -27,7 +27,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm ci
+        run: echo 'No dependencies to install'
 
       - name: Fetch all data sources
         env:
