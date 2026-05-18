@@ -1,0 +1,62 @@
+name: Update Dashboard
+
+on:
+  schedule:
+    # Run daily at 12:00 UTC (7am CT)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Manual trigger button
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch all data sources
+        env:
+          TW_API_KEY: ${{ secrets.TW_API_KEY }}
+          TW_SHOP_DOMAIN: ${{ secrets.TW_SHOP_DOMAIN }}
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          STATUSGATOR_API_KEY: ${{ secrets.STATUSGATOR_API_KEY }}
+        run: node scripts/fetch-data.mjs
+
+      - name: Build dashboard HTML
+        run: node scripts/build-dashboard.mjs
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/data.json index.html
+          git diff --staged --quiet || git commit -m "📊 Dashboard update $(date -u +%Y-%m-%d)"
+          git push
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

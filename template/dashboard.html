@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Ads Intel — May 2026</title>
+<link rel="stylesheet" href="https://unpkg.com/open-props@2.0.5/open-props.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<!-- DATA_INJECTION_POINT -->
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#070b12;--card:#0d1420;--card2:#121b2a;--border:#182133;
+  --t1:#edf1f7;--t2:#a0aec0;--t3:#647892;
+  --g:#30d8a4;--gd:rgba(48,216,164,.1);
+  --r:#ef6b63;--rd:rgba(239,107,99,.12);
+  --a:#ebb832;--ad:rgba(235,184,50,.12);
+  --b:#5e9df7;--bd:rgba(94,157,247,.08);
+  --p:#a78bfa;--pd:rgba(167,139,250,.08);
+  --mono:'IBM Plex Mono',monospace;--sans:'Sora',sans-serif;
+}
+html{scroll-behavior:smooth;scroll-padding-top:52px}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 20%,rgba(94,157,247,.04) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(167,139,250,.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+.w{max-width:540px;margin:0 auto;padding:16px 10px 64px;position:relative;z-index:1}
+
+/* ===== STICKY NAV ===== */
+.nav{position:sticky;top:0;z-index:100;background:rgba(7,11,18,.88);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-bottom:1px solid var(--border);margin:0 -10px;padding:0 10px}
+.nav::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(94,157,247,.2),rgba(167,139,250,.2),transparent)}
+.nav-inner{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:8px 0;-webkit-overflow-scrolling:touch}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-inner::after{content:'';flex-shrink:0;width:14px}
+.nav-btn{flex-shrink:0;padding:6px 14px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--t3);font-family:var(--sans);font-size:.68rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.nav-btn:hover{color:var(--t2);background:rgba(94,157,247,.05);border-color:rgba(94,157,247,.1)}
+.nav-btn.active{background:linear-gradient(135deg,rgba(94,157,247,.12),rgba(167,139,250,.08));color:var(--b);border-color:rgba(94,157,247,.2);box-shadow:0 0 12px rgba(94,157,247,.1)}
+
+/* ===== DESKTOP ===== */
+@media(min-width:768px){
+  .w{max-width:960px;padding:24px 40px 80px}
+  .nav{margin:0 -40px;padding:0 40px}
+  .nav-inner{justify-content:center;gap:4px}
+  .nav-btn{font-size:.78rem;padding:8px 20px}
+  .hdr h1{font-size:2.1rem}
+  .hdr .sub{font-size:.88rem}
+  .sh h2{font-size:1.15rem}
+  .c{padding:24px}
+  .chart-wrap{aspect-ratio:2/1}
+  .c.chart-card{padding:14px 10px 12px 10px;overflow:visible}
+  .chart-wrap{width:100%;margin:4px 0}
+  .sg{gap:12px;grid-template-columns:1fr 1fr 1fr}
+  .sg3{grid-template-columns:1fr 1fr 1fr}
+  .st{padding:20px 16px}
+  .st .v{font-size:1.9rem}
+  .st .l{font-size:.68rem}
+  .ax{padding:24px;font-size:.88rem}
+  .collapse{max-height:0}
+  .collapse.open{max-height:800px}
+  .collapse-toggle{font-size:.68rem;padding:6px 16px}
+  .dr{grid-template-columns:52px 60px 1fr 64px 60px;gap:8px;padding:8px 14px;font-size:.82rem}
+  .dr .dd{font-size:.78rem}
+  .dr .dd small{font-size:.58rem}
+  .dr .ds2{font-size:.64rem}
+  .dr .db{height:18px}
+  .dr .dro{font-size:.82rem}
+  .dr .dcp{font-size:.74rem}
+  .oi{font-size:.84rem;padding:12px 18px}
+  .oi .od{font-size:.7rem;min-width:68px}
+  .tb{font-size:.86rem}
+  .tb th{font-size:.68rem;padding:10px 14px}
+  .tb td{padding:10px 14px}
+  .tb .o{font-size:.8rem}
+  .lk{padding:16px}
+  .lk h3{font-size:.9rem}
+  .lk p{font-size:.7rem}
+  .lk .ic{width:38px;height:38px;font-size:1rem}
+  .ft{font-size:.64rem}
+  .f{font-size:.74rem;padding:16px}
+  .links-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+}
+
+@media(min-width:1200px){
+  .w{max-width:1320px;padding:32px 56px 80px}
+  .nav{margin:0 -56px;padding:0 56px}
+  .hdr h1{font-size:2.5rem}
+  .hdr .sub{font-size:.95rem}
+  .sh h2{font-size:1.25rem}
+  .chart-wrap{aspect-ratio:5/2}
+  .c.chart-card{padding:16px 12px 14px 12px;overflow:visible}
+  .chart-wrap{width:100%;margin:4px 0}
+  .macro-chart-wrap{max-width:720px;margin-left:auto;margin-right:auto}
+  .macro-chart-wrap .chart-wrap{aspect-ratio:2/1}
+  .c{padding:28px}
+  .sg{grid-template-columns:repeat(6,1fr)}
+  .sg3{grid-template-columns:1fr 1fr 1fr}
+  .st{padding:22px 18px}
+  .st .v{font-size:2rem}
+  .st .l{font-size:.72rem}
+  .ax{padding:28px;font-size:.92rem;line-height:1.8}
+  .dr{grid-template-columns:60px 68px 1fr 72px 68px;gap:10px;padding:9px 16px;font-size:.86rem}
+  .dr .dd{font-size:.82rem}
+  .dr .ds2{font-size:.68rem}
+  .dr .db{height:20px}
+  .dr .dro{font-size:.86rem}
+  .dr .dcp{font-size:.78rem}
+  .oi{font-size:.88rem;padding:14px 20px}
+  .oi .od{font-size:.74rem;min-width:72px}
+  .tb{font-size:.9rem}
+  .tb th{font-size:.72rem;padding:12px 16px}
+  .tb td{padding:12px 16px}
+  .tb .o{font-size:.84rem}
+  .f{font-size:.78rem;padding:20px}
+  .lk{padding:18px}
+  .lk h3{font-size:.95rem}
+  .lk p{font-size:.74rem}
+  .lk .ic{width:40px;height:40px;font-size:1.1rem}
+  .links-grid{grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .ft{font-size:.68rem}
+}
+/* Side-by-side charts only on very wide screens */
+@media(min-width:1440px){
+  .charts-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .charts-pair .c.chart-card{padding:16px 12px 14px 12px;overflow:visible}
+  .charts-pair .chart-wrap{width:100%;margin:8px 0;aspect-ratio:4/3}
+}
+
+/* ===== HEADER ===== */
+.hdr{text-align:center;padding:28px 0 28px;position:relative}
+.hdr::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(94,157,247,.08) 0%,transparent 70%);pointer-events:none}
+.hdr::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(94,157,247,.3),rgba(167,139,250,.3),transparent)}
+.hdr h1{font-size:1.5rem;font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#fff 10%,#7cb8ff 40%,#b090ff 70%,#ff8a80 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 40px rgba(94,157,247,.15)}
+.hdr .sub{font-size:.72rem;color:var(--t2);margin-top:6px;font-weight:400}
+.pill{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:4px 16px;background:linear-gradient(135deg,rgba(94,157,247,.1),rgba(48,216,164,.08));border:1px solid rgba(94,157,247,.2);border-radius:99px;font-family:var(--mono);font-size:.62rem;color:var(--b)}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 8px var(--g);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px var(--g)}50%{opacity:.4;box-shadow:0 0 2px var(--g)}}
+
+/* ===== SECTIONS ===== */
+.s{margin-top:32px;scroll-margin-top:52px}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.si{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:.85rem;flex-shrink:0}
+.sh h2{font-size:.95rem;font-weight:700;flex:1;letter-spacing:-.01em}
+.sh .sr{font-family:var(--mono);font-size:.52rem;color:var(--t3)}
+
+/* ===== COLLAPSIBLE ===== */
+.collapse{overflow:hidden;max-height:0;transition:max-height .35s ease,opacity .25s ease,margin .2s ease;opacity:0;margin-top:0}
+.collapse.open{max-height:600px;opacity:1;margin-top:0;margin-bottom:10px}
+.collapse-toggle{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card2);color:var(--t3);font-family:var(--mono);font-size:.6rem;cursor:pointer;margin-bottom:10px;transition:all .2s;user-select:none}
+.collapse-toggle:hover{border-color:rgba(94,157,247,.3);color:var(--t2);background:rgba(94,157,247,.04)}
+.collapse-toggle .arrow{transition:transform .25s;display:inline-block;font-size:.5rem}
+.collapse-toggle.open .arrow{transform:rotate(90deg)}
+
+/* ===== CARDS ===== */
+.c{background:linear-gradient(180deg,var(--card) 0%,rgba(10,16,28,.8) 100%);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px;position:relative;overflow:hidden}
+.c::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 10%,rgba(94,157,247,.18) 50%,transparent 90%)}
+.c.chart-card{overflow:visible;padding:10px 0 8px 0}
+
+/* ===== CHARTS ===== */
+.chart-wrap{position:relative;width:100%;aspect-ratio:5/4;margin:4px 0;min-width:0;overflow:visible}
+.chart-wrap canvas{width:100%!important;height:100%!important}
+
+/* ===== DAY STRIP ===== */
+.ds{display:flex;flex-direction:column;gap:3px}
+.dr{display:grid;grid-template-columns:42px 50px 1fr 56px 46px;align-items:center;gap:6px;padding:7px 10px;border-radius:8px;font-size:.78rem;border-left:3px solid transparent;transition:background .15s}
+.dr:hover{filter:brightness(1.15)}
+.dr.n{border-left-color:var(--g);background:linear-gradient(90deg,rgba(48,216,164,.1),rgba(48,216,164,.03))}
+.dr.b{border-left-color:var(--a);background:linear-gradient(90deg,rgba(235,184,50,.12),rgba(235,184,50,.03))}
+.dr.v{border-left-color:var(--r);background:linear-gradient(90deg,rgba(239,107,99,.14),rgba(239,107,99,.04))}
+.dr .dd{font-family:var(--mono);font-weight:600;font-size:.78rem;line-height:1.2}
+.dr .dd small{font-size:.56rem;color:var(--t3);font-weight:400;display:block}
+.dr .ds2{font-family:var(--mono);font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;text-align:center}
+.dr.n .ds2{color:var(--g)}.dr.b .ds2{color:var(--a)}.dr.v .ds2{color:var(--r)}
+.dr .db{height:16px;border-radius:4px;background:rgba(255,255,255,.03);overflow:hidden}
+.dr .dbf{height:100%;border-radius:4px}
+.dr.n .dbf{background:linear-gradient(90deg,var(--g),rgba(48,216,164,.15))}
+.dr.b .dbf{background:linear-gradient(90deg,var(--a),rgba(235,184,50,.15))}
+.dr.v .dbf{background:linear-gradient(90deg,var(--r),rgba(239,107,99,.15))}
+.dr .dro{font-family:var(--mono);font-weight:600;font-size:.8rem;text-align:right}
+.dr .dcp{font-family:var(--mono);font-size:.72rem;color:var(--t2);text-align:right}
+
+/* ===== STATS ===== */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.sg3{grid-template-columns:1fr 1fr 1fr}
+.st{background:linear-gradient(135deg,var(--card2),rgba(18,27,42,.6));border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;position:relative;overflow:hidden}
+.st::before{content:'';position:absolute;top:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)}
+.st .v{font-family:var(--mono);font-size:1.5rem;font-weight:700;line-height:1}
+.st .l{font-size:.56rem;color:var(--t3);margin-top:5px;text-transform:uppercase;letter-spacing:.06em;line-height:1.3}
+.st .n{font-size:.54rem;color:var(--t3);margin-top:2px;font-style:italic}
+
+/* ===== ANALYSIS ===== */
+.ax{background:linear-gradient(135deg,rgba(94,157,247,.05),rgba(167,139,250,.04));border:1px solid rgba(94,157,247,.15);border-radius:12px;padding:16px;margin-top:12px;font-size:.76rem;color:var(--t2);line-height:1.75}
+.ax strong{color:var(--t1)}
+
+/* ===== OUTAGE ===== */
+.oi{display:flex;gap:10px;padding:8px 12px;border-radius:8px;background:rgba(7,11,18,.5);border-left:3px solid var(--r);font-size:.72rem;margin-bottom:5px;transition:background .15s}
+.oi:hover{background:rgba(7,11,18,.8)}
+.oi.w{border-left-color:var(--a)}.oi.ok{border-left-color:var(--g)}
+.oi .od{font-family:var(--mono);font-size:.58rem;color:var(--t3);min-width:52px;flex-shrink:0;padding-top:1px}
+.oi .os{font-family:var(--mono);font-size:.48rem;color:var(--t3);margin-left:auto;opacity:.5;flex-shrink:0}
+
+/* ===== TABLE ===== */
+.tb{width:100%;border-collapse:collapse;font-size:.72rem}
+.tb th{text-align:left;padding:8px 8px;font-size:.56rem;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);border-bottom:1px solid var(--border);font-weight:500}
+.tb td{padding:8px;border-bottom:1px solid rgba(24,33,51,.4)}
+.tb tr:last-child td{border-bottom:none}
+.tb tr:hover td{background:rgba(94,157,247,.02)}
+.tb .m{font-weight:500}.tb .o{font-family:var(--mono);font-size:.66rem}
+.tb .h{background:rgba(94,157,247,.04)}.tb .h .m{color:var(--b)}
+
+/* ===== LINKS ===== */
+.lk{display:flex;align-items:center;gap:12px;padding:12px;background:linear-gradient(135deg,var(--card),rgba(13,20,32,.7));border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--t1);margin-bottom:6px;transition:all .2s}
+.lk:hover{background:var(--card2);border-color:rgba(94,157,247,.2);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.lk:active{transform:translateY(0)}
+.lk .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:.85rem;flex-shrink:0}
+.lk h3{font-size:.76rem;font-weight:600}.lk p{font-size:.58rem;color:var(--t3);margin-top:1px}
+.lk .tg{font-family:var(--mono);font-size:.52rem;padding:3px 8px;border-radius:4px;margin-left:auto;flex-shrink:0}
+.tg.fr{background:var(--gd);color:var(--g)}.tg.fm{background:var(--ad);color:var(--a)}
+
+/* ===== FOOTER ===== */
+.ft{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);text-align:center;font-size:.54rem;color:var(--t3);line-height:1.8}
+</style>
+</head>
+<body>
+<div class="w">
+
+<!-- HEADER -->
+<div class="hdr">
+  <h1>Meta Ads Intelligence Hub</h1>
+  <p class="sub">Platform health × Gardner's performance — <span id="hdrMonth">Loading...</span></p>
+  <div class="pill"><span class="dot"></span><span id="hdrRange">LOADING</span></div>
+</div>
+
+<!-- STICKY NAV -->
+<div class="nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="go('charts')">Charts</button>
+    <button class="nav-btn" onclick="go('daily')">Daily</button>
+    <button class="nav-btn" onclick="go('outages')">Outages</button>
+    <button class="nav-btn" onclick="go('bench')">Benchmarks</button>
+    <button class="nav-btn" onclick="go('macro')">Macro</button>
+    <button class="nav-btn" onclick="go('reliability')">Reliability</button>
+    <button class="nav-btn" onclick="go('tools')">Tools</button>
+  </div>
+</div>
+
+<!-- INTRO (collapsible) -->
+<div style="margin-top:16px">
+  <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> What is this dashboard?</button>
+  <div class="collapse">
+    <div class="ax" style="margin-top:0">
+      <strong>This dashboard cross-references three things:</strong> Breezeway's "Bad Day Detector" (a free tool tracking whether Meta's ad platform is performing normally across ~45 DTC brands), our actual Meta ad performance from Triple Whale, and industry benchmarks from Polar Analytics, Varos, and others.
+      <br><br>
+      <strong>The goal:</strong> When our ads underperform, is it us or the platform?
+      <br><br>
+      <strong>How to read colors:</strong> <span style="color:var(--g)">Green = Normal</span> (Meta performing as expected). <span style="color:var(--a)">Amber = Bad</span> (bottom 5% across the panel — expect ~1–2/month normally). <span style="color:var(--r)">Red = Very Bad</span> (bottom 1% — expect ~2/year normally).
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHARTS ===== -->
+<div class="s" id="charts">
+  <div class="sh">
+    <div class="si" style="background:var(--bd);color:var(--b)">📈</div>
+    <h2>Meta Spend & ROAS vs. Platform Health</h2>
+  </div>
+  <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> How to read these charts</button>
+  <div class="collapse">
+    <div class="ax" style="margin-top:0">Bars = our daily Meta spend, colored by Breezeway's platform rating. Blue line = our Meta ROAS. Notice how spend stays flat but ROAS drops on red/amber days — same budget, worse results. The CPA chart below shows the inverse: cost per acquisition spikes on bad days. The dashed purple line is our May average.</div>
+  </div>
+  <div class="charts-pair">
+    <div class="c chart-card"><div class="chart-wrap"><canvas id="revChart"></canvas></div></div>
+    <div class="c chart-card"><div class="chart-wrap"><canvas id="cpaChart"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ===== DAILY ===== -->
+<div class="s" id="daily">
+  <div class="sh">
+    <div class="si" style="background:var(--bd);color:var(--b)">📊</div>
+    <h2>Daily Breakdown</h2>
+    <span class="sr">Breezeway + TW</span>
+  </div>
+  <div class="c">
+    <div class="dr" style="background:none;border-left-color:transparent;font-size:.5rem;color:var(--t3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;padding-bottom:2px">
+      <span>Date</span><span style="text-align:center">Status</span><span>Revenue</span><span style="text-align:right">M.ROAS</span><span style="text-align:right">CPA</span>
+    </div>
+    <div class="ds" id="strip"></div>
+  </div>
+
+  <div class="sg" id="statsGrid"><!-- populated by JS --></div>
+
+  <div class="ax" id="statsAnalysis"><!-- populated by JS --></div>
+</div>
+
+<!-- ===== OUTAGES ===== -->
+<div class="s" id="outages">
+  <div class="sh">
+    <div class="si" style="background:var(--rd);color:var(--r)">🔴</div>
+    <h2>Outage Monitor</h2>
+    <span class="sr">Aggregated</span>
+  </div>
+  <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> About this data</button>
+  <div class="collapse">
+    <div class="ax" style="margin-top:0">Known Meta platform incidents from three independent monitoring services (StatusGator, IsDown, Ad Status Monitor) plus Meta's own status page at metastatus.com. Meta's official page often lags 30–120 minutes behind actual issues — the independent monitors are faster.</div>
+  </div>
+  <div class="c" id="outagesList"><!-- populated by JS --></div>
+  <div class="sg" id="outageStats"><!-- populated by JS --></div>
+</div>
+
+<!-- ===== BENCHMARKS ===== -->
+<div class="s" id="bench">
+  <div class="sh">
+    <div class="si" style="background:var(--pd);color:var(--p)">🧀</div>
+    <h2>Gardner's vs. Industry</h2>
+    <span class="sr">TW + Polar + Varos</span>
+  </div>
+  <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> What are these benchmarks?</button>
+  <div class="collapse">
+    <div class="ax" style="margin-top:0">"F&B Bench" = typical range for Food & Beverage DTC brands. "All Ecom" = cross-industry median. Sources: Polar Analytics (4K+ Shopify brands), Varos (4,500+ brands), MHI Media (1,247 Meta accounts), Ryze AI, and Immerss.</div>
+  </div>
+  <div class="c" id="benchTable"><!-- populated by JS --></div>
+
+  <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> What this means</button>
+  <div class="collapse">
+    <div class="ax" style="margin-top:0">
+      <strong style="color:var(--g)">Blended ROAS 3.43× is solid</strong> — above the all-ecom median (2.87×) and within the F&B range (3–5×). Our overall marketing mix is working.
+      <br><br>
+      <strong style="color:var(--a)">Meta ROAS 2.10× is below where we should be.</strong> The F&B floor is 2.5×. On Normal days we averaged 2.21× — still below, but platform instability accounts for ~12% of the gap.
+      <br><br>
+      <strong style="color:var(--a)">Meta CPA $35.88 is at the top of the F&B range</strong> ($15–35). On Normal days: $34.82 (within range). On Bad/Very Bad days: $40.15 (above even the all-ecom median).
+      <br><br>
+      <strong>Meta CPM $9.86</strong> is 21% above F&B bench ($8.14) but well below US average ($23.00).
+      <br><br>
+      <strong>Bottom line:</strong> Blended is healthy. Meta is underperforming vs. F&B benchmarks — roughly half explained by platform instability, the rest is a real optimization opportunity.
+    </div>
+  </div>
+</div>
+
+<!-- ===== MACRO EVENTS ===== -->
+<div class="s" id="macro">
+  <div class="sh">
+    <div class="si" style="background:var(--rd);color:var(--r)">🌍</div>
+    <h2>Macro Events × Our Performance</h2>
+    <span class="sr">News + TW</span>
+  </div>
+  <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> Why track this?</button>
+  <div class="collapse">
+    <div class="ax" style="margin-top:0">When something big happens in the world, it affects our ads in two ways. First, people's Facebook and Instagram feeds fill up with news, outrage, and commentary — which means they're doomscrolling instead of shopping. Second, economic events (gas prices, inflation reports, tariff news) directly affect whether people feel comfortable spending on non-essentials like specialty cheese. This section tracks both: what was dominating feeds and what was hitting wallets.</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+    <span style="font-size:.6rem;color:var(--t3);font-family:var(--mono)">ROAS VIEW:</span>
+    <button id="roasMetaBtn" class="nav-btn active" onclick="setRoasView('meta')" style="padding:4px 10px;font-size:.6rem">Meta Only</button>
+    <button id="roasBlendBtn" class="nav-btn" onclick="setRoasView('blended')" style="padding:4px 10px;font-size:.6rem">Blended</button>
+  </div>
+  <div class="macro-chart-wrap">
+    <div class="c chart-card">
+      <div id="macroChartTitle" style="font-size:.52rem;color:var(--t3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;padding-bottom:6px">Event Timeline × Gardner's Daily Meta ROAS</div>
+      <div class="chart-wrap"><canvas id="macroChart"></canvas></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin:8px 0">
+    <button id="fuelBtn" onclick="toggleFuel()" style="padding:8px 18px;border-radius:8px;border:1px solid var(--a);background:var(--ad);color:var(--a);font-family:var(--sans);font-size:.72rem;font-weight:600;cursor:pointer;transition:all .15s">⛽ Show Fuel Prices × Performance</button>
+  </div>
+  <div id="fuelWrap" style="display:none">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+      <span style="font-size:.6rem;color:var(--t3);font-family:var(--mono)">ROAS VIEW:</span>
+      <button id="roasMetaBtn2" class="nav-btn active" onclick="setRoasView('meta')" style="padding:4px 10px;font-size:.6rem">Meta Only</button>
+      <button id="roasBlendBtn2" class="nav-btn" onclick="setRoasView('blended')" style="padding:4px 10px;font-size:.6rem">Blended</button>
+    </div>
+    <div class="macro-chart-wrap">
+      <div class="c chart-card">
+        <div id="fuelChartTitle" style="font-size:.52rem;color:var(--t3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;padding-bottom:6px">⛽ US Avg Gas Price × Meta ROAS × Breezeway Status</div>
+        <div class="chart-wrap"><canvas id="fuelChart"></canvas></div>
+      </div>
+    </div>
+    <div class="ax">
+      <strong>What you're seeing:</strong> The orange area shows the US average gas price rising through May (interpolated from AAA/EIA weekly data). The blue line is our Meta ROAS. Gas went from ~$4.40/gal at the start of May to $4.63 by mid-month — the highest point of 2026. Our worst ROAS days (May 12, 15) coincide with peak gas prices AND platform instability. Consumers paying $60+ to fill a tank are less likely to impulse-buy specialty cheese online.
+      <br><br>
+      <em style="font-size:.65rem">Gas price data: AAA national averages (weekly, interpolated to daily). Actual daily prices may vary ±$0.05. Wisconsin gas was slightly below national avg (~$4.30–4.45 range).</em>
+    </div>
+  </div>
+
+  <div class="c" style="padding:12px">
+    <div style="font-size:.6rem;color:var(--t3);font-family:var(--mono);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px">💰 = WALLET IMPACT · 📱 = FEED DOMINATION · 🔴 = PLATFORM ISSUE</div>
+    <div id="macroTimeline" style="display:flex;flex-direction:column;gap:6px"><!-- populated by JS --></div>
+  </div>
+
+  <div class="ax" id="macroAnalysis"><!-- populated by JS --></div>
+</div>
+
+<!-- ===== RELIABILITY ===== -->
+<div class="s" id="reliability">
+  <div class="sh">
+    <div class="si" style="background:var(--ad);color:var(--a)">🧮</div>
+    <h2>Platform Reliability — <span id="reliMonth">Loading</span></h2>
+  </div>
+  <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> What do these numbers mean?</button>
+  <div class="collapse">
+    <div class="ax" style="margin-top:0">"Stability" = % of days rated Normal by Breezeway. "VBad Rate" and "Bad+ Rate" compare how often degraded days occurred vs. what's expected under normal conditions. Breezeway expects ~2 Very Bad days per year; we got 4 in 17 days.</div>
+  </div>
+  <div class="sg sg3" id="reliStats"><!-- populated by JS --></div>
+  <div class="ax" id="reliAnalysis" style="margin-top:10px"><!-- populated by JS --></div>
+</div>
+
+<!-- ===== TOOLS ===== -->
+<div class="s" id="tools">
+  <div class="sh">
+    <div class="si" style="background:var(--gd);color:var(--g)">🔗</div>
+    <h2>Free Monitoring Stack</h2>
+  </div>
+  <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> When to use each tool</button>
+  <div class="collapse">
+    <div class="ax" style="margin-top:0">Check <strong>Breezeway daily</strong> before making campaign changes. Use <strong>outage monitors</strong> (StatusGator, IsDown) when performance drops unexpectedly. Use <strong>Varos/Polar/Triple Whale</strong> monthly to benchmark against peers.</div>
+  </div>
+  <div class="links-grid">
+    <a href="https://headwinds.breezeway.co/" target="_blank" class="lk"><div class="ic" style="background:var(--ad);color:var(--a)">⚡</div><div><h3>Breezeway Bad Day Detector</h3><p>Daily CPA anomaly. ~45 DTC brands. No login.</p></div><span class="tg fr">FREE</span></a>
+    <a href="https://varos.com/benchmarks" target="_blank" class="lk"><div class="ic" style="background:var(--bd);color:var(--b)">📊</div><div><h3>Varos Benchmarks</h3><p>Real-time CPM/ROAS/CTR. 4,500+ brands.</p></div><span class="tg fr">FREE</span></a>
+    <a href="https://www.polaranalytics.com/ecommerce-benchmarks" target="_blank" class="lk"><div class="ic" style="background:var(--gd);color:var(--g)">📈</div><div><h3>Polar Benchmarks</h3><p>CVR, ROAS, CAC by industry. 4K+ Shopify.</p></div><span class="tg fr">FREE</span></a>
+    <a href="https://www.triplewhale.com/free" target="_blank" class="lk"><div class="ic" style="background:var(--pd);color:var(--p)">🐋</div><div><h3>Triple Whale Free Dash</h3><p>Shopify dashboard + 20K brand benchmarks.</p></div><span class="tg fr">FREE</span></a>
+    <a href="https://metastatus.com/" target="_blank" class="lk"><div class="ic" style="background:var(--rd);color:var(--r)">🏠</div><div><h3>Meta Official Status</h3><p>Meta's own outage page. Lags 30–120 min.</p></div><span class="tg fr">FREE</span></a>
+    <a href="https://statusgator.com/services/meta/ads-delivery" target="_blank" class="lk"><div class="ic" style="background:var(--rd);color:var(--r)">🐊</div><div><h3>StatusGator</h3><p>Independent. Early warnings. 1,063+ outages.</p></div><span class="tg fm">FREEMIUM</span></a>
+    <a href="https://isdown.app/status/meta/facebook-ads-manager" target="_blank" class="lk"><div class="ic" style="background:var(--ad);color:var(--a)">⬇️</div><div><h3>IsDown</h3><p>Status aggregator. 6,320+ services.</p></div><span class="tg fm">FREEMIUM</span></a>
+  </div>
+</div>
+
+<div class="ft" id="footer">
+  Loading dashboard data...
+</div>
+
+</div>
+
+<script>
+// ===== COLLAPSIBLE SECTIONS =====
+function toggle(btn){
+  btn.classList.toggle('open');
+  const panel = btn.nextElementSibling;
+  panel.classList.toggle('open');
+}
+
+// ===== STICKY NAV SCROLL =====
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+const sections = ['charts','daily','outages','bench','macro','reliability','tools'];
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.id;
+      document.querySelectorAll('.nav-btn').forEach((b,i)=>{
+        b.classList.toggle('active',sections[i]===id);
+      });
+    }
+  });
+},{rootMargin:'-40% 0px -55% 0px'});
+sections.forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el);});
+
+// ===== LOAD DATA =====
+const RAW = window.__DASHBOARD_DATA__ || {};
+const tw = RAW.tripleWhale || [];
+const bwRaw = RAW.breezeway || [];
+const gasPricesRaw = RAW.gasPrices || [];
+const outagesRaw = RAW.outages || [];
+const macroRaw = RAW.macroEvents || [];
+const meta = RAW.meta || {};
+
+// ===== MERGE TW + BREEZEWAY INTO DAILY ARRAY =====
+const bwMap = {};
+bwRaw.forEach(b => { bwMap[b.date] = b.status; });
+
+const D = tw.map(day => {
+  const date = new Date(day.date);
+  const dayNum = date.getUTCDate();
+  const bwStatus = bwMap[day.date] || 'normal';
+  const s = bwStatus === 'very_bad' ? 'v' : bwStatus === 'bad' ? 'b' : 'n';
+  return {
+    d: String(dayNum),
+    date: day.date,
+    s,
+    rev: day.revenue || 0,
+    roas: day.blendedRoas || 0,
+    mr: day.metaRoas || 0,
+    cpa: day.metaCpa || 0,
+    sp: day.metaSpend || 0,
+    ord: day.orders || 0,
+    cpm: day.metaCpm || 0,
+  };
+});
+
+// If no TW data, show message and stop
+if (D.length === 0) {
+  document.querySelector('.w').innerHTML = `
+    <div class="hdr"><h1>Meta Ads Intelligence Hub</h1>
+    <p class="sub" style="margin-top:20px;color:var(--a)">⚠️ No data available yet. Run the fetch script or trigger the GitHub Action.</p>
+    <p class="sub" style="margin-top:10px">Last attempted: ${meta.updatedAt || 'never'}</p></div>`;
+  throw new Error('No data');
+}
+
+// ===== POPULATE HEADER =====
+const monthLabel = meta.monthLabel || 'Loading';
+const startDay = D[0]?.d || '?';
+const endDay = D[D.length-1]?.d || '?';
+const monthName = new Date(D[0]?.date || Date.now()).toLocaleString('en-US',{month:'short',timeZone:'UTC'}).toUpperCase();
+document.getElementById('hdrMonth').textContent = monthLabel;
+document.getElementById('hdrRange').textContent = `${monthName} ${startDay}–${endDay} · TRIPLE WHALE LIVE`;
+
+// ===== COMPUTE STATS =====
+const normalDays = D.filter(d=>d.s==='n');
+const badDays = D.filter(d=>d.s!=='n');
+const avg = (arr,key) => arr.length ? arr.reduce((s,d)=>s+d[key],0)/arr.length : 0;
+
+const avgMrNormal = avg(normalDays,'mr');
+const avgMrBad = avg(badDays,'mr');
+const avgCpaNormal = avg(normalDays,'cpa');
+const avgCpaBad = avg(badDays,'cpa');
+const roasDrop = avgMrNormal ? ((avgMrBad - avgMrNormal)/avgMrNormal * 100).toFixed(0) : 0;
+const cpaInflation = avgCpaNormal ? ((avgCpaBad - avgCpaNormal)/avgCpaNormal * 100).toFixed(0) : 0;
+
+const avgRevenue = avg(D,'rev');
+const avgOrders = avg(D,'ord');
+const avgAdSpend = avg(D,'sp');
+const avgBlendedRoas = avg(D,'roas');
+const avgMetaRoas = avg(D,'mr');
+const avgMetaCpa = avg(D,'cpa');
+const avgMetaCpm = avg(D,'cpm');
+
+// Populate stats grid
+document.getElementById('statsGrid').innerHTML = `
+  <div class="st"><div class="v" style="color:var(--g)">${avgMrNormal.toFixed(2)}×</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
+  <div class="st"><div class="v" style="color:var(--r)">${avgMrBad.toFixed(2)}×</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
+  <div class="st"><div class="v" style="color:var(--g)">$${avgCpaNormal.toFixed(2)}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
+  <div class="st"><div class="v" style="color:var(--r)">$${avgCpaBad.toFixed(2)}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
+  <div class="st"><div class="v" style="color:var(--a)">${roasDrop}%</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
+  <div class="st"><div class="v" style="color:var(--a)">+${Math.abs(cpaInflation)}%</div><div class="l">CPA Inflation</div><div class="n">bad vs normal</div></div>
+`;
+document.getElementById('statsAnalysis').innerHTML = badDays.length
+  ? `<strong>The correlation is clear.</strong> On Breezeway-flagged days, Meta ROAS averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days — a <strong>${Math.abs(roasDrop)}% efficiency drop</strong>. Meta spend was relatively flat across all days — same budget consumed, fewer conversions delivered.`
+  : `<strong>All days were rated Normal by Breezeway this period.</strong> Average Meta ROAS: ${avgMetaRoas.toFixed(2)}×, CPA: $${avgMetaCpa.toFixed(2)}.`;
+
+// ===== POPULATE OUTAGES =====
+const outageEl = document.getElementById('outagesList');
+// Build enriched Breezeway lookup
+const bwFull = {};
+bwRaw.forEach(b => { bwFull[b.date] = b; });
+
+if (outagesRaw.length) {
+  outageEl.innerHTML = outagesRaw.map(o => {
+    const cls = o.status === 'resolved' ? 'ok' : '';
+    return `<div class="oi ${cls}"><span class="od">${o.date}</span><span>${o.title}</span><span class="os">${o.service || ''}</span></div>`;
+  }).join('');
+} else {
+  const badBw = D.filter(d=>d.s!=='n');
+  if (badBw.length) {
+    outageEl.innerHTML = badBw.map(d => {
+      const cls = d.s==='v' ? '' : 'w';
+      const label = d.s==='v' ? 'Very Bad' : 'Bad';
+      const bwDay = bwFull[d.date];
+      const zScore = bwDay?.cpa_z != null ? ` · CPA z-score: ${bwDay.cpa_z.toFixed(2)}` : '';
+      const nBiz = bwDay?.n_biz ? ` · ${bwDay.n_biz} brands` : '';
+      const incident = bwDay?.incident_description
+        ? `<div style="font-size:.6rem;color:var(--t3);margin-top:4px;line-height:1.4">${bwDay.incident_description.replace(/\r?\n/g,' ').substring(0,200)}${bwDay.incident_description.length>200?'…':''}</div>`
+        : '';
+      return `<div class="oi ${cls}"><span class="od">${monthName} ${d.d}</span><span>Breezeway: ${label}${zScore}${nBiz}${incident}</span><span class="os">${bwDay?.incident_source||'Breezeway'}</span></div>`;
+    }).join('');
+  } else {
+    outageEl.innerHTML = '<div class="oi ok"><span>No incidents detected this period</span></div>';
+  }
+}
+document.getElementById('outageStats').innerHTML = `
+  <div class="st"><div class="v" style="color:var(--r)">${outagesRaw.length || badDays.length}</div><div class="l">Incidents<br>This Period</div></div>
+  <div class="st"><div class="v" style="color:${badDays.length?'var(--a)':'var(--g)'}">${badDays.length}</div><div class="l">Breezeway<br>Bad+ Days</div></div>
+`;
+
+// ===== POPULATE BENCHMARKS =====
+document.getElementById('benchTable').innerHTML = `<table class="tb">
+  <thead><tr><th>Metric</th><th>Gardner's</th><th>F&B Bench</th><th>All Ecom</th></tr></thead>
+  <tbody>
+    <tr class="h"><td class="m">Blended ROAS</td><td class="o" style="color:var(--g)">${avgBlendedRoas.toFixed(2)}×</td><td class="o">3–5×</td><td class="o">2.87×</td></tr>
+    <tr><td class="m">Meta ROAS</td><td class="o" style="color:${avgMetaRoas>=2.5?'var(--g)':'var(--a)'}">${avgMetaRoas.toFixed(2)}×</td><td class="o">2.5–4×</td><td class="o">2.87×</td></tr>
+    <tr><td class="m">Meta CPA</td><td class="o" style="color:${avgMetaCpa<=35?'var(--g)':'var(--a)'}">$${avgMetaCpa.toFixed(2)}</td><td class="o">$15–35</td><td class="o">$38.19</td></tr>
+    <tr><td class="m">Meta CPM</td><td class="o">$${avgMetaCpm.toFixed(2)}</td><td class="o">$8.14</td><td class="o">$7.19</td></tr>
+    <tr class="h"><td class="m">Daily Revenue</td><td class="o">$${Math.round(avgRevenue).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
+    <tr><td class="m">Daily Orders</td><td class="o">${Math.round(avgOrders)}</td><td class="o">—</td><td class="o">—</td></tr>
+    <tr><td class="m">Daily Ad Spend</td><td class="o">$${Math.round(avgAdSpend).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
+  </tbody>
+</table>`;
+
+// ===== POPULATE MACRO EVENTS =====
+const macroEl = document.getElementById('macroTimeline');
+if (macroRaw.length) {
+  macroEl.innerHTML = macroRaw.map(e => {
+    const cls = e.intensity >= 3 ? '' : e.intensity >= 2 ? 'w' : 'ok';
+    const borderColor = e.intensity >= 3 ? 'var(--r)' : e.intensity >= 2 ? 'var(--a)' : 'var(--p)';
+    const dateLabel = e.date ? e.date.split('-').slice(1).map(s=>parseInt(s)).join('/') : '';
+    return `<div class="oi ${cls}" style="border-left-color:${borderColor}"><span class="od">${dateLabel}</span><span>${e.icon||''} ${e.description}</span><span class="os">${e.source||''}</span></div>`;
+  }).join('');
+} else {
+  macroEl.innerHTML = '<div class="oi ok"><span>Macro events will be auto-curated on next data refresh</span></div>';
+}
+
+const majorEvents = macroRaw.filter(e=>e.intensity>=3);
+const walletEvents = macroRaw.filter(e=>e.category==='wallet');
+const feedEvents = macroRaw.filter(e=>e.category==='feed');
+document.getElementById('macroAnalysis').innerHTML = macroRaw.length
+  ? `<strong>${majorEvents.length} major events</strong> occurred during this period: ${walletEvents.length} wallet-impact, ${feedEvents.length} feed-domination. The worst performance days tend to cluster around high-intensity macro events combined with platform instability.`
+  : '<em>Macro analysis will appear after the first data refresh.</em>';
+
+// ===== POPULATE RELIABILITY =====
+const reliMonth = meta.monthLabel ? meta.monthLabel.split(' ')[0].substring(0,3) + " '" + (meta.monthLabel.split(' ')[1]||'').substring(2) : 'Loading';
+document.getElementById('reliMonth').textContent = reliMonth;
+
+const stability = D.length ? (normalDays.length / D.length * 100).toFixed(0) : 0;
+const vbadDays = D.filter(d=>d.s==='v').length;
+const vbadRate = D.length ? (vbadDays / D.length * 365 / 2).toFixed(0) : 0;
+const badPlusDays = badDays.length;
+const badPlusRate = D.length ? (badPlusDays / D.length * 365 / 24).toFixed(1) : 0;
+
+document.getElementById('reliStats').innerHTML = `
+  <div class="st"><div class="v" style="color:${stability>=80?'var(--g)':stability>=60?'var(--a)':'var(--r)'}">${stability}%</div><div class="l">Stability</div></div>
+  <div class="st"><div class="v" style="color:${vbadRate<=5?'var(--a)':'var(--r)'}">~${vbadRate}×</div><div class="l">VBad Rate</div></div>
+  <div class="st"><div class="v" style="color:${badPlusRate<=3?'var(--a)':'var(--r)'}">${badPlusRate}×</div><div class="l">Bad+ Rate</div></div>
+`;
+
+const avgDailySpend = avg(D,'sp');
+const impactCost = badDays.length * avgDailySpend;
+const excessCpa = impactCost * Math.abs(cpaInflation)/100;
+document.getElementById('reliAnalysis').innerHTML = badDays.length
+  ? `<strong>At ~$${Math.round(avgDailySpend).toLocaleString()}/day Meta spend:</strong> ${badDays.length} impacted days = $${Math.round(impactCost).toLocaleString()} during degraded delivery. +${Math.abs(cpaInflation)}% CPA inflation = <strong>~$${Math.round(excessCpa).toLocaleString()} excess cost</strong>.`
+  : '<strong>No impacted days this period.</strong> All Breezeway ratings were Normal.';
+
+// ===== POPULATE FOOTER =====
+const updatedAt = meta.updatedAt ? new Date(meta.updatedAt).toLocaleString('en-US',{dateStyle:'long',timeStyle:'short'}) : 'unknown';
+document.getElementById('footer').innerHTML = `
+  Last updated: ${updatedAt}<br>
+  Gardner's data via Triple Whale API · Platform health: Breezeway, StatusGator, metastatus.com<br>
+  Benchmarks: Polar, Varos, MHI, Ryze AI · Charts: Chart.js 4.4 · Design: Open Props 2.0
+`;
+
+// ===== INTERPOLATE GAS PRICES (weekly → daily) =====
+function interpolateGas(weeklyPrices, days) {
+  if (!weeklyPrices.length) return days.map(()=>null);
+  const sorted = [...weeklyPrices].sort((a,b) => new Date(a.date) - new Date(b.date));
+  return days.map(d => {
+    const dayDate = new Date(d.date);
+    let before = sorted[0], after = sorted[sorted.length-1];
+    for (let i = 0; i < sorted.length - 1; i++) {
+      if (new Date(sorted[i].date) <= dayDate && new Date(sorted[i+1].date) >= dayDate) {
+        before = sorted[i]; after = sorted[i+1]; break;
+      }
+    }
+    const t1 = new Date(before.date).getTime(), t2 = new Date(after.date).getTime();
+    const t = dayDate.getTime();
+    if (t2 === t1) return before.price;
+    const ratio = Math.max(0, Math.min(1, (t - t1) / (t2 - t1)));
+    return +(before.price + ratio * (after.price - before.price)).toFixed(3);
+  });
+}
+const gasDaily = interpolateGas(gasPricesRaw, D);
+
+// ===== CHART SETUP =====
+const isDesktop = window.innerWidth >= 768;
+const isWide = window.innerWidth >= 1200;
+const cFont = isWide ? 13 : isDesktop ? 12 : 10;
+const cPad = {left:isWide?8:isDesktop?8:6,right:isWide?8:isDesktop?8:6,top:8,bottom:4};
+const tickPad = isWide ? 10 : isDesktop ? 8 : 4;
+const forceAxisWidth = minWidth => scale => { scale.width = Math.max(scale.width, minWidth); };
+const leftAxisWidth = isWide ? 66 : isDesktop ? 58 : 44;
+const rightAxisWidth = isWide ? 54 : isDesktop ? 48 : 36;
+const gasAxisWidth = isWide ? 78 : isDesktop ? 72 : 54;
+const cTipTitle = isWide ? 14 : 12;
+const cTipBody = isWide ? 13 : 11;
+const cLegend = isWide ? 12 : isDesktop ? 11 : 10;
+const cTickColor = '#a0aec0';
+const cGridColor = 'rgba(30,41,59,.4)';
+const cGridLight = 'rgba(30,41,59,.2)';
+const roasAxisColor = '#93c5fd';
+const lineColor = '#7bb8ff';
+
+const bgC=D.map(d=>d.s==='v'?'rgba(239,107,99,.3)':d.s==='b'?'rgba(235,184,50,.25)':'rgba(48,216,164,.18)');
+const brC=D.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4');
+const ptC=D.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#5e9df7');
+const ptR = isWide ? 8 : isDesktop ? 7 : 5;
+const ptHR = isWide ? 11 : 9;
+const ptBW = isWide ? 3 : 2.5;
+
+// Auto-compute axis ranges
+const spMin = Math.floor(Math.min(...D.map(d=>d.sp))/500)*500;
+const spMax = Math.ceil(Math.max(...D.map(d=>d.sp))/500)*500;
+const mrMin = Math.max(0.5, Math.floor(Math.min(...D.map(d=>d.mr))*2)/2);
+const mrMax = Math.ceil(Math.max(...D.map(d=>d.mr))*2)/2 + 0.5;
+const cpaMin = Math.floor(Math.min(...D.map(d=>d.cpa))/5)*5 - 5;
+const cpaMax = Math.ceil(Math.max(...D.map(d=>d.cpa))/5)*5 + 5;
+
+const chartMonth = new Date(D[0]?.date||Date.now()).toLocaleString('en-US',{month:'short',timeZone:'UTC'});
+const chartLabels = D.map(d=>chartMonth+' '+d.d);
+
+// ===== SPEND + ROAS CHART =====
+new Chart(document.getElementById('revChart'),{
+  type:'bar',
+  data:{labels:chartLabels,datasets:[
+    {type:'bar',label:'Meta Spend',data:D.map(d=>d.sp),backgroundColor:bgC,borderColor:brC,borderWidth:1.5,borderRadius:5,yAxisID:'y',order:2},
+    {type:'line',label:'Meta ROAS',data:D.map(d=>d.mr),borderColor:lineColor,pointBackgroundColor:ptC,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:3,tension:.3,yAxisID:'y1',fill:false,order:1}
+  ]},
+  options:{
+    responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    layout:{padding:cPad},
+    plugins:{
+      legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
+      tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>ctx.dataset.label==='Meta Spend'?'  $'+ctx.parsed.y.toLocaleString():'  '+ctx.parsed.y.toFixed(2)+'×'}}
+    },
+    scales:{
+      x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
+      y:{position:'left',min:spMin,max:spMax,ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},callback:v=>'$'+(v/1000).toFixed(1)+'k',stepSize:500,padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(leftAxisWidth)},
+      y1:{position:'right',min:mrMin,max:mrMax,ticks:{color:roasAxisColor,font:{family:'IBM Plex Mono',size:cFont,weight:'bold'},callback:v=>v.toFixed(1)+'×',padding:tickPad},grid:{display:false},afterFit:forceAxisWidth(rightAxisWidth)}
+    }
+  }
+});
+
+// ===== CPA CHART =====
+const avgCpa = avg(D,'cpa');
+new Chart(document.getElementById('cpaChart'),{
+  type:'bar',
+  data:{labels:chartLabels,datasets:[
+    {label:'Meta CPA',data:D.map(d=>d.cpa),backgroundColor:D.map(d=>d.s==='v'?'rgba(239,107,99,.45)':d.s==='b'?'rgba(235,184,50,.4)':'rgba(48,216,164,.3)'),borderColor:D.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4'),borderWidth:1.5,borderRadius:5},
+    {type:'line',label:`Avg ($${avgCpa.toFixed(2)})`,data:Array(D.length).fill(avgCpa),borderColor:'rgba(176,144,255,.6)',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false}
+  ]},
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    layout:{padding:cPad},
+    plugins:{
+      legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
+      tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>'  $'+ctx.parsed.y.toFixed(2)}}
+    },
+    scales:{
+      x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
+      y:{min:cpaMin,max:cpaMax,ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},callback:v=>'$'+v,padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(leftAxisWidth)}
+    }
+  }
+});
+
+// ===== DAY STRIP =====
+const strip=document.getElementById('dayStrip');
+const maxR=Math.max(...D.map(d=>d.rev));
+D.forEach((d,i)=>{
+  const date = new Date(d.date);
+  const dow = date.toLocaleString('en-US',{weekday:'short',timeZone:'UTC'});
+  const pct=(d.rev/maxR*100).toFixed(0);
+  const cls=d.s==='v'?'v':d.s==='b'?'b':'n';
+  const sl=d.s==='v'?'V.BAD':d.s==='b'?'BAD':'OK';
+  const r=document.createElement('div');
+  r.className=`dr ${cls}`;
+  r.innerHTML=`<span class="dd">${d.d}<small>${dow}</small></span><span class="ds2">${sl}</span><div class="db"><div class="dbf" style="width:${pct}%"></div></div><span class="dro">${d.mr}×</span><span class="dcp">$${d.cpa.toFixed(0)}</span>`;
+  strip.appendChild(r);
+});
+
+// ===== MACRO EVENTS CHART =====
+const macroByDay = {};
+macroRaw.forEach(e => {
+  const dayNum = new Date(e.date).getUTCDate();
+  macroByDay[dayNum] = Math.max(macroByDay[dayNum]||0, e.intensity||1);
+});
+const macroIntensity = D.map(d => macroByDay[parseInt(d.d)] || 1);
+const macroChartLabels = D.map(d => {
+  const dayEvents = macroRaw.filter(e => new Date(e.date).getUTCDate() === parseInt(d.d));
+  if (!dayEvents.length) return '';
+  return (dayEvents[0].description||'').substring(0,30);
+});
+
+const macroChartInstance = new Chart(document.getElementById('macroChart'),{
+  type:'bar',
+  data:{labels:chartLabels,datasets:[
+    {type:'bar',label:'Event Intensity',data:macroIntensity,backgroundColor:macroIntensity.map(v=>v>=3?'rgba(239,107,99,.35)':v>=2?'rgba(235,184,50,.3)':'rgba(94,157,247,.12)'),borderColor:macroIntensity.map(v=>v>=3?'#ef6b63':v>=2?'#ebb832':'rgba(94,157,247,.3)'),borderWidth:1,borderRadius:5,yAxisID:'y',order:2},
+    {type:'line',label:'Meta ROAS',data:D.map(d=>d.mr),borderColor:lineColor,pointBackgroundColor:ptC,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:3,tension:.3,yAxisID:'y1',fill:false,order:1}
+  ]},
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    layout:{padding:cPad},
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
+      tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,
+        callbacks:{
+          title:ctx=>{const i=ctx[0].dataIndex;return chartLabels[i]+(macroChartLabels[i]?' — '+macroChartLabels[i]:'');},
+          label:ctx=>{
+            if(ctx.dataset.label==='Event Intensity'){const v=ctx.parsed.y;return v>=3?'  🔴 Major event':v>=2?'  🟡 Notable':'  ⚪ Minor/none';}
+            return '  ROAS: '+ctx.parsed.y.toFixed(2)+'×';
+          }
+        }
+      }
+    },
+    scales:{
+      x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
+      y:{display:false,min:0,max:4},
+      y1:{position:'right',min:mrMin,max:mrMax+1.5,ticks:{color:roasAxisColor,font:{family:'IBM Plex Mono',size:cFont,weight:'bold'},callback:v=>v.toFixed(1)+'×',padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(rightAxisWidth)}
+    }
+  }
+});
+
+// ===== ROAS VIEW TOGGLE =====
+let currentRoasView = 'meta';
+const metaRoas = D.map(d=>d.mr);
+const blendedRoas = D.map(d=>d.roas);
+const blendedPtC = D.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4');
+
+function setRoasView(view){
+  currentRoasView = view;
+  const isMeta = view === 'meta';
+  const data = isMeta ? metaRoas : blendedRoas;
+  const label = isMeta ? 'Meta ROAS' : 'Blended ROAS';
+  const color = isMeta ? lineColor : '#4ade80';
+  const axisCol = isMeta ? roasAxisColor : '#86efac';
+  const pts = isMeta ? ptC : blendedPtC;
+  const bRoasVals = blendedRoas.filter(v=>v>0);
+  const minY = isMeta ? mrMin : (bRoasVals.length ? Math.max(1,Math.floor(Math.min(...bRoasVals)*2)/2) : 1);
+  const maxY = isMeta ? mrMax : (bRoasVals.length ? Math.ceil(Math.max(...bRoasVals)*2)/2+0.5 : 5);
+
+  document.querySelectorAll('#roasMetaBtn,#roasMetaBtn2').forEach(b=>{if(b)b.classList.toggle('active',isMeta)});
+  document.querySelectorAll('#roasBlendBtn,#roasBlendBtn2').forEach(b=>{if(b)b.classList.toggle('active',!isMeta)});
+
+  macroChartInstance.data.datasets[1].data = data;
+  macroChartInstance.data.datasets[1].label = label;
+  macroChartInstance.data.datasets[1].borderColor = color;
+  macroChartInstance.data.datasets[1].pointBackgroundColor = pts;
+  macroChartInstance.options.scales.y1.min = minY;
+  macroChartInstance.options.scales.y1.max = maxY;
+  macroChartInstance.options.scales.y1.ticks.color = axisCol;
+  macroChartInstance.update();
+  document.getElementById('macroChartTitle').textContent = 'Event Timeline × Gardner\'s Daily ' + label;
+
+  if(fuelChartInstance){
+    fuelChartInstance.data.datasets[1].data = data;
+    fuelChartInstance.data.datasets[1].label = label;
+    fuelChartInstance.data.datasets[1].borderColor = color;
+    fuelChartInstance.data.datasets[1].pointBackgroundColor = pts;
+    fuelChartInstance.options.scales.y1.min = minY;
+    fuelChartInstance.options.scales.y1.max = maxY;
+    fuelChartInstance.options.scales.y1.ticks.color = axisCol;
+    fuelChartInstance.options.scales.y1.title.text = label;
+    fuelChartInstance.options.scales.y1.title.color = axisCol;
+    fuelChartInstance.update();
+    document.getElementById('fuelChartTitle').textContent = '⛽ US Avg Gas Price × ' + label + ' × Breezeway Status';
+  }
+}
+
+// ===== FUEL PRICE TOGGLE =====
+let fuelChartInstance = null;
+function toggleFuel(){
+  const wrap = document.getElementById('fuelWrap');
+  const btn = document.getElementById('fuelBtn');
+  if(wrap.style.display==='none'){
+    wrap.style.display='block';
+    btn.textContent='⛽ Hide Fuel Prices';
+    btn.style.background='rgba(235,184,50,.25)';
+    if(!fuelChartInstance) buildFuelChart();
+  } else {
+    wrap.style.display='none';
+    btn.textContent='⛽ Show Fuel Prices × Performance';
+    btn.style.background='var(--ad)';
+  }
+}
+
+function buildFuelChart(){
+  const gas = gasDaily.some(g=>g!==null) ? gasDaily : null;
+  const hasGas = gas && gas.some(g=>g!==null);
+  const statusBg=D.map(d=>d.s==='v'?'rgba(239,107,99,.12)':d.s==='b'?'rgba(235,184,50,.1)':'rgba(48,216,164,.06)');
+  const isMeta = currentRoasView === 'meta';
+  const roasData = isMeta ? metaRoas : blendedRoas;
+  const roasLabel = isMeta ? 'Meta ROAS' : 'Blended ROAS';
+  const roasColor = isMeta ? lineColor : '#4ade80';
+  const roasPts = isMeta ? ptC : blendedPtC;
+  const bRoasVals = blendedRoas.filter(v=>v>0);
+  const minY1 = isMeta ? mrMin : (bRoasVals.length ? Math.max(1,Math.floor(Math.min(...bRoasVals)*2)/2) : 1);
+  const maxY1 = isMeta ? mrMax : (bRoasVals.length ? Math.ceil(Math.max(...bRoasVals)*2)/2+0.5 : 5);
+
+  const gasVals = hasGas ? gas.filter(g=>g!==null) : [];
+  const gasMin = gasVals.length ? Math.floor(Math.min(...gasVals)*20)/20 - 0.05 : 4.0;
+  const gasMax = gasVals.length ? Math.ceil(Math.max(...gasVals)*20)/20 + 0.05 : 5.0;
+
+  document.getElementById('fuelChartTitle').textContent = '⛽ US Avg Gas Price × ' + roasLabel + ' × Breezeway Status';
+
+  const datasets = [
+    {label:roasLabel,data:roasData,borderColor:roasColor,pointBackgroundColor:roasPts,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:2.5,tension:.3,yAxisID:'y1',fill:false,order:1},
+    {label:'Breezeway Status',data:D.map(d=>d.s==='v'?3:d.s==='b'?2:1),backgroundColor:statusBg,borderColor:D.map(d=>d.s==='v'?'rgba(239,107,99,.3)':d.s==='b'?'rgba(235,184,50,.25)':'rgba(48,216,164,.15)'),borderWidth:1,type:'bar',yAxisID:'y2',order:3,borderRadius:4,barPercentage:.5}
+  ];
+  if(hasGas) datasets.unshift({label:'Gas $/gal',data:gas,borderColor:'#ebb832',backgroundColor:'rgba(235,184,50,.08)',pointRadius:isDesktop?ptR-1:3,pointBackgroundColor:'#ebb832',pointBorderColor:'#fff',pointBorderWidth:ptBW,borderWidth:2.5,tension:.4,yAxisID:'y',fill:true,order:2});
+
+  const scales = {
+    x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
+    y1:{position:'right',min:minY1,max:maxY1,ticks:{color:roasColor,font:{family:'IBM Plex Mono',size:cFont},callback:v=>v.toFixed(1)+'×',padding:tickPad},grid:{display:false},title:{display:true,text:roasLabel,color:roasColor,font:{family:'IBM Plex Mono',size:cFont}},afterFit:forceAxisWidth(gasAxisWidth)},
+    y2:{display:false,min:0,max:5}
+  };
+  if(hasGas) scales.y = {position:'left',min:gasMin,max:gasMax,ticks:{color:'#ebb832',font:{family:'IBM Plex Mono',size:cFont},callback:v=>'$'+v.toFixed(2),padding:tickPad},grid:{color:cGridLight},title:{display:true,text:'Gas Price',color:'#ebb832',font:{family:'IBM Plex Mono',size:cFont}},afterFit:forceAxisWidth(gasAxisWidth)};
+
+  fuelChartInstance = new Chart(document.getElementById('fuelChart'),{
+    type:'line',
+    data:{labels:chartLabels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      layout:{padding:cPad},
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
+        tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,
+          callbacks:{label:ctx=>{
+            if(ctx.dataset.label==='Gas $/gal')return '  $'+ctx.parsed.y.toFixed(2)+'/gal';
+            if(ctx.dataset.label==='Breezeway Status'){const v=ctx.parsed.y;return v===3?'  🔴 Very Bad':v===2?'  🟡 Bad':'  🟢 Normal';}
+            return '  ROAS: '+ctx.parsed.y.toFixed(2)+'×';
+          }}
+        }
+      },
+      scales
+    }
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "meta-ads-intel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "node scripts/fetch-data.mjs",
+    "build": "node scripts/build-dashboard.mjs",
+    "update": "npm run fetch && npm run build"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}

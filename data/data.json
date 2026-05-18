@@ -1,0 +1,451 @@
+{
+  "meta": {
+    "updatedAt": "2026-05-18T17:00:00Z",
+    "dateRange": {
+      "start": "2026-05-01",
+      "end": "2026-05-17"
+    },
+    "monthLabel": "May 2026"
+  },
+  "tripleWhale": [
+    {
+      "date": "2026-05-01",
+      "revenue": 18562.02,
+      "orders": 234,
+      "adSpend": 5245.03,
+      "blendedRoas": 3.54,
+      "metaSpend": 3357.75,
+      "metaRoas": 2.63,
+      "metaCpa": 26.86,
+      "metaCpm": 10.14
+    },
+    {
+      "date": "2026-05-02",
+      "revenue": 22876.44,
+      "orders": 283,
+      "adSpend": 5895.97,
+      "blendedRoas": 3.88,
+      "metaSpend": 3720.76,
+      "metaRoas": 3.07,
+      "metaCpa": 26.02,
+      "metaCpm": 10.67
+    },
+    {
+      "date": "2026-05-03",
+      "revenue": 21959.54,
+      "orders": 272,
+      "adSpend": 6100.05,
+      "blendedRoas": 3.6,
+      "metaSpend": 4107.81,
+      "metaRoas": 2.88,
+      "metaCpa": 26.5,
+      "metaCpm": 10.0
+    },
+    {
+      "date": "2026-05-04",
+      "revenue": 19485.18,
+      "orders": 248,
+      "adSpend": 6029.41,
+      "blendedRoas": 3.23,
+      "metaSpend": 3943.91,
+      "metaRoas": 2.85,
+      "metaCpa": 25.28,
+      "metaCpm": 9.08
+    },
+    {
+      "date": "2026-05-05",
+      "revenue": 19330.01,
+      "orders": 250,
+      "adSpend": 5644.03,
+      "blendedRoas": 3.42,
+      "metaSpend": 3529.42,
+      "metaRoas": 3.19,
+      "metaCpa": 23.37,
+      "metaCpm": 9.44
+    },
+    {
+      "date": "2026-05-06",
+      "revenue": 28886.73,
+      "orders": 372,
+      "adSpend": 6206.82,
+      "blendedRoas": 4.65,
+      "metaSpend": 3990.34,
+      "metaRoas": 3.49,
+      "metaCpa": 21.69,
+      "metaCpm": 10.42
+    },
+    {
+      "date": "2026-05-07",
+      "revenue": 16591.04,
+      "orders": 224,
+      "adSpend": 5116.15,
+      "blendedRoas": 3.24,
+      "metaSpend": 3332.38,
+      "metaRoas": 2.9,
+      "metaCpa": 25.63,
+      "metaCpm": 10.2
+    },
+    {
+      "date": "2026-05-08",
+      "revenue": 16854.45,
+      "orders": 206,
+      "adSpend": 5624.14,
+      "blendedRoas": 3.0,
+      "metaSpend": 3733.01,
+      "metaRoas": 2.67,
+      "metaCpa": 31.37,
+      "metaCpm": 10.15
+    },
+    {
+      "date": "2026-05-09",
+      "revenue": 24395.44,
+      "orders": 285,
+      "adSpend": 5757.8,
+      "blendedRoas": 4.24,
+      "metaSpend": 3640.37,
+      "metaRoas": 2.98,
+      "metaCpa": 27.17,
+      "metaCpm": 10.73
+    },
+    {
+      "date": "2026-05-10",
+      "revenue": 26105.7,
+      "orders": 319,
+      "adSpend": 6448.71,
+      "blendedRoas": 4.05,
+      "metaSpend": 3978.84,
+      "metaRoas": 3.31,
+      "metaCpa": 25.02,
+      "metaCpm": 9.54
+    },
+    {
+      "date": "2026-05-11",
+      "revenue": 19075.07,
+      "orders": 270,
+      "adSpend": 5987.69,
+      "blendedRoas": 3.19,
+      "metaSpend": 3844.6,
+      "metaRoas": 3.05,
+      "metaCpa": 23.59,
+      "metaCpm": 9.52
+    },
+    {
+      "date": "2026-05-12",
+      "revenue": 16737.76,
+      "orders": 206,
+      "adSpend": 5524.44,
+      "blendedRoas": 3.03,
+      "metaSpend": 3563.8,
+      "metaRoas": 2.13,
+      "metaCpa": 33.62,
+      "metaCpm": 11.05
+    },
+    {
+      "date": "2026-05-13",
+      "revenue": 19783.52,
+      "orders": 245,
+      "adSpend": 5535.09,
+      "blendedRoas": 3.57,
+      "metaSpend": 3559.92,
+      "metaRoas": 2.67,
+      "metaCpa": 27.81,
+      "metaCpm": 9.86
+    },
+    {
+      "date": "2026-05-14",
+      "revenue": 14038.89,
+      "orders": 188,
+      "adSpend": 5171.04,
+      "blendedRoas": 2.71,
+      "metaSpend": 3305.51,
+      "metaRoas": 2.52,
+      "metaCpa": 28.74,
+      "metaCpm": 9.29
+    },
+    {
+      "date": "2026-05-15",
+      "revenue": 12929.24,
+      "orders": 166,
+      "adSpend": 4950.73,
+      "blendedRoas": 2.61,
+      "metaSpend": 3080.52,
+      "metaRoas": 2.25,
+      "metaCpa": 35.82,
+      "metaCpm": 8.74
+    },
+    {
+      "date": "2026-05-16",
+      "revenue": 16599.96,
+      "orders": 214,
+      "adSpend": 5067.51,
+      "blendedRoas": 3.28,
+      "metaSpend": 3258.61,
+      "metaRoas": 2.47,
+      "metaCpa": 29.62,
+      "metaCpm": 9.38
+    },
+    {
+      "date": "2026-05-17",
+      "revenue": 19271.71,
+      "orders": 241,
+      "adSpend": 5878.49,
+      "blendedRoas": 3.28,
+      "metaSpend": 3669.52,
+      "metaRoas": 3.01,
+      "metaCpa": 27.38,
+      "metaCpm": 9.02
+    }
+  ],
+  "breezeway": [
+    {
+      "date": "2026-05-01",
+      "status": "normal",
+      "cpa_z": 0.407,
+      "n_biz": 43,
+      "dow": "Fri",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-02",
+      "status": "normal",
+      "cpa_z": 0.48,
+      "n_biz": 45,
+      "dow": "Sat",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-03",
+      "status": "normal",
+      "cpa_z": 0.306,
+      "n_biz": 45,
+      "dow": "Sun",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-04",
+      "status": "normal",
+      "cpa_z": 0.366,
+      "n_biz": 44,
+      "dow": "Mon",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-05",
+      "status": "bad",
+      "cpa_z": 0.788,
+      "n_biz": 43,
+      "dow": "Tue",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-06",
+      "status": "normal",
+      "cpa_z": 0.468,
+      "n_biz": 44,
+      "dow": "Wed",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-07",
+      "status": "normal",
+      "cpa_z": 0.473,
+      "n_biz": 44,
+      "dow": "Thu",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-08",
+      "status": "normal",
+      "cpa_z": 0.269,
+      "n_biz": 45,
+      "dow": "Fri",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-09",
+      "status": "normal",
+      "cpa_z": -0.8,
+      "n_biz": 45,
+      "dow": "Sat",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-10",
+      "status": "normal",
+      "cpa_z": -0.426,
+      "n_biz": 44,
+      "dow": "Sun",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-11",
+      "status": "very_bad",
+      "cpa_z": 2.056,
+      "n_biz": 43,
+      "dow": "Mon",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-12",
+      "status": "very_bad",
+      "cpa_z": 2.487,
+      "n_biz": 44,
+      "dow": "Tue",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-13",
+      "status": "bad",
+      "cpa_z": 0.987,
+      "n_biz": 44,
+      "dow": "Wed",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-14",
+      "status": "very_bad",
+      "cpa_z": 1.666,
+      "n_biz": 44,
+      "dow": "Thu",
+      "incident_source": "Breezeway",
+      "incident_description": "Meta has recently experienced an unusually long stretch of \"bad days.\"  At the same time, the company is reportedly preparing to lay off roughly 10% of its workforce next week despite record revenue performance.\r\n\r\nThat combination could have implications beyond internal operations. Large-scale layoffs often impact morale, focus, and organizational stability \u2014 and when morale inside Meta suffers, advertisers on the platform may feel the downstream effects through increased volatility, slower issue resolution, or reduced platform consistency."
+    },
+    {
+      "date": "2026-05-15",
+      "status": "very_bad",
+      "cpa_z": 1.352,
+      "n_biz": 44,
+      "dow": "Fri",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-16",
+      "status": "normal",
+      "cpa_z": 0.825,
+      "n_biz": 45,
+      "dow": "Sat",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-17",
+      "status": "normal",
+      "cpa_z": 0.377,
+      "n_biz": 44,
+      "dow": "Sun",
+      "incident_source": null,
+      "incident_description": null
+    }
+  ],
+  "gasPrices": [
+    {
+      "date": "2026-04-21",
+      "price": 4.1
+    },
+    {
+      "date": "2026-04-28",
+      "price": 4.19
+    },
+    {
+      "date": "2026-05-05",
+      "price": 4.35
+    },
+    {
+      "date": "2026-05-12",
+      "price": 4.5
+    },
+    {
+      "date": "2026-05-19",
+      "price": 4.51
+    }
+  ],
+  "outages": [],
+  "macroEvents": [
+    {
+      "date": "2026-05-01",
+      "description": "Gas avg $4.53/gal (+40% vs last year). Spirit Airlines shuts down. May Day protests trend.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "\ud83d\udcb0",
+      "source": "AAA"
+    },
+    {
+      "date": "2026-05-02",
+      "description": "Kentucky Derby dominates feeds (first female-trained winner).",
+      "intensity": 2,
+      "category": "feed",
+      "icon": "\ud83d\udcf1",
+      "source": "Britannica"
+    },
+    {
+      "date": "2026-05-05",
+      "description": "Meta Ads outage confirmed. Supreme Court guts Voting Rights Act \u2014 massive reaction.",
+      "intensity": 3,
+      "category": "platform",
+      "icon": "\ud83d\udd34",
+      "source": "IsDown/NPR"
+    },
+    {
+      "date": "2026-05-08",
+      "description": "Consumer sentiment hits ALL-TIME LOW: 48.2 (U of Michigan).",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "\ud83d\udcb0",
+      "source": "CNBC"
+    },
+    {
+      "date": "2026-05-11",
+      "description": "UAE intercepts Iranian missiles. Strait of Hormuz oil flow down 30%.",
+      "intensity": 3,
+      "category": "feed",
+      "icon": "\ud83d\udcf1",
+      "source": "Wiki/NPR"
+    },
+    {
+      "date": "2026-05-12",
+      "description": "April CPI at 3.8%. Energy up 17.9%. Gas up 28.4%.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "\ud83d\udcb0",
+      "source": "CNBC/BLS"
+    },
+    {
+      "date": "2026-05-13",
+      "description": "Trump-Xi summit dominates feeds (no deals). Retail data shows pullback.",
+      "intensity": 3,
+      "category": "feed",
+      "icon": "\ud83d\udcf1",
+      "source": "NPR/CNN"
+    },
+    {
+      "date": "2026-05-15",
+      "description": "Worst performance day. Fuel + platform instability combined.",
+      "intensity": 3,
+      "category": "platform",
+      "icon": "\ud83d\udd34",
+      "source": "TW"
+    },
+    {
+      "date": "2026-05-16",
+      "description": "Recovery. Preakness Stakes + Eurovision = lighter feeds.",
+      "intensity": 1,
+      "category": "feed",
+      "icon": "\ud83d\udcf1",
+      "source": "BofA"
+    }
+  ]
+}
