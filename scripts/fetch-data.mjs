@@ -225,21 +225,24 @@ async function fetchMacroEvents() {
     return null;
   }
 
-  const prompt = `You are analyzing macro events that could affect US e-commerce ad performance for a specialty food brand (artisan cheese shipped nationally).
+  const prompt = `You are analyzing macro events that could affect US e-commerce ad performance for a specialty food brand (artisan cheese shipped nationally, avg order ~$45, gifting-heavy).
 
 For the date range ${startDate} to ${endDate}, identify the major events in each of these categories:
-1. WALLET IMPACT (💰) — gas prices, CPI/inflation data, consumer confidence, tariffs, retail spending shifts
-2. FEED DOMINATION (📱) — news events that dominated social media feeds (political, cultural, disasters, celebrity deaths)
-3. PLATFORM ISSUE (🔴) — any known Meta/Facebook/Instagram ad platform outages or issues
+1. WALLET IMPACT (💰) — gas prices, CPI/inflation data, consumer confidence surveys, tariffs, retail spending reports
+2. FEED DOMINATION (📱) — news events that dominated social media feeds (political, cultural, disasters, major sports)
+3. PLATFORM ISSUE (🔴) — any known Meta/Facebook/Instagram ad platform outages or delivery issues
 
 For each event, provide:
-- The exact date
-- A 1-2 sentence description written for a non-expert audience
-- An intensity rating: 1 (minor), 2 (notable), 3 (major)
-- The category icon
+- date: exact date (YYYY-MM-DD)
+- description: one punchy headline sentence (max 15 words)
+- details: 3-4 sentences that FIRST explain what the event/metric actually IS (e.g. "The U of Michigan Consumer Sentiment Index is a monthly survey of 500 households measuring financial confidence — it has run since 1952 and a score below 60 signals meaningful pessimism"), THEN explain what this specific reading/development means in historical context, THEN explain the expected impact on Meta ROAS and CPA for a DTC food brand in plain language a marketing manager would understand. Do NOT use generic phrases like "wallets feel tight" or "expect lower conversion rates" without first establishing what the event actually is and why this instance is noteworthy.
+- intensity: 1 (minor), 2 (notable), 3 (major)
+- category: wallet | feed | platform
+- icon: 💰 | 📱 | 🔴
+- source: publication or agency name
 
-Respond ONLY with a JSON array, no markdown, no preamble:
-[{"date":"YYYY-MM-DD","description":"One punchy sentence summary","details":"2-3 sentences of plain-English context explaining what happened and why it matters for DTC ad performance — written for a marketing manager who isn't a macro economist. Include what you'd expect to see in ROAS or CPA on this day and why.","intensity":1-3,"category":"wallet|feed|platform","icon":"💰|📱|🔴","source":"..."}]`;
+Respond ONLY with a valid JSON array, no markdown fences, no preamble:
+[{"date":"YYYY-MM-DD","description":"...","details":"...","intensity":1,"category":"wallet","icon":"💰","source":"..."}]`;
 
   try {
     const res = await fetch(

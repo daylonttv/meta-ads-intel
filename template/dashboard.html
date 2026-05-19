@@ -180,7 +180,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 /* ===== STATS ===== */
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .sg3{grid-template-columns:1fr 1fr 1fr}
-.st{background:linear-gradient(135deg,var(--card2),rgba(18,27,42,.6));border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;position:relative;overflow:hidden}
+.st{background:linear-gradient(135deg,var(--card2),rgba(18,27,42,.6));border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;position:relative}
 .st::before{content:'';position:absolute;top:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)}
 .st .v{font-family:var(--mono);font-size:1.5rem;font-weight:700;line-height:1}
 .st .l{font-size:.56rem;color:var(--t3);margin-top:5px;text-transform:uppercase;letter-spacing:.06em;line-height:1.3}
@@ -528,15 +528,7 @@ macroEl.innerHTML = macroRaw.length ? macroRaw.map(e => {
   const cls = e.intensity>=3?'':e.intensity>=2?'w':'ok';
   const borderColor = e.intensity>=3?'var(--r)':e.intensity>=2?'var(--a)':'var(--p)';
   const dateLabel = e.date ? e.date.split('-').slice(1).map(s=>parseInt(s)).join('/') : '';
-  const detail = e.details || (
-    e.category==='wallet'
-      ? `This economic signal squeezes consumer spending power. When wallets feel tight — especially for non-essentials like specialty food — expect lower conversion rates and higher CPAs on days surrounding this event. If ROAS dropped around this date, the macro environment likely shares the blame.`
-      : e.category==='feed'
-      ? `Events like this dominate Facebook and Instagram feeds, directly competing with ads for attention. Users in "news mode" scroll past products without purchasing — expect lower click-through rates and reduced ROAS while this story trended. Not your creative's fault.`
-      : e.category==='platform'
-      ? `A Meta platform issue affects ad delivery, audience targeting, and/or attribution. Your budget may have spent normally but reached fewer qualified buyers — or conversion tracking may be understating actual sales. Check Triple Whale data around this date carefully and don't make budget decisions based on it.`
-      : `This event may have influenced ad performance during this period. Click to see context.`
-  );
+  const detail = e.details || 'No additional context available for this event.';
   return `<div class="oi ${cls} me-row" style="border-left-color:${borderColor};display:block;cursor:pointer;padding:8px 12px" onclick="this.classList.toggle('me-open');this.querySelector('.me-expand').classList.toggle('open')">
     <div style="display:flex;gap:10px;align-items:flex-start">
       <span class="od">${dateLabel}</span><span style="flex:1">${e.icon||''} ${e.description}</span><span class="os" style="display:flex;align-items:center;gap:2px">${e.source||''}&nbsp;<span class="me-chev">▶</span></span>
