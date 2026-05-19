@@ -414,7 +414,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
   </div>
   <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> What do these numbers mean?</button>
   <div class="collapse">
-    <div class="ax" style="margin-top:0">"Stability" = % of days rated Normal by Breezeway. "VBad Rate" and "Bad+ Rate" compare how often degraded days occurred vs. what's expected under normal conditions. Breezeway expects ~2 Very Bad days per year; we got 4 in 17 days.</div>
+    <div class="ax" style="margin-top:0">"Stability" = % of days rated Normal by Breezeway. "VBad Rate" = annualized rate of Very Bad days (expected baseline: ~2/year). "Bad+ Rate" = annualized rate of Bad-or-worse days (expected baseline: ~24/year). A multiplier above 1× means we're seeing degradation above the historical norm.</div>
   </div>
   <div class="sg sg3" id="reliStats"><!-- populated by JS --></div>
   <div class="ax" id="reliAnalysis" style="margin-top:10px"><!-- populated by JS --></div>
@@ -503,6 +503,7 @@ if (D.length === 0) {
 
 // ===== STATIC CONTENT (not affected by date filter) =====
 document.getElementById('hdrMonth').textContent = meta.monthLabel || 'Loading';
+document.title = `Meta Ads Intel — ${meta.monthLabel || 'Dashboard'}`;
 
 const updatedAt = meta.updatedAt ? new Date(meta.updatedAt).toLocaleString('en-US',{dateStyle:'long',timeStyle:'short'}) : 'unknown';
 document.getElementById('footer').innerHTML = `Last updated: ${updatedAt}<br>
@@ -579,13 +580,20 @@ function render(days) {
   const avgRevenue=avg(days,'rev'), avgOrders=avg(days,'ord'), avgAdSpend=avg(days,'sp');
   const avgBlendedRoas=avg(days,'roas'), avgMetaRoas=avg(days,'mr'), avgMetaCpa=avg(days,'cpa'), avgMetaCpm=avg(days,'cpm');
 
+  const hasNormal = normalDays.length > 0, hasBad = badDays.length > 0, hasBoth = hasNormal && hasBad;
+  const nrVal = hasNormal ? `${avgMrNormal.toFixed(2)}×` : '—';
+  const brVal = hasBad ? `${avgMrBad.toFixed(2)}×` : '—';
+  const ncVal = hasNormal ? `$${avgCpaNormal.toFixed(2)}` : '—';
+  const bcVal = hasBad ? `$${avgCpaBad.toFixed(2)}` : '—';
+  const dropVal = hasBoth ? `${Math.abs(+roasDrop)}%` : '—';
+  const inflVal = hasBoth ? `+${Math.abs(+cpaInflation)}%` : '—';
   document.getElementById('statsGrid').innerHTML = `
-    <div class="st"><div class="v" style="color:var(--g)">${avgMrNormal.toFixed(2)}×</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
-    <div class="st"><div class="v" style="color:var(--r)">${avgMrBad.toFixed(2)}×</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
-    <div class="st"><div class="v" style="color:var(--g)">$${avgCpaNormal.toFixed(2)}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
-    <div class="st"><div class="v" style="color:var(--r)">$${avgCpaBad.toFixed(2)}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
-    <div class="st"><div class="v" style="color:var(--a)">${roasDrop}%</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
-    <div class="st"><div class="v" style="color:var(--a)">+${Math.abs(cpaInflation)}%</div><div class="l">CPA Inflation</div><div class="n">bad vs normal</div></div>`;
+    <div class="st"><div class="v" style="color:var(--g)">${nrVal}</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
+    <div class="st"><div class="v" style="color:var(--r)">${brVal}</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
+    <div class="st"><div class="v" style="color:var(--g)">${ncVal}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
+    <div class="st"><div class="v" style="color:var(--r)">${bcVal}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
+    <div class="st"><div class="v" style="color:var(--a)">${dropVal}</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
+    <div class="st"><div class="v" style="color:var(--a)">${inflVal}</div><div class="l">CPA Inflation</div><div class="n">bad vs normal</div></div>`;
   document.getElementById('statsAnalysis').innerHTML = badDays.length
     ? `<strong>The correlation is clear.</strong> On Breezeway-flagged days, Meta ROAS averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days — a <strong>${Math.abs(roasDrop)}% efficiency drop</strong>. Meta spend was relatively flat across all days — same budget consumed, fewer conversions delivered.`
     : `<strong>All days were rated Normal by Breezeway this period.</strong> Average Meta ROAS: ${avgMetaRoas.toFixed(2)}×, CPA: $${avgMetaCpa.toFixed(2)}.`;
@@ -681,11 +689,11 @@ function render(days) {
   chartLabels = days.map(d=>chartMonth+' '+d.d);
   gasDaily = interpolateGas(gasPricesRaw, days);
 
-  // Macro chart data
+  // Macro chart data — key by full date string to avoid month-boundary collisions
   const macroByDay={};
-  macroRaw.forEach(e=>{if(datesInRange.has(e.date)){const dn=new Date(e.date).getUTCDate();macroByDay[dn]=Math.max(macroByDay[dn]||0,e.intensity||1);}});
-  const macroIntensity=days.map(d=>macroByDay[parseInt(d.d)]||1);
-  const macroChartLabels=days.map(d=>{const ev=macroRaw.filter(e=>new Date(e.date).getUTCDate()===parseInt(d.d)&&datesInRange.has(e.date));return ev.length?(ev[0].description||'').substring(0,30):''});
+  macroRaw.forEach(e=>{if(datesInRange.has(e.date)){macroByDay[e.date]=Math.max(macroByDay[e.date]||0,e.intensity||1);}});
+  const macroIntensity=days.map(d=>macroByDay[d.date]||1);
+  const macroChartLabels=days.map(d=>{const ev=macroRaw.filter(e=>e.date===d.date);return ev.length?(ev[0].description||'').substring(0,30):''});
 
   // Spend + ROAS chart
   revChartInst = new Chart(document.getElementById('revChart'),{
@@ -788,10 +796,8 @@ function setRoasView(view){
   document.getElementById('macroChartTitle').textContent='Event Timeline × Gardner\'s Daily '+label;
 
   if(fuelChartInst){
-    fuelChartInst.data.datasets[1].data=data;
-    fuelChartInst.data.datasets[1].label=label;
-    fuelChartInst.data.datasets[1].borderColor=color;
-    fuelChartInst.data.datasets[1].pointBackgroundColor=pts;
+    const fd=fuelChartInst.data.datasets.find(d=>d.label==='Meta ROAS'||d.label==='Blended ROAS');
+    if(fd){fd.data=data;fd.label=label;fd.borderColor=color;fd.pointBackgroundColor=pts;}
     fuelChartInst.options.scales.y1.min=minY;
     fuelChartInst.options.scales.y1.max=maxY;
     fuelChartInst.options.scales.y1.ticks.color=axisCol;
