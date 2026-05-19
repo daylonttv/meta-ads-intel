@@ -185,17 +185,30 @@ async function fetchOutages() {
 // Fallback: scrape Meta's public status page
 async function scrapeMetaStatus() {
   try {
-    const res = await fetch('https://metastatus.com/api/v2/summary.json');
-    if (res.ok) {
-      const data = await res.json();
-      const incidents = (data?.incidents || []).map(i => ({
-        date: (i.created_at || '').split('T')[0],
-        title: i.name,
-        status: i.status,
-        service: 'Meta',
-      }));
-      console.log(`  ✅ Got ${incidents.length} incidents from metastatus.com`);
-      return incidents;
+    // Try Meta's developer status API first
+    const devRes = await fetch('https://developers.facebook.com/status/summary/');
+    if (devRes.ok) {
+      const devData = await devRes.json();
+      const devIncidents = (devData?.incidents || devData?.data || [])
+        .filter(i => {
+          const d = new Date(i.created_at || i.start_time || '');
+          return d >= new Date(startDate) && d <= new Date(endDate + 'T23:59:59Z');
+        })
+        .map(i => ({
+          date: (i.created_at || i.start_time || '').split('T')[0],
+          title: i.title || i.name || 'Meta platform incident',
+          status: i.status || 'investigating',
+          service: 'Meta',
+        }));
+      if (devIncidents.length) {
+        console.log(`  ✅ Got ${devIncidents.length} incidents from developers.facebook.com`);
+        return devIncidents;
+      }
+    }
+    // Fallback: metastatus.com
+    const msRes = await fetch('https://metastatus.com/');
+    if (msRes.ok) {
+      console.log(`  ℹ️  metastatus.com reachable but no JSON API — no incidents recorded`);
     }
   } catch (e) { /* silent */ }
   console.warn('  ⚠️  No outage data available');
@@ -226,7 +239,7 @@ For each event, provide:
 - The category icon
 
 Respond ONLY with a JSON array, no markdown, no preamble:
-[{"date":"YYYY-MM-DD","description":"...","intensity":1-3,"category":"wallet|feed|platform","icon":"💰|📱|🔴","source":"..."}]`;
+[{"date":"YYYY-MM-DD","description":"One punchy sentence summary","details":"2-3 sentences of plain-English context explaining what happened and why it matters for DTC ad performance — written for a marketing manager who isn't a macro economist. Include what you'd expect to see in ROAS or CPA on this day and why.","intensity":1-3,"category":"wallet|feed|platform","icon":"💰|📱|🔴","source":"..."}]`;
 
   try {
     const res = await fetch(

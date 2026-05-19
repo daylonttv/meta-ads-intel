@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meta Ads Intel — May 2026</title>
+<title>GOUDA Dashboard</title>
 <link rel="stylesheet" href="https://unpkg.com/open-props@2.0.5/open-props.min.css">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
@@ -144,7 +144,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 /* ===== COLLAPSIBLE ===== */
 .collapse{overflow:hidden;max-height:0;transition:max-height .35s ease,opacity .25s ease,margin .2s ease;opacity:0;margin-top:0}
 .collapse.open{max-height:600px;opacity:1;margin-top:0;margin-bottom:10px}
-.collapse-toggle{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card2);color:var(--t3);font-family:var(--mono);font-size:.6rem;cursor:pointer;margin-bottom:10px;transition:all .2s;user-select:none}
+.collapse-toggle{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card2);color:var(--t1);font-family:var(--mono);font-size:.6rem;cursor:pointer;margin-bottom:10px;transition:all .2s;user-select:none}
 .collapse-toggle:hover{border-color:rgba(94,157,247,.3);color:var(--t2);background:rgba(94,157,247,.04)}
 .collapse-toggle .arrow{transition:transform .25s;display:inline-block;font-size:.5rem}
 .collapse-toggle.open .arrow{transform:rotate(90deg)}
@@ -225,6 +225,18 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 .drpill:hover{color:var(--t2);border-color:rgba(94,157,247,.2)}
 .drpill.active{background:linear-gradient(135deg,rgba(94,157,247,.12),rgba(167,139,250,.08));color:var(--b);border-color:rgba(94,157,247,.25)}
 .drpill-ct{font-size:.54rem;color:var(--t3);font-family:var(--mono);margin-left:auto;white-space:nowrap}
+/* ===== TOOLTIPS ===== */
+.tip-wrap{position:relative;cursor:help}
+.tip-wrap::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:rgba(7,11,18,.97);color:var(--t2);font-size:.62rem;padding:9px 13px;border-radius:8px;border:1px solid rgba(94,157,247,.25);white-space:normal;width:220px;text-align:left;line-height:1.65;opacity:0;pointer-events:none;z-index:500;transition:opacity .15s;font-family:var(--sans);font-weight:400}
+.tip-wrap::before{content:'';position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:rgba(94,157,247,.25);opacity:0;z-index:501;pointer-events:none;transition:opacity .15s}
+@media(hover:hover){.tip-wrap:hover::after,.tip-wrap:hover::before{opacity:1}}
+.tip-wrap.tip-open::after,.tip-wrap.tip-open::before{opacity:1}
+/* ===== MACRO EXPAND ===== */
+.me-chev{transition:transform .25s;display:inline-block;font-size:.45rem;opacity:.5}
+.me-row.me-open .me-chev{transform:rotate(90deg)}
+.me-expand{overflow:hidden;max-height:0;transition:max-height .3s ease,opacity .25s ease;opacity:0}
+.me-expand.open{max-height:300px;opacity:1;margin-top:6px}
+.me-expand-inner{font-size:.66rem;color:var(--t2);line-height:1.75;padding:8px 11px;background:rgba(94,157,247,.04);border-radius:6px;border:1px solid rgba(94,157,247,.12)}
 </style>
 </head>
 <body>
@@ -232,8 +244,9 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 
 <!-- HEADER -->
 <div class="hdr">
-  <h1>Meta Ads Intelligence Hub</h1>
-  <p class="sub">Platform health × Gardner's performance — <span id="hdrMonth">Loading...</span></p>
+  <h1>GOUDA</h1>
+  <p class="sub">Gardner's Outage &amp; Underperformance Daily Analytics</p>
+  <p class="sub" style="margin-top:3px;opacity:.55;font-size:.62rem;font-style:italic">Aged to monitor perfection — <span id="hdrMonth">Loading...</span></p>
   <div class="pill"><span class="dot"></span><span id="hdrRange">LOADING</span></div>
 </div>
 
@@ -503,7 +516,7 @@ if (D.length === 0) {
 
 // ===== STATIC CONTENT (not affected by date filter) =====
 document.getElementById('hdrMonth').textContent = meta.monthLabel || 'Loading';
-document.title = `Meta Ads Intel — ${meta.monthLabel || 'Dashboard'}`;
+document.title = `GOUDA — ${meta.monthLabel || 'Dashboard'}`;
 
 const updatedAt = meta.updatedAt ? new Date(meta.updatedAt).toLocaleString('en-US',{dateStyle:'long',timeStyle:'short'}) : 'unknown';
 document.getElementById('footer').innerHTML = `Last updated: ${updatedAt}<br>
@@ -515,7 +528,21 @@ macroEl.innerHTML = macroRaw.length ? macroRaw.map(e => {
   const cls = e.intensity>=3?'':e.intensity>=2?'w':'ok';
   const borderColor = e.intensity>=3?'var(--r)':e.intensity>=2?'var(--a)':'var(--p)';
   const dateLabel = e.date ? e.date.split('-').slice(1).map(s=>parseInt(s)).join('/') : '';
-  return `<div class="oi ${cls}" style="border-left-color:${borderColor}"><span class="od">${dateLabel}</span><span>${e.icon||''} ${e.description}</span><span class="os">${e.source||''}</span></div>`;
+  const detail = e.details || (
+    e.category==='wallet'
+      ? `This economic signal squeezes consumer spending power. When wallets feel tight — especially for non-essentials like specialty food — expect lower conversion rates and higher CPAs on days surrounding this event. If ROAS dropped around this date, the macro environment likely shares the blame.`
+      : e.category==='feed'
+      ? `Events like this dominate Facebook and Instagram feeds, directly competing with ads for attention. Users in "news mode" scroll past products without purchasing — expect lower click-through rates and reduced ROAS while this story trended. Not your creative's fault.`
+      : e.category==='platform'
+      ? `A Meta platform issue affects ad delivery, audience targeting, and/or attribution. Your budget may have spent normally but reached fewer qualified buyers — or conversion tracking may be understating actual sales. Check Triple Whale data around this date carefully and don't make budget decisions based on it.`
+      : `This event may have influenced ad performance during this period. Click to see context.`
+  );
+  return `<div class="oi ${cls} me-row" style="border-left-color:${borderColor};display:block;cursor:pointer;padding:8px 12px" onclick="this.classList.toggle('me-open');this.querySelector('.me-expand').classList.toggle('open')">
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <span class="od">${dateLabel}</span><span style="flex:1">${e.icon||''} ${e.description}</span><span class="os" style="display:flex;align-items:center;gap:2px">${e.source||''}&nbsp;<span class="me-chev">▶</span></span>
+    </div>
+    <div class="me-expand"><div class="me-expand-inner">${detail}</div></div>
+  </div>`;
 }).join('') : '<div class="oi ok"><span>Macro events will be auto-curated on next data refresh</span></div>';
 
 // ===== CHART CONSTANTS (viewport-based, computed once) =====
@@ -588,12 +615,12 @@ function render(days) {
   const dropVal = hasBoth ? `${Math.abs(+roasDrop)}%` : '—';
   const inflVal = hasBoth ? `+${Math.abs(+cpaInflation)}%` : '—';
   document.getElementById('statsGrid').innerHTML = `
-    <div class="st"><div class="v" style="color:var(--g)">${nrVal}</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
-    <div class="st"><div class="v" style="color:var(--r)">${brVal}</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
-    <div class="st"><div class="v" style="color:var(--g)">${ncVal}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
-    <div class="st"><div class="v" style="color:var(--r)">${bcVal}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
-    <div class="st"><div class="v" style="color:var(--a)">${dropVal}</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
-    <div class="st"><div class="v" style="color:var(--a)">${inflVal}</div><div class="l">CPA Inflation</div><div class="n">bad vs normal</div></div>`;
+    <div class="st tip-wrap" data-tip="Average Meta Return on Ad Spend on days when Breezeway rated the platform as Normal — this is your true baseline, what you earn when Meta isn't fighting you."><div class="v" style="color:var(--g)">${nrVal}</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
+    <div class="st tip-wrap" data-tip="Average Meta ROAS on Breezeway-flagged Bad or Very Bad days. Lower than Normal Days = platform instability is costing you real efficiency."><div class="v" style="color:var(--r)">${brVal}</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
+    <div class="st tip-wrap" data-tip="Cost Per Acquisition on normal platform days. This is your true baseline CPA — what a conversion actually costs when Meta's delivery is healthy."><div class="v" style="color:var(--g)">${ncVal}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
+    <div class="st tip-wrap" data-tip="Cost Per Acquisition on degraded platform days. Higher than Normal Days = you're paying more per sale because of platform issues, not your ads."><div class="v" style="color:var(--r)">${bcVal}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
+    <div class="st tip-wrap" data-tip="How much lower Meta ROAS was on bad days compared to normal days. This is the efficiency cost of platform instability — same budget, fewer results."><div class="v" style="color:var(--a)">${dropVal}</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
+    <div class="st tip-wrap" data-tip="How much more each conversion cost on bad platform days vs. normal. This is wasted spend caused by Meta instability — not your targeting or creative."><div class="v" style="color:var(--a)">${inflVal}</div><div class="l">CPA Inflation</div><div class="n">bad vs normal</div></div>`;
   document.getElementById('statsAnalysis').innerHTML = badDays.length
     ? `<strong>The correlation is clear.</strong> On Breezeway-flagged days, Meta ROAS averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days — a <strong>${Math.abs(roasDrop)}% efficiency drop</strong>. Meta spend was relatively flat across all days — same budget consumed, fewer conversions delivered.`
     : `<strong>All days were rated Normal by Breezeway this period.</strong> Average Meta ROAS: ${avgMetaRoas.toFixed(2)}×, CPA: $${avgMetaCpa.toFixed(2)}.`;
@@ -623,13 +650,20 @@ function render(days) {
     }).join('');
   } else {
     const badBw = days.filter(d=>d.s!=='n');
-    outageEl.innerHTML = badBw.length ? badBw.map(d=>{
+    const platformEvents = macroRaw.filter(e=>e.category==='platform'&&datesInRange.has(e.date));
+    const seenDates = new Set(platformEvents.map(e=>e.date));
+    const platformHtml = platformEvents.map(e=>{
+      const dl=e.date.split('-').slice(1).map(s=>parseInt(s)).join('/');
+      return `<div class="oi"><span class="od">${dl}</span><span>${e.icon||'🔴'} ${e.description}</span><span class="os">${e.source||'Macro'}</span></div>`;
+    }).join('');
+    const breezeHtml = badBw.filter(d=>!seenDates.has(d.date)).map(d=>{
       const bwDay=bwFull[d.date];
       const zScore=bwDay?.cpa_z!=null?` · CPA z-score: ${bwDay.cpa_z.toFixed(2)}`:'';
       const nBiz=bwDay?.n_biz?` · ${bwDay.n_biz} brands`:'';
       const incident=bwDay?.incident_description?`<div style="font-size:.6rem;color:var(--t3);margin-top:4px;line-height:1.4">${bwDay.incident_description.replace(/\r?\n/g,' ').substring(0,200)}${bwDay.incident_description.length>200?'…':''}</div>`:'';
       return `<div class="oi ${d.s==='v'?'':'w'}"><span class="od">${monthName} ${d.d}</span><span>Breezeway: ${d.s==='v'?'Very Bad':'Bad'}${zScore}${nBiz}${incident}</span><span class="os">${bwDay?.incident_source||'Breezeway'}</span></div>`;
-    }).join('') : '<div class="oi ok"><span>No incidents detected this period</span></div>';
+    }).join('');
+    outageEl.innerHTML = (platformHtml+breezeHtml) || '<div class="oi ok"><span>No incidents detected this period</span></div>';
   }
   document.getElementById('outageStats').innerHTML = `
     <div class="st"><div class="v" style="color:var(--r)">${outagesInRange.length||badDays.length}</div><div class="l">Incidents<br>This Period</div></div>
@@ -705,7 +739,7 @@ function render(days) {
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},layout:{padding:cPad},
       plugins:{
         legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
-        tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>ctx.dataset.label==='Meta Spend'?'  $'+ctx.parsed.y.toLocaleString():'  '+ctx.parsed.y.toFixed(2)+'×'}}
+        tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>{if(ctx.dataset.label==='Meta Spend'){const d=DAYS[ctx.dataIndex];const st=d?.s==='v'?'🔴 Very Bad':d?.s==='b'?'🟡 Bad':'🟢 Normal';return['  $'+ctx.parsed.y.toLocaleString(),'  Platform: '+st];}return'  '+ctx.parsed.y.toFixed(2)+'×';}}}
       },
       scales:{
         x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
@@ -726,7 +760,7 @@ function render(days) {
     options:{responsive:true,maintainAspectRatio:false,layout:{padding:cPad},
       plugins:{
         legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
-        tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>'  $'+ctx.parsed.y.toFixed(2)}}
+        tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>{if(ctx.dataset.label==='Meta CPA'){const d=DAYS[ctx.dataIndex];const st=d?.s==='v'?'🔴 Very Bad':d?.s==='b'?'🟡 Bad':'🟢 Normal';return['  $'+ctx.parsed.y.toFixed(2),'  Platform: '+st];}return'  Avg $'+ctx.parsed.y.toFixed(2);}}}
       },
       scales:{
         x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
@@ -873,6 +907,19 @@ function buildFuelChart(){
     }
   });
 }
+
+// ===== MOBILE HANDLERS =====
+// Stat card tooltip: click to toggle on touch devices
+document.addEventListener('click', e=>{
+  const card = e.target.closest('.tip-wrap');
+  document.querySelectorAll('.tip-wrap.tip-open').forEach(el=>{if(el!==card)el.classList.remove('tip-open');});
+  if(card && !window.matchMedia('(hover:hover)').matches) card.classList.toggle('tip-open');
+});
+// Dismiss first chart tooltip when tapping outside on mobile
+document.addEventListener('touchstart', e=>{
+  if(e.target.closest('canvas')) return;
+  if(revChartInst){revChartInst.tooltip.setActiveElements([],{x:0,y:0});revChartInst.update('none');}
+}, {passive:true});
 
 // ===== INITIAL RENDER =====
 render(D);
