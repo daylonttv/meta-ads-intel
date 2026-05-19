@@ -240,11 +240,49 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 </style>
 </head>
 <body>
+
+<!-- PASSWORD GATE -->
+<div id="gate" style="position:fixed;inset:0;background:#070b12;z-index:9999;display:flex;align-items:center;justify-content:center">
+  <div style="text-align:center;padding:40px 32px;max-width:340px;width:100%">
+    <div style="font-size:2.8rem;margin-bottom:12px">🧀</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:1.25rem;font-weight:700;color:#edf1f7;letter-spacing:.04em;margin-bottom:4px">G.O.U.D.A-LYTICS</div>
+    <div style="font-size:.65rem;color:#647892;font-style:italic;margin-bottom:28px">Aged to monitor perfection</div>
+    <input id="pwInput" type="password" placeholder="Password" autocomplete="current-password"
+      style="width:100%;padding:11px 14px;border-radius:8px;border:1px solid #182133;background:#0d1420;color:#edf1f7;font-family:'IBM Plex Mono',monospace;font-size:.9rem;outline:none;margin-bottom:10px;box-sizing:border-box;transition:border-color .2s"
+      onkeydown="if(event.key==='Enter')checkPw()"
+      onfocus="this.style.borderColor='rgba(94,157,247,.5)'"
+      onblur="this.style.borderColor='#182133'">
+    <button onclick="checkPw()"
+      style="width:100%;padding:11px;border-radius:8px;border:none;background:linear-gradient(135deg,rgba(94,157,247,.18),rgba(167,139,250,.12));color:#edf1f7;font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600;cursor:pointer;letter-spacing:.05em;transition:opacity .2s"
+      onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">ENTER</button>
+    <div id="pwErr" style="color:#ef6b63;font-size:.65rem;margin-top:10px;height:14px;transition:opacity .2s;opacity:0">Incorrect password</div>
+  </div>
+</div>
+<script>
+(function(){
+  if(localStorage.getItem('gouda_auth')==='1'){document.getElementById('gate').style.display='none';}
+})();
+function checkPw(){
+  const v=document.getElementById('pwInput').value;
+  if(v==='Cheesyday'){
+    localStorage.setItem('gouda_auth','1');
+    document.getElementById('gate').style.display='none';
+  } else {
+    const err=document.getElementById('pwErr');
+    err.style.opacity='1';
+    const inp=document.getElementById('pwInput');
+    inp.style.borderColor='rgba(239,107,99,.6)';
+    inp.value='';
+    setTimeout(()=>{err.style.opacity='0';inp.style.borderColor='#182133';},2000);
+  }
+}
+</script>
+
 <div class="w">
 
 <!-- HEADER -->
 <div class="hdr">
-  <h1>GOUDA</h1>
+  <h1>G.O.U.D.A-LYTICS</h1>
   <p class="sub">Gardner's Outage &amp; Underperformance Daily Analytics</p>
   <p class="sub" style="margin-top:3px;opacity:.55;font-size:.62rem;font-style:italic">Aged to monitor perfection — <span id="hdrMonth">Loading...</span></p>
   <div class="pill"><span class="dot"></span><span id="hdrRange">LOADING</span></div>
@@ -516,7 +554,7 @@ if (D.length === 0) {
 
 // ===== STATIC CONTENT (not affected by date filter) =====
 document.getElementById('hdrMonth').textContent = meta.monthLabel || 'Loading';
-document.title = `GOUDA — ${meta.monthLabel || 'Dashboard'}`;
+document.title = `G.O.U.D.A-LYTICS — ${meta.monthLabel || 'Dashboard'}`;
 
 const updatedAt = meta.updatedAt ? new Date(meta.updatedAt).toLocaleString('en-US',{dateStyle:'long',timeStyle:'short'}) : 'unknown';
 document.getElementById('footer').innerHTML = `Last updated: ${updatedAt}<br>
