@@ -217,6 +217,14 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 
 /* ===== FOOTER ===== */
 .ft{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);text-align:center;font-size:.54rem;color:var(--t3);line-height:1.8}
+
+/* ===== DATE RANGE BAR ===== */
+.drbar{display:flex;align-items:center;gap:6px;padding:8px 0 4px;flex-wrap:wrap}
+.drbar label{font-size:.54rem;color:var(--t3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.07em;flex-shrink:0;margin-right:2px}
+.drpill{padding:4px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--t3);font-family:var(--mono);font-size:.61rem;font-weight:600;cursor:pointer;transition:all .18s;white-space:nowrap}
+.drpill:hover{color:var(--t2);border-color:rgba(94,157,247,.2)}
+.drpill.active{background:linear-gradient(135deg,rgba(94,157,247,.12),rgba(167,139,250,.08));color:var(--b);border-color:rgba(94,157,247,.25)}
+.drpill-ct{font-size:.54rem;color:var(--t3);font-family:var(--mono);margin-left:auto;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -240,6 +248,16 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
     <button class="nav-btn" onclick="go('reliability')">Reliability</button>
     <button class="nav-btn" onclick="go('tools')">Tools</button>
   </div>
+</div>
+
+<!-- DATE RANGE BAR -->
+<div class="drbar">
+  <label>View:</label>
+  <button class="drpill" data-range="7" onclick="setRange(7)">Last 7</button>
+  <button class="drpill" data-range="14" onclick="setRange(14)">Last 14</button>
+  <button class="drpill" data-range="30" onclick="setRange(30)">Last 30</button>
+  <button class="drpill active" data-range="0" onclick="setRange(0)">All</button>
+  <span class="drpill-ct" id="rangeDisplay"></span>
 </div>
 
 <!-- INTRO (collapsible) -->
@@ -433,8 +451,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 // ===== COLLAPSIBLE SECTIONS =====
 function toggle(btn){
   btn.classList.toggle('open');
-  const panel = btn.nextElementSibling;
-  panel.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
 }
 
 // ===== STICKY NAV SCROLL =====
@@ -448,9 +465,7 @@ const observer = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       const id=e.target.id;
-      document.querySelectorAll('.nav-btn').forEach((b,i)=>{
-        b.classList.toggle('active',sections[i]===id);
-      });
+      document.querySelectorAll('.nav-btn').forEach((b,i)=>{b.classList.toggle('active',sections[i]===id);});
     }
   });
 },{rootMargin:'-40% 0px -55% 0px'});
@@ -465,395 +480,340 @@ const outagesRaw = RAW.outages || [];
 const macroRaw = RAW.macroEvents || [];
 const meta = RAW.meta || {};
 
-// ===== MERGE TW + BREEZEWAY INTO DAILY ARRAY =====
+// ===== MERGE TW + BREEZEWAY =====
 const bwMap = {};
 bwRaw.forEach(b => { bwMap[b.date] = b.status; });
-
 const D = tw.map(day => {
-  const date = new Date(day.date);
-  const dayNum = date.getUTCDate();
   const bwStatus = bwMap[day.date] || 'normal';
   const s = bwStatus === 'very_bad' ? 'v' : bwStatus === 'bad' ? 'b' : 'n';
   return {
-    d: String(dayNum),
-    date: day.date,
-    s,
-    rev: day.revenue || 0,
-    roas: day.blendedRoas || 0,
-    mr: day.metaRoas || 0,
-    cpa: day.metaCpa || 0,
-    sp: day.metaSpend || 0,
-    ord: day.orders || 0,
-    cpm: day.metaCpm || 0,
+    d: String(new Date(day.date).getUTCDate()),
+    date: day.date, s,
+    rev: day.revenue||0, roas: day.blendedRoas||0, mr: day.metaRoas||0,
+    cpa: day.metaCpa||0, sp: day.metaSpend||0, ord: day.orders||0, cpm: day.metaCpm||0,
   };
 });
 
-// If no TW data, show message and stop
 if (D.length === 0) {
-  document.querySelector('.w').innerHTML = `
-    <div class="hdr"><h1>Meta Ads Intelligence Hub</h1>
+  document.querySelector('.w').innerHTML = `<div class="hdr"><h1>Meta Ads Intelligence Hub</h1>
     <p class="sub" style="margin-top:20px;color:var(--a)">⚠️ No data available yet. Run the fetch script or trigger the GitHub Action.</p>
     <p class="sub" style="margin-top:10px">Last attempted: ${meta.updatedAt || 'never'}</p></div>`;
   throw new Error('No data');
 }
 
-// ===== POPULATE HEADER =====
-const monthLabel = meta.monthLabel || 'Loading';
-const startDay = D[0]?.d || '?';
-const endDay = D[D.length-1]?.d || '?';
-const monthName = new Date(D[0]?.date || Date.now()).toLocaleString('en-US',{month:'short',timeZone:'UTC'}).toUpperCase();
-document.getElementById('hdrMonth').textContent = monthLabel;
-document.getElementById('hdrRange').textContent = `${monthName} ${startDay}–${endDay} · TRIPLE WHALE LIVE`;
+// ===== STATIC CONTENT (not affected by date filter) =====
+document.getElementById('hdrMonth').textContent = meta.monthLabel || 'Loading';
 
-// ===== COMPUTE STATS =====
-const normalDays = D.filter(d=>d.s==='n');
-const badDays = D.filter(d=>d.s!=='n');
-const avg = (arr,key) => arr.length ? arr.reduce((s,d)=>s+d[key],0)/arr.length : 0;
-
-const avgMrNormal = avg(normalDays,'mr');
-const avgMrBad = avg(badDays,'mr');
-const avgCpaNormal = avg(normalDays,'cpa');
-const avgCpaBad = avg(badDays,'cpa');
-const roasDrop = avgMrNormal ? ((avgMrBad - avgMrNormal)/avgMrNormal * 100).toFixed(0) : 0;
-const cpaInflation = avgCpaNormal ? ((avgCpaBad - avgCpaNormal)/avgCpaNormal * 100).toFixed(0) : 0;
-
-const avgRevenue = avg(D,'rev');
-const avgOrders = avg(D,'ord');
-const avgAdSpend = avg(D,'sp');
-const avgBlendedRoas = avg(D,'roas');
-const avgMetaRoas = avg(D,'mr');
-const avgMetaCpa = avg(D,'cpa');
-const avgMetaCpm = avg(D,'cpm');
-
-// Populate stats grid
-document.getElementById('statsGrid').innerHTML = `
-  <div class="st"><div class="v" style="color:var(--g)">${avgMrNormal.toFixed(2)}×</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
-  <div class="st"><div class="v" style="color:var(--r)">${avgMrBad.toFixed(2)}×</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
-  <div class="st"><div class="v" style="color:var(--g)">$${avgCpaNormal.toFixed(2)}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
-  <div class="st"><div class="v" style="color:var(--r)">$${avgCpaBad.toFixed(2)}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
-  <div class="st"><div class="v" style="color:var(--a)">${roasDrop}%</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
-  <div class="st"><div class="v" style="color:var(--a)">+${Math.abs(cpaInflation)}%</div><div class="l">CPA Inflation</div><div class="n">bad vs normal</div></div>
-`;
-document.getElementById('statsAnalysis').innerHTML = badDays.length
-  ? `<strong>The correlation is clear.</strong> On Breezeway-flagged days, Meta ROAS averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days — a <strong>${Math.abs(roasDrop)}% efficiency drop</strong>. Meta spend was relatively flat across all days — same budget consumed, fewer conversions delivered.`
-  : `<strong>All days were rated Normal by Breezeway this period.</strong> Average Meta ROAS: ${avgMetaRoas.toFixed(2)}×, CPA: $${avgMetaCpa.toFixed(2)}.`;
-
-// ===== POPULATE OUTAGES =====
-const outageEl = document.getElementById('outagesList');
-// Build enriched Breezeway lookup
-const bwFull = {};
-bwRaw.forEach(b => { bwFull[b.date] = b; });
-
-if (outagesRaw.length) {
-  outageEl.innerHTML = outagesRaw.map(o => {
-    const cls = o.status === 'resolved' ? 'ok' : '';
-    return `<div class="oi ${cls}"><span class="od">${o.date}</span><span>${o.title}</span><span class="os">${o.service || ''}</span></div>`;
-  }).join('');
-} else {
-  const badBw = D.filter(d=>d.s!=='n');
-  if (badBw.length) {
-    outageEl.innerHTML = badBw.map(d => {
-      const cls = d.s==='v' ? '' : 'w';
-      const label = d.s==='v' ? 'Very Bad' : 'Bad';
-      const bwDay = bwFull[d.date];
-      const zScore = bwDay?.cpa_z != null ? ` · CPA z-score: ${bwDay.cpa_z.toFixed(2)}` : '';
-      const nBiz = bwDay?.n_biz ? ` · ${bwDay.n_biz} brands` : '';
-      const incident = bwDay?.incident_description
-        ? `<div style="font-size:.6rem;color:var(--t3);margin-top:4px;line-height:1.4">${bwDay.incident_description.replace(/\r?\n/g,' ').substring(0,200)}${bwDay.incident_description.length>200?'…':''}</div>`
-        : '';
-      return `<div class="oi ${cls}"><span class="od">${monthName} ${d.d}</span><span>Breezeway: ${label}${zScore}${nBiz}${incident}</span><span class="os">${bwDay?.incident_source||'Breezeway'}</span></div>`;
-    }).join('');
-  } else {
-    outageEl.innerHTML = '<div class="oi ok"><span>No incidents detected this period</span></div>';
-  }
-}
-document.getElementById('outageStats').innerHTML = `
-  <div class="st"><div class="v" style="color:var(--r)">${outagesRaw.length || badDays.length}</div><div class="l">Incidents<br>This Period</div></div>
-  <div class="st"><div class="v" style="color:${badDays.length?'var(--a)':'var(--g)'}">${badDays.length}</div><div class="l">Breezeway<br>Bad+ Days</div></div>
-`;
-
-// ===== POPULATE BENCHMARKS =====
-document.getElementById('benchTable').innerHTML = `<table class="tb">
-  <thead><tr><th>Metric</th><th>Gardner's</th><th>F&B Bench</th><th>All Ecom</th></tr></thead>
-  <tbody>
-    <tr class="h"><td class="m">Blended ROAS</td><td class="o" style="color:var(--g)">${avgBlendedRoas.toFixed(2)}×</td><td class="o">3–5×</td><td class="o">2.87×</td></tr>
-    <tr><td class="m">Meta ROAS</td><td class="o" style="color:${avgMetaRoas>=2.5?'var(--g)':'var(--a)'}">${avgMetaRoas.toFixed(2)}×</td><td class="o">2.5–4×</td><td class="o">2.87×</td></tr>
-    <tr><td class="m">Meta CPA</td><td class="o" style="color:${avgMetaCpa<=35?'var(--g)':'var(--a)'}">$${avgMetaCpa.toFixed(2)}</td><td class="o">$15–35</td><td class="o">$38.19</td></tr>
-    <tr><td class="m">Meta CPM</td><td class="o">$${avgMetaCpm.toFixed(2)}</td><td class="o">$8.14</td><td class="o">$7.19</td></tr>
-    <tr class="h"><td class="m">Daily Revenue</td><td class="o">$${Math.round(avgRevenue).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
-    <tr><td class="m">Daily Orders</td><td class="o">${Math.round(avgOrders)}</td><td class="o">—</td><td class="o">—</td></tr>
-    <tr><td class="m">Daily Ad Spend</td><td class="o">$${Math.round(avgAdSpend).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
-  </tbody>
-</table>`;
-
-// ===== POPULATE MACRO EVENTS =====
-const macroEl = document.getElementById('macroTimeline');
-if (macroRaw.length) {
-  macroEl.innerHTML = macroRaw.map(e => {
-    const cls = e.intensity >= 3 ? '' : e.intensity >= 2 ? 'w' : 'ok';
-    const borderColor = e.intensity >= 3 ? 'var(--r)' : e.intensity >= 2 ? 'var(--a)' : 'var(--p)';
-    const dateLabel = e.date ? e.date.split('-').slice(1).map(s=>parseInt(s)).join('/') : '';
-    return `<div class="oi ${cls}" style="border-left-color:${borderColor}"><span class="od">${dateLabel}</span><span>${e.icon||''} ${e.description}</span><span class="os">${e.source||''}</span></div>`;
-  }).join('');
-} else {
-  macroEl.innerHTML = '<div class="oi ok"><span>Macro events will be auto-curated on next data refresh</span></div>';
-}
-
-const majorEvents = macroRaw.filter(e=>e.intensity>=3);
-const walletEvents = macroRaw.filter(e=>e.category==='wallet');
-const feedEvents = macroRaw.filter(e=>e.category==='feed');
-document.getElementById('macroAnalysis').innerHTML = macroRaw.length
-  ? `<strong>${majorEvents.length} major events</strong> occurred during this period: ${walletEvents.length} wallet-impact, ${feedEvents.length} feed-domination. The worst performance days tend to cluster around high-intensity macro events combined with platform instability.`
-  : '<em>Macro analysis will appear after the first data refresh.</em>';
-
-// ===== POPULATE RELIABILITY =====
-const reliMonth = meta.monthLabel ? meta.monthLabel.split(' ')[0].substring(0,3) + " '" + (meta.monthLabel.split(' ')[1]||'').substring(2) : 'Loading';
-document.getElementById('reliMonth').textContent = reliMonth;
-
-const stability = D.length ? (normalDays.length / D.length * 100).toFixed(0) : 0;
-const vbadDays = D.filter(d=>d.s==='v').length;
-const vbadRate = D.length ? (vbadDays / D.length * 365 / 2).toFixed(0) : 0;
-const badPlusDays = badDays.length;
-const badPlusRate = D.length ? (badPlusDays / D.length * 365 / 24).toFixed(1) : 0;
-
-document.getElementById('reliStats').innerHTML = `
-  <div class="st"><div class="v" style="color:${stability>=80?'var(--g)':stability>=60?'var(--a)':'var(--r)'}">${stability}%</div><div class="l">Stability</div></div>
-  <div class="st"><div class="v" style="color:${vbadRate<=5?'var(--a)':'var(--r)'}">~${vbadRate}×</div><div class="l">VBad Rate</div></div>
-  <div class="st"><div class="v" style="color:${badPlusRate<=3?'var(--a)':'var(--r)'}">${badPlusRate}×</div><div class="l">Bad+ Rate</div></div>
-`;
-
-const avgDailySpend = avg(D,'sp');
-const impactCost = badDays.length * avgDailySpend;
-const excessCpa = impactCost * Math.abs(cpaInflation)/100;
-document.getElementById('reliAnalysis').innerHTML = badDays.length
-  ? `<strong>At ~$${Math.round(avgDailySpend).toLocaleString()}/day Meta spend:</strong> ${badDays.length} impacted days = $${Math.round(impactCost).toLocaleString()} during degraded delivery. +${Math.abs(cpaInflation)}% CPA inflation = <strong>~$${Math.round(excessCpa).toLocaleString()} excess cost</strong>.`
-  : '<strong>No impacted days this period.</strong> All Breezeway ratings were Normal.';
-
-// ===== POPULATE FOOTER =====
 const updatedAt = meta.updatedAt ? new Date(meta.updatedAt).toLocaleString('en-US',{dateStyle:'long',timeStyle:'short'}) : 'unknown';
-document.getElementById('footer').innerHTML = `
-  Last updated: ${updatedAt}<br>
+document.getElementById('footer').innerHTML = `Last updated: ${updatedAt}<br>
   Gardner's data via Triple Whale API · Platform health: Breezeway, StatusGator, metastatus.com<br>
-  Benchmarks: Polar, Varos, MHI, Ryze AI · Charts: Chart.js 4.4 · Design: Open Props 2.0
-`;
+  Benchmarks: Polar, Varos, MHI, Ryze AI · Charts: Chart.js 4.4 · Design: Open Props 2.0`;
 
-// ===== INTERPOLATE GAS PRICES (weekly → daily) =====
-function interpolateGas(weeklyPrices, days) {
-  if (!weeklyPrices.length) return days.map(()=>null);
-  const sorted = [...weeklyPrices].sort((a,b) => new Date(a.date) - new Date(b.date));
-  return days.map(d => {
-    const dayDate = new Date(d.date);
-    let before = sorted[0], after = sorted[sorted.length-1];
-    for (let i = 0; i < sorted.length - 1; i++) {
-      if (new Date(sorted[i].date) <= dayDate && new Date(sorted[i+1].date) >= dayDate) {
-        before = sorted[i]; after = sorted[i+1]; break;
-      }
-    }
-    const t1 = new Date(before.date).getTime(), t2 = new Date(after.date).getTime();
-    const t = dayDate.getTime();
-    if (t2 === t1) return before.price;
-    const ratio = Math.max(0, Math.min(1, (t - t1) / (t2 - t1)));
-    return +(before.price + ratio * (after.price - before.price)).toFixed(3);
-  });
-}
-const gasDaily = interpolateGas(gasPricesRaw, D);
+const macroEl = document.getElementById('macroTimeline');
+macroEl.innerHTML = macroRaw.length ? macroRaw.map(e => {
+  const cls = e.intensity>=3?'':e.intensity>=2?'w':'ok';
+  const borderColor = e.intensity>=3?'var(--r)':e.intensity>=2?'var(--a)':'var(--p)';
+  const dateLabel = e.date ? e.date.split('-').slice(1).map(s=>parseInt(s)).join('/') : '';
+  return `<div class="oi ${cls}" style="border-left-color:${borderColor}"><span class="od">${dateLabel}</span><span>${e.icon||''} ${e.description}</span><span class="os">${e.source||''}</span></div>`;
+}).join('') : '<div class="oi ok"><span>Macro events will be auto-curated on next data refresh</span></div>';
 
-// ===== CHART SETUP =====
+// ===== CHART CONSTANTS (viewport-based, computed once) =====
 const isDesktop = window.innerWidth >= 768;
 const isWide = window.innerWidth >= 1200;
-const cFont = isWide ? 13 : isDesktop ? 12 : 10;
+const cFont = isWide?13:isDesktop?12:10;
 const cPad = {left:isWide?8:isDesktop?8:6,right:isWide?8:isDesktop?8:6,top:8,bottom:4};
-const tickPad = isWide ? 10 : isDesktop ? 8 : 4;
-const forceAxisWidth = minWidth => scale => { scale.width = Math.max(scale.width, minWidth); };
-const leftAxisWidth = isWide ? 66 : isDesktop ? 58 : 44;
-const rightAxisWidth = isWide ? 54 : isDesktop ? 48 : 36;
-const gasAxisWidth = isWide ? 78 : isDesktop ? 72 : 54;
-const cTipTitle = isWide ? 14 : 12;
-const cTipBody = isWide ? 13 : 11;
-const cLegend = isWide ? 12 : isDesktop ? 11 : 10;
-const cTickColor = '#a0aec0';
-const cGridColor = 'rgba(30,41,59,.4)';
-const cGridLight = 'rgba(30,41,59,.2)';
-const roasAxisColor = '#93c5fd';
-const lineColor = '#7bb8ff';
+const tickPad = isWide?10:isDesktop?8:4;
+const forceAxisWidth = minW => scale => { scale.width = Math.max(scale.width, minW); };
+const leftAxisWidth = isWide?66:isDesktop?58:44;
+const rightAxisWidth = isWide?54:isDesktop?48:36;
+const gasAxisWidth = isWide?78:isDesktop?72:54;
+const cTipTitle = isWide?14:12, cTipBody = isWide?13:11, cLegend = isWide?12:isDesktop?11:10;
+const cTickColor='#a0aec0', cGridColor='rgba(30,41,59,.4)', cGridLight='rgba(30,41,59,.2)';
+const roasAxisColor='#93c5fd', lineColor='#7bb8ff';
+const ptR=isWide?8:isDesktop?7:5, ptHR=isWide?11:9, ptBW=isWide?3:2.5;
 
-const bgC=D.map(d=>d.s==='v'?'rgba(239,107,99,.3)':d.s==='b'?'rgba(235,184,50,.25)':'rgba(48,216,164,.18)');
-const brC=D.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4');
-const ptC=D.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#5e9df7');
-const ptR = isWide ? 8 : isDesktop ? 7 : 5;
-const ptHR = isWide ? 11 : 9;
-const ptBW = isWide ? 3 : 2.5;
+// ===== MODULE-LEVEL STATE (set by render, used by setRoasView/buildFuelChart) =====
+let revChartInst=null, cpaChartInst=null, macroChartInst=null, fuelChartInst=null;
+let currentRoasView='meta', fuelVisible=false;
+let DAYS=[], metaRoas=[], blendedRoas=[], ptC=[], blendedPtC=[], mrMin=1, mrMax=5, chartLabels=[], gasDaily=[];
 
-// Auto-compute axis ranges
-const spMin = Math.floor(Math.min(...D.map(d=>d.sp))/500)*500;
-const spMax = Math.ceil(Math.max(...D.map(d=>d.sp))/500)*500;
-const mrMin = Math.max(0.5, Math.floor(Math.min(...D.map(d=>d.mr))*2)/2);
-const mrMax = Math.ceil(Math.max(...D.map(d=>d.mr))*2)/2 + 0.5;
-const cpaMin = Math.floor(Math.min(...D.map(d=>d.cpa))/5)*5 - 5;
-const cpaMax = Math.ceil(Math.max(...D.map(d=>d.cpa))/5)*5 + 5;
-
-const chartMonth = new Date(D[0]?.date||Date.now()).toLocaleString('en-US',{month:'short',timeZone:'UTC'});
-const chartLabels = D.map(d=>chartMonth+' '+d.d);
-
-// ===== SPEND + ROAS CHART =====
-new Chart(document.getElementById('revChart'),{
-  type:'bar',
-  data:{labels:chartLabels,datasets:[
-    {type:'bar',label:'Meta Spend',data:D.map(d=>d.sp),backgroundColor:bgC,borderColor:brC,borderWidth:1.5,borderRadius:5,yAxisID:'y',order:2},
-    {type:'line',label:'Meta ROAS',data:D.map(d=>d.mr),borderColor:lineColor,pointBackgroundColor:ptC,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:3,tension:.3,yAxisID:'y1',fill:false,order:1}
-  ]},
-  options:{
-    responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-    layout:{padding:cPad},
-    plugins:{
-      legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
-      tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>ctx.dataset.label==='Meta Spend'?'  $'+ctx.parsed.y.toLocaleString():'  '+ctx.parsed.y.toFixed(2)+'×'}}
-    },
-    scales:{
-      x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
-      y:{position:'left',min:spMin,max:spMax,ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},callback:v=>'$'+(v/1000).toFixed(1)+'k',stepSize:500,padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(leftAxisWidth)},
-      y1:{position:'right',min:mrMin,max:mrMax,ticks:{color:roasAxisColor,font:{family:'IBM Plex Mono',size:cFont,weight:'bold'},callback:v=>v.toFixed(1)+'×',padding:tickPad},grid:{display:false},afterFit:forceAxisWidth(rightAxisWidth)}
+// ===== GAS INTERPOLATION =====
+function interpolateGas(weeklyPrices, days) {
+  if (!weeklyPrices.length) return days.map(()=>null);
+  const sorted = [...weeklyPrices].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  return days.map(d => {
+    const dayDate = new Date(d.date);
+    let before=sorted[0], after=sorted[sorted.length-1];
+    for (let i=0;i<sorted.length-1;i++) {
+      if (new Date(sorted[i].date)<=dayDate && new Date(sorted[i+1].date)>=dayDate) { before=sorted[i];after=sorted[i+1];break; }
     }
-  }
-});
+    const t1=new Date(before.date).getTime(), t2=new Date(after.date).getTime(), t=dayDate.getTime();
+    if (t2===t1) return before.price;
+    return +(before.price + Math.max(0,Math.min(1,(t-t1)/(t2-t1))) * (after.price-before.price)).toFixed(3);
+  });
+}
 
-// ===== CPA CHART =====
-const avgCpa = avg(D,'cpa');
-new Chart(document.getElementById('cpaChart'),{
-  type:'bar',
-  data:{labels:chartLabels,datasets:[
-    {label:'Meta CPA',data:D.map(d=>d.cpa),backgroundColor:D.map(d=>d.s==='v'?'rgba(239,107,99,.45)':d.s==='b'?'rgba(235,184,50,.4)':'rgba(48,216,164,.3)'),borderColor:D.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4'),borderWidth:1.5,borderRadius:5},
-    {type:'line',label:`Avg ($${avgCpa.toFixed(2)})`,data:Array(D.length).fill(avgCpa),borderColor:'rgba(176,144,255,.6)',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false}
-  ]},
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    layout:{padding:cPad},
-    plugins:{
-      legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
-      tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>'  $'+ctx.parsed.y.toFixed(2)}}
-    },
-    scales:{
-      x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
-      y:{min:cpaMin,max:cpaMax,ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},callback:v=>'$'+v,padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(leftAxisWidth)}
+// ===== MAIN RENDER =====
+function render(days) {
+  DAYS = days;
+  const avg = (arr,key) => arr.length ? arr.reduce((s,d)=>s+d[key],0)/arr.length : 0;
+
+  // Destroy existing charts
+  [revChartInst,cpaChartInst,macroChartInst].forEach(c=>{if(c)c.destroy();});
+  if (fuelChartInst) { fuelChartInst.destroy(); fuelChartInst=null; }
+  revChartInst=cpaChartInst=macroChartInst=null;
+
+  const normalDays = days.filter(d=>d.s==='n');
+  const badDays = days.filter(d=>d.s!=='n');
+  const monthName = new Date(days[0]?.date||Date.now()).toLocaleString('en-US',{month:'short',timeZone:'UTC'}).toUpperCase();
+
+  // Header range
+  document.getElementById('hdrRange').textContent = `${monthName} ${days[0]?.d||'?'}–${days[days.length-1]?.d||'?'} · TRIPLE WHALE LIVE`;
+  document.getElementById('rangeDisplay').textContent = `${days.length} day${days.length!==1?'s':''}`;
+
+  // Stats
+  const avgMrNormal=avg(normalDays,'mr'), avgMrBad=avg(badDays,'mr');
+  const avgCpaNormal=avg(normalDays,'cpa'), avgCpaBad=avg(badDays,'cpa');
+  const roasDrop = avgMrNormal ? ((avgMrBad-avgMrNormal)/avgMrNormal*100).toFixed(0) : 0;
+  const cpaInflation = avgCpaNormal ? ((avgCpaBad-avgCpaNormal)/avgCpaNormal*100).toFixed(0) : 0;
+  const avgRevenue=avg(days,'rev'), avgOrders=avg(days,'ord'), avgAdSpend=avg(days,'sp');
+  const avgBlendedRoas=avg(days,'roas'), avgMetaRoas=avg(days,'mr'), avgMetaCpa=avg(days,'cpa'), avgMetaCpm=avg(days,'cpm');
+
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="st"><div class="v" style="color:var(--g)">${avgMrNormal.toFixed(2)}×</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
+    <div class="st"><div class="v" style="color:var(--r)">${avgMrBad.toFixed(2)}×</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
+    <div class="st"><div class="v" style="color:var(--g)">$${avgCpaNormal.toFixed(2)}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
+    <div class="st"><div class="v" style="color:var(--r)">$${avgCpaBad.toFixed(2)}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
+    <div class="st"><div class="v" style="color:var(--a)">${roasDrop}%</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
+    <div class="st"><div class="v" style="color:var(--a)">+${Math.abs(cpaInflation)}%</div><div class="l">CPA Inflation</div><div class="n">bad vs normal</div></div>`;
+  document.getElementById('statsAnalysis').innerHTML = badDays.length
+    ? `<strong>The correlation is clear.</strong> On Breezeway-flagged days, Meta ROAS averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days — a <strong>${Math.abs(roasDrop)}% efficiency drop</strong>. Meta spend was relatively flat across all days — same budget consumed, fewer conversions delivered.`
+    : `<strong>All days were rated Normal by Breezeway this period.</strong> Average Meta ROAS: ${avgMetaRoas.toFixed(2)}×, CPA: $${avgMetaCpa.toFixed(2)}.`;
+
+  // Day strip
+  const strip = document.getElementById('strip');
+  strip.innerHTML = '';
+  const maxR = Math.max(...days.map(d=>d.rev));
+  days.forEach(d => {
+    const dow = new Date(d.date).toLocaleString('en-US',{weekday:'short',timeZone:'UTC'});
+    const r = document.createElement('div');
+    r.className = `dr ${d.s==='v'?'v':d.s==='b'?'b':'n'}`;
+    r.innerHTML = `<span class="dd">${d.d}<small>${dow}</small></span><span class="ds2">${d.s==='v'?'V.BAD':d.s==='b'?'BAD':'OK'}</span><div class="db"><div class="dbf" style="width:${(d.rev/maxR*100).toFixed(0)}%"></div></div><span class="dro">${d.mr}×</span><span class="dcp">$${d.cpa.toFixed(0)}</span>`;
+    strip.appendChild(r);
+  });
+
+  // Outages
+  const outageEl = document.getElementById('outagesList');
+  const bwFull = {};
+  bwRaw.forEach(b => { bwFull[b.date] = b; });
+  const datesInRange = new Set(days.map(d=>d.date));
+  const outagesInRange = outagesRaw.filter(o=>!o.date||datesInRange.has(o.date));
+  if (outagesInRange.length) {
+    outageEl.innerHTML = outagesInRange.map(o=>{
+      const cls = o.status==='resolved'?'ok':'';
+      return `<div class="oi ${cls}"><span class="od">${o.date}</span><span>${o.title}</span><span class="os">${o.service||''}</span></div>`;
+    }).join('');
+  } else {
+    const badBw = days.filter(d=>d.s!=='n');
+    outageEl.innerHTML = badBw.length ? badBw.map(d=>{
+      const bwDay=bwFull[d.date];
+      const zScore=bwDay?.cpa_z!=null?` · CPA z-score: ${bwDay.cpa_z.toFixed(2)}`:'';
+      const nBiz=bwDay?.n_biz?` · ${bwDay.n_biz} brands`:'';
+      const incident=bwDay?.incident_description?`<div style="font-size:.6rem;color:var(--t3);margin-top:4px;line-height:1.4">${bwDay.incident_description.replace(/\r?\n/g,' ').substring(0,200)}${bwDay.incident_description.length>200?'…':''}</div>`:'';
+      return `<div class="oi ${d.s==='v'?'':'w'}"><span class="od">${monthName} ${d.d}</span><span>Breezeway: ${d.s==='v'?'Very Bad':'Bad'}${zScore}${nBiz}${incident}</span><span class="os">${bwDay?.incident_source||'Breezeway'}</span></div>`;
+    }).join('') : '<div class="oi ok"><span>No incidents detected this period</span></div>';
+  }
+  document.getElementById('outageStats').innerHTML = `
+    <div class="st"><div class="v" style="color:var(--r)">${outagesInRange.length||badDays.length}</div><div class="l">Incidents<br>This Period</div></div>
+    <div class="st"><div class="v" style="color:${badDays.length?'var(--a)':'var(--g)'}">${badDays.length}</div><div class="l">Breezeway<br>Bad+ Days</div></div>`;
+
+  // Benchmarks
+  document.getElementById('benchTable').innerHTML = `<table class="tb">
+    <thead><tr><th>Metric</th><th>Gardner's</th><th>F&B Bench</th><th>All Ecom</th></tr></thead>
+    <tbody>
+      <tr class="h"><td class="m">Blended ROAS</td><td class="o" style="color:var(--g)">${avgBlendedRoas.toFixed(2)}×</td><td class="o">3–5×</td><td class="o">2.87×</td></tr>
+      <tr><td class="m">Meta ROAS</td><td class="o" style="color:${avgMetaRoas>=2.5?'var(--g)':'var(--a)'}">${avgMetaRoas.toFixed(2)}×</td><td class="o">2.5–4×</td><td class="o">2.87×</td></tr>
+      <tr><td class="m">Meta CPA</td><td class="o" style="color:${avgMetaCpa<=35?'var(--g)':'var(--a)'}">$${avgMetaCpa.toFixed(2)}</td><td class="o">$15–35</td><td class="o">$38.19</td></tr>
+      <tr><td class="m">Meta CPM</td><td class="o">$${avgMetaCpm.toFixed(2)}</td><td class="o">$8.14</td><td class="o">$7.19</td></tr>
+      <tr class="h"><td class="m">Daily Revenue</td><td class="o">$${Math.round(avgRevenue).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
+      <tr><td class="m">Daily Orders</td><td class="o">${Math.round(avgOrders)}</td><td class="o">—</td><td class="o">—</td></tr>
+      <tr><td class="m">Daily Ad Spend</td><td class="o">$${Math.round(avgAdSpend).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
+    </tbody></table>`;
+
+  // Macro analysis (list stays static; analysis reflects filtered range)
+  const majorEvents = macroRaw.filter(e=>e.intensity>=3&&datesInRange.has(e.date));
+  const walletEvents = macroRaw.filter(e=>e.category==='wallet'&&datesInRange.has(e.date));
+  const feedEvents = macroRaw.filter(e=>e.category==='feed'&&datesInRange.has(e.date));
+  document.getElementById('macroAnalysis').innerHTML = macroRaw.length
+    ? `<strong>${majorEvents.length} major events</strong> occurred during this period: ${walletEvents.length} wallet-impact, ${feedEvents.length} feed-domination. The worst performance days tend to cluster around high-intensity macro events combined with platform instability.`
+    : '<em>Macro analysis will appear after the first data refresh.</em>';
+
+  // Reliability
+  document.getElementById('reliMonth').textContent = meta.monthLabel
+    ? meta.monthLabel.split(' ')[0].substring(0,3)+" '"+(meta.monthLabel.split(' ')[1]||'').substring(2) : 'Loading';
+  const stability = days.length ? (normalDays.length/days.length*100).toFixed(0) : 0;
+  const vbadDays = days.filter(d=>d.s==='v').length;
+  const vbadRate = days.length ? (vbadDays/days.length*365/2).toFixed(0) : 0;
+  const badPlusRate = days.length ? (badDays.length/days.length*365/24).toFixed(1) : 0;
+  document.getElementById('reliStats').innerHTML = `
+    <div class="st"><div class="v" style="color:${stability>=80?'var(--g)':stability>=60?'var(--a)':'var(--r)'}">${stability}%</div><div class="l">Stability</div></div>
+    <div class="st"><div class="v" style="color:${vbadRate<=5?'var(--a)':'var(--r)'}">~${vbadRate}×</div><div class="l">VBad Rate</div></div>
+    <div class="st"><div class="v" style="color:${badPlusRate<=3?'var(--a)':'var(--r)'}">${badPlusRate}×</div><div class="l">Bad+ Rate</div></div>`;
+  const avgDailySpend=avg(days,'sp'), impactCost=badDays.length*avgDailySpend, excessCpa=impactCost*Math.abs(cpaInflation)/100;
+  document.getElementById('reliAnalysis').innerHTML = badDays.length
+    ? `<strong>At ~$${Math.round(avgDailySpend).toLocaleString()}/day Meta spend:</strong> ${badDays.length} impacted days = $${Math.round(impactCost).toLocaleString()} during degraded delivery. +${Math.abs(cpaInflation)}% CPA inflation = <strong>~$${Math.round(excessCpa).toLocaleString()} excess cost</strong>.`
+    : '<strong>No impacted days this period.</strong> All Breezeway ratings were Normal.';
+
+  // Chart computed vars (module-level so setRoasView/buildFuelChart can use them)
+  metaRoas = days.map(d=>d.mr);
+  blendedRoas = days.map(d=>d.roas);
+  ptC = days.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#5e9df7');
+  blendedPtC = days.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4');
+  const bgC = days.map(d=>d.s==='v'?'rgba(239,107,99,.3)':d.s==='b'?'rgba(235,184,50,.25)':'rgba(48,216,164,.18)');
+  const brC = days.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4');
+  const spMin=Math.floor(Math.min(...days.map(d=>d.sp))/500)*500;
+  const spMax=Math.ceil(Math.max(...days.map(d=>d.sp))/500)*500;
+  mrMin=Math.max(0.5,Math.floor(Math.min(...days.map(d=>d.mr))*2)/2);
+  mrMax=Math.ceil(Math.max(...days.map(d=>d.mr))*2)/2+0.5;
+  const cpaMin=Math.floor(Math.min(...days.map(d=>d.cpa))/5)*5-5;
+  const cpaMax=Math.ceil(Math.max(...days.map(d=>d.cpa))/5)*5+5;
+  const chartMonth=new Date(days[0]?.date||Date.now()).toLocaleString('en-US',{month:'short',timeZone:'UTC'});
+  chartLabels = days.map(d=>chartMonth+' '+d.d);
+  gasDaily = interpolateGas(gasPricesRaw, days);
+
+  // Macro chart data
+  const macroByDay={};
+  macroRaw.forEach(e=>{if(datesInRange.has(e.date)){const dn=new Date(e.date).getUTCDate();macroByDay[dn]=Math.max(macroByDay[dn]||0,e.intensity||1);}});
+  const macroIntensity=days.map(d=>macroByDay[parseInt(d.d)]||1);
+  const macroChartLabels=days.map(d=>{const ev=macroRaw.filter(e=>new Date(e.date).getUTCDate()===parseInt(d.d)&&datesInRange.has(e.date));return ev.length?(ev[0].description||'').substring(0,30):''});
+
+  // Spend + ROAS chart
+  revChartInst = new Chart(document.getElementById('revChart'),{
+    type:'bar',
+    data:{labels:chartLabels,datasets:[
+      {type:'bar',label:'Meta Spend',data:days.map(d=>d.sp),backgroundColor:bgC,borderColor:brC,borderWidth:1.5,borderRadius:5,yAxisID:'y',order:2},
+      {type:'line',label:'Meta ROAS',data:metaRoas,borderColor:lineColor,pointBackgroundColor:ptC,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:3,tension:.3,yAxisID:'y1',fill:false,order:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},layout:{padding:cPad},
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
+        tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>ctx.dataset.label==='Meta Spend'?'  $'+ctx.parsed.y.toLocaleString():'  '+ctx.parsed.y.toFixed(2)+'×'}}
+      },
+      scales:{
+        x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
+        y:{position:'left',min:spMin,max:spMax,ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},callback:v=>'$'+(v/1000).toFixed(1)+'k',stepSize:500,padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(leftAxisWidth)},
+        y1:{position:'right',min:mrMin,max:mrMax,ticks:{color:roasAxisColor,font:{family:'IBM Plex Mono',size:cFont,weight:'bold'},callback:v=>v.toFixed(1)+'×',padding:tickPad},grid:{display:false},afterFit:forceAxisWidth(rightAxisWidth)}
+      }
     }
-  }
-});
+  });
 
-// ===== DAY STRIP =====
-const strip=document.getElementById('strip');
-const maxR=Math.max(...D.map(d=>d.rev));
-D.forEach((d,i)=>{
-  const date = new Date(d.date);
-  const dow = date.toLocaleString('en-US',{weekday:'short',timeZone:'UTC'});
-  const pct=(d.rev/maxR*100).toFixed(0);
-  const cls=d.s==='v'?'v':d.s==='b'?'b':'n';
-  const sl=d.s==='v'?'V.BAD':d.s==='b'?'BAD':'OK';
-  const r=document.createElement('div');
-  r.className=`dr ${cls}`;
-  r.innerHTML=`<span class="dd">${d.d}<small>${dow}</small></span><span class="ds2">${sl}</span><div class="db"><div class="dbf" style="width:${pct}%"></div></div><span class="dro">${d.mr}×</span><span class="dcp">$${d.cpa.toFixed(0)}</span>`;
-  strip.appendChild(r);
-});
+  // CPA chart
+  const avgCpa=avg(days,'cpa');
+  cpaChartInst = new Chart(document.getElementById('cpaChart'),{
+    type:'bar',
+    data:{labels:chartLabels,datasets:[
+      {label:'Meta CPA',data:days.map(d=>d.cpa),backgroundColor:days.map(d=>d.s==='v'?'rgba(239,107,99,.45)':d.s==='b'?'rgba(235,184,50,.4)':'rgba(48,216,164,.3)'),borderColor:days.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4'),borderWidth:1.5,borderRadius:5},
+      {type:'line',label:`Avg ($${avgCpa.toFixed(2)})`,data:Array(days.length).fill(avgCpa),borderColor:'rgba(176,144,255,.6)',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:cPad},
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
+        tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,callbacks:{label:ctx=>'  $'+ctx.parsed.y.toFixed(2)}}
+      },
+      scales:{
+        x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
+        y:{min:cpaMin,max:cpaMax,ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},callback:v=>'$'+v,padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(leftAxisWidth)}
+      }
+    }
+  });
 
-// ===== MACRO EVENTS CHART =====
-const macroByDay = {};
-macroRaw.forEach(e => {
-  const dayNum = new Date(e.date).getUTCDate();
-  macroByDay[dayNum] = Math.max(macroByDay[dayNum]||0, e.intensity||1);
-});
-const macroIntensity = D.map(d => macroByDay[parseInt(d.d)] || 1);
-const macroChartLabels = D.map(d => {
-  const dayEvents = macroRaw.filter(e => new Date(e.date).getUTCDate() === parseInt(d.d));
-  if (!dayEvents.length) return '';
-  return (dayEvents[0].description||'').substring(0,30);
-});
-
-const macroChartInstance = new Chart(document.getElementById('macroChart'),{
-  type:'bar',
-  data:{labels:chartLabels,datasets:[
-    {type:'bar',label:'Event Intensity',data:macroIntensity,backgroundColor:macroIntensity.map(v=>v>=3?'rgba(239,107,99,.35)':v>=2?'rgba(235,184,50,.3)':'rgba(94,157,247,.12)'),borderColor:macroIntensity.map(v=>v>=3?'#ef6b63':v>=2?'#ebb832':'rgba(94,157,247,.3)'),borderWidth:1,borderRadius:5,yAxisID:'y',order:2},
-    {type:'line',label:'Meta ROAS',data:D.map(d=>d.mr),borderColor:lineColor,pointBackgroundColor:ptC,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:3,tension:.3,yAxisID:'y1',fill:false,order:1}
-  ]},
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    layout:{padding:cPad},
-    interaction:{mode:'index',intersect:false},
-    plugins:{
-      legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
-      tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,
-        callbacks:{
-          title:ctx=>{const i=ctx[0].dataIndex;return chartLabels[i]+(macroChartLabels[i]?' — '+macroChartLabels[i]:'');},
-          label:ctx=>{
-            if(ctx.dataset.label==='Event Intensity'){const v=ctx.parsed.y;return v>=3?'  🔴 Major event':v>=2?'  🟡 Notable':'  ⚪ Minor/none';}
-            return '  ROAS: '+ctx.parsed.y.toFixed(2)+'×';
+  // Macro events chart
+  macroChartInst = new Chart(document.getElementById('macroChart'),{
+    type:'bar',
+    data:{labels:chartLabels,datasets:[
+      {type:'bar',label:'Event Intensity',data:macroIntensity,backgroundColor:macroIntensity.map(v=>v>=3?'rgba(239,107,99,.35)':v>=2?'rgba(235,184,50,.3)':'rgba(94,157,247,.12)'),borderColor:macroIntensity.map(v=>v>=3?'#ef6b63':v>=2?'#ebb832':'rgba(94,157,247,.3)'),borderWidth:1,borderRadius:5,yAxisID:'y',order:2},
+      {type:'line',label:'Meta ROAS',data:metaRoas,borderColor:lineColor,pointBackgroundColor:ptC,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:3,tension:.3,yAxisID:'y1',fill:false,order:1}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:cPad},interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
+        tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,
+          callbacks:{
+            title:ctx=>{const i=ctx[0].dataIndex;return chartLabels[i]+(macroChartLabels[i]?' — '+macroChartLabels[i]:'');},
+            label:ctx=>{if(ctx.dataset.label==='Event Intensity'){const v=ctx.parsed.y;return v>=3?'  🔴 Major event':v>=2?'  🟡 Notable':'  ⚪ Minor/none';}return '  ROAS: '+ctx.parsed.y.toFixed(2)+'×';}
           }
         }
+      },
+      scales:{
+        x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
+        y:{display:false,min:0,max:4},
+        y1:{position:'right',min:mrMin,max:mrMax+1.5,ticks:{color:roasAxisColor,font:{family:'IBM Plex Mono',size:cFont,weight:'bold'},callback:v=>v.toFixed(1)+'×',padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(rightAxisWidth)}
       }
-    },
-    scales:{
-      x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
-      y:{display:false,min:0,max:4},
-      y1:{position:'right',min:mrMin,max:mrMax+1.5,ticks:{color:roasAxisColor,font:{family:'IBM Plex Mono',size:cFont,weight:'bold'},callback:v=>v.toFixed(1)+'×',padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(rightAxisWidth)}
     }
-  }
-});
+  });
+
+  if (fuelVisible) buildFuelChart();
+}
+
+// ===== DATE RANGE SELECTOR =====
+function setRange(n) {
+  document.querySelectorAll('.drpill').forEach(p=>{p.classList.toggle('active',parseInt(p.dataset.range)===n);});
+  render(n>0 ? D.slice(-Math.min(n,D.length)) : D);
+}
 
 // ===== ROAS VIEW TOGGLE =====
-let currentRoasView = 'meta';
-const metaRoas = D.map(d=>d.mr);
-const blendedRoas = D.map(d=>d.roas);
-const blendedPtC = D.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4');
-
 function setRoasView(view){
-  currentRoasView = view;
-  const isMeta = view === 'meta';
-  const data = isMeta ? metaRoas : blendedRoas;
-  const label = isMeta ? 'Meta ROAS' : 'Blended ROAS';
-  const color = isMeta ? lineColor : '#4ade80';
-  const axisCol = isMeta ? roasAxisColor : '#86efac';
-  const pts = isMeta ? ptC : blendedPtC;
-  const bRoasVals = blendedRoas.filter(v=>v>0);
-  const minY = isMeta ? mrMin : (bRoasVals.length ? Math.max(1,Math.floor(Math.min(...bRoasVals)*2)/2) : 1);
-  const maxY = isMeta ? mrMax : (bRoasVals.length ? Math.ceil(Math.max(...bRoasVals)*2)/2+0.5 : 5);
+  currentRoasView=view;
+  const isMeta=view==='meta';
+  const data=isMeta?metaRoas:blendedRoas;
+  const label=isMeta?'Meta ROAS':'Blended ROAS';
+  const color=isMeta?lineColor:'#4ade80';
+  const axisCol=isMeta?roasAxisColor:'#86efac';
+  const pts=isMeta?ptC:blendedPtC;
+  const bRoasVals=blendedRoas.filter(v=>v>0);
+  const minY=isMeta?mrMin:(bRoasVals.length?Math.max(1,Math.floor(Math.min(...bRoasVals)*2)/2):1);
+  const maxY=isMeta?mrMax:(bRoasVals.length?Math.ceil(Math.max(...bRoasVals)*2)/2+0.5:5);
 
   document.querySelectorAll('#roasMetaBtn,#roasMetaBtn2').forEach(b=>{if(b)b.classList.toggle('active',isMeta)});
   document.querySelectorAll('#roasBlendBtn,#roasBlendBtn2').forEach(b=>{if(b)b.classList.toggle('active',!isMeta)});
 
-  macroChartInstance.data.datasets[1].data = data;
-  macroChartInstance.data.datasets[1].label = label;
-  macroChartInstance.data.datasets[1].borderColor = color;
-  macroChartInstance.data.datasets[1].pointBackgroundColor = pts;
-  macroChartInstance.options.scales.y1.min = minY;
-  macroChartInstance.options.scales.y1.max = maxY;
-  macroChartInstance.options.scales.y1.ticks.color = axisCol;
-  macroChartInstance.update();
-  document.getElementById('macroChartTitle').textContent = 'Event Timeline × Gardner\'s Daily ' + label;
+  macroChartInst.data.datasets[1].data=data;
+  macroChartInst.data.datasets[1].label=label;
+  macroChartInst.data.datasets[1].borderColor=color;
+  macroChartInst.data.datasets[1].pointBackgroundColor=pts;
+  macroChartInst.options.scales.y1.min=minY;
+  macroChartInst.options.scales.y1.max=maxY;
+  macroChartInst.options.scales.y1.ticks.color=axisCol;
+  macroChartInst.update();
+  document.getElementById('macroChartTitle').textContent='Event Timeline × Gardner\'s Daily '+label;
 
-  if(fuelChartInstance){
-    fuelChartInstance.data.datasets[1].data = data;
-    fuelChartInstance.data.datasets[1].label = label;
-    fuelChartInstance.data.datasets[1].borderColor = color;
-    fuelChartInstance.data.datasets[1].pointBackgroundColor = pts;
-    fuelChartInstance.options.scales.y1.min = minY;
-    fuelChartInstance.options.scales.y1.max = maxY;
-    fuelChartInstance.options.scales.y1.ticks.color = axisCol;
-    fuelChartInstance.options.scales.y1.title.text = label;
-    fuelChartInstance.options.scales.y1.title.color = axisCol;
-    fuelChartInstance.update();
-    document.getElementById('fuelChartTitle').textContent = '⛽ US Avg Gas Price × ' + label + ' × Breezeway Status';
+  if(fuelChartInst){
+    fuelChartInst.data.datasets[1].data=data;
+    fuelChartInst.data.datasets[1].label=label;
+    fuelChartInst.data.datasets[1].borderColor=color;
+    fuelChartInst.data.datasets[1].pointBackgroundColor=pts;
+    fuelChartInst.options.scales.y1.min=minY;
+    fuelChartInst.options.scales.y1.max=maxY;
+    fuelChartInst.options.scales.y1.ticks.color=axisCol;
+    fuelChartInst.options.scales.y1.title.text=label;
+    fuelChartInst.options.scales.y1.title.color=axisCol;
+    fuelChartInst.update();
+    document.getElementById('fuelChartTitle').textContent='⛽ US Avg Gas Price × '+label+' × Breezeway Status';
   }
 }
 
 // ===== FUEL PRICE TOGGLE =====
-let fuelChartInstance = null;
 function toggleFuel(){
-  const wrap = document.getElementById('fuelWrap');
-  const btn = document.getElementById('fuelBtn');
+  const wrap=document.getElementById('fuelWrap');
+  const btn=document.getElementById('fuelBtn');
   if(wrap.style.display==='none'){
+    fuelVisible=true;
     wrap.style.display='block';
     btn.textContent='⛽ Hide Fuel Prices';
     btn.style.background='rgba(235,184,50,.25)';
-    if(!fuelChartInstance) buildFuelChart();
+    if(!fuelChartInst) buildFuelChart();
   } else {
+    fuelVisible=false;
     wrap.style.display='none';
     btn.textContent='⛽ Show Fuel Prices × Performance';
     btn.style.background='var(--ad)';
@@ -861,44 +821,38 @@ function toggleFuel(){
 }
 
 function buildFuelChart(){
-  const gas = gasDaily.some(g=>g!==null) ? gasDaily : null;
-  const hasGas = gas && gas.some(g=>g!==null);
-  const statusBg=D.map(d=>d.s==='v'?'rgba(239,107,99,.12)':d.s==='b'?'rgba(235,184,50,.1)':'rgba(48,216,164,.06)');
-  const isMeta = currentRoasView === 'meta';
-  const roasData = isMeta ? metaRoas : blendedRoas;
-  const roasLabel = isMeta ? 'Meta ROAS' : 'Blended ROAS';
-  const roasColor = isMeta ? lineColor : '#4ade80';
-  const roasPts = isMeta ? ptC : blendedPtC;
-  const bRoasVals = blendedRoas.filter(v=>v>0);
-  const minY1 = isMeta ? mrMin : (bRoasVals.length ? Math.max(1,Math.floor(Math.min(...bRoasVals)*2)/2) : 1);
-  const maxY1 = isMeta ? mrMax : (bRoasVals.length ? Math.ceil(Math.max(...bRoasVals)*2)/2+0.5 : 5);
+  const gas=gasDaily.some(g=>g!==null)?gasDaily:null;
+  const hasGas=gas&&gas.some(g=>g!==null);
+  const statusBg=DAYS.map(d=>d.s==='v'?'rgba(239,107,99,.12)':d.s==='b'?'rgba(235,184,50,.1)':'rgba(48,216,164,.06)');
+  const isMeta=currentRoasView==='meta';
+  const roasData=isMeta?metaRoas:blendedRoas;
+  const roasLabel=isMeta?'Meta ROAS':'Blended ROAS';
+  const roasColor=isMeta?lineColor:'#4ade80';
+  const roasPts=isMeta?ptC:blendedPtC;
+  const bRoasVals=blendedRoas.filter(v=>v>0);
+  const minY1=isMeta?mrMin:(bRoasVals.length?Math.max(1,Math.floor(Math.min(...bRoasVals)*2)/2):1);
+  const maxY1=isMeta?mrMax:(bRoasVals.length?Math.ceil(Math.max(...bRoasVals)*2)/2+0.5:5);
+  const gasVals=hasGas?gas.filter(g=>g!==null):[];
+  const gasMin=gasVals.length?Math.floor(Math.min(...gasVals)*20)/20-0.05:4.0;
+  const gasMax=gasVals.length?Math.ceil(Math.max(...gasVals)*20)/20+0.05:5.0;
 
-  const gasVals = hasGas ? gas.filter(g=>g!==null) : [];
-  const gasMin = gasVals.length ? Math.floor(Math.min(...gasVals)*20)/20 - 0.05 : 4.0;
-  const gasMax = gasVals.length ? Math.ceil(Math.max(...gasVals)*20)/20 + 0.05 : 5.0;
-
-  document.getElementById('fuelChartTitle').textContent = '⛽ US Avg Gas Price × ' + roasLabel + ' × Breezeway Status';
-
-  const datasets = [
+  document.getElementById('fuelChartTitle').textContent='⛽ US Avg Gas Price × '+roasLabel+' × Breezeway Status';
+  const datasets=[
     {label:roasLabel,data:roasData,borderColor:roasColor,pointBackgroundColor:roasPts,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:2.5,tension:.3,yAxisID:'y1',fill:false,order:1},
-    {label:'Breezeway Status',data:D.map(d=>d.s==='v'?3:d.s==='b'?2:1),backgroundColor:statusBg,borderColor:D.map(d=>d.s==='v'?'rgba(239,107,99,.3)':d.s==='b'?'rgba(235,184,50,.25)':'rgba(48,216,164,.15)'),borderWidth:1,type:'bar',yAxisID:'y2',order:3,borderRadius:4,barPercentage:.5}
+    {label:'Breezeway Status',data:DAYS.map(d=>d.s==='v'?3:d.s==='b'?2:1),backgroundColor:statusBg,borderColor:DAYS.map(d=>d.s==='v'?'rgba(239,107,99,.3)':d.s==='b'?'rgba(235,184,50,.25)':'rgba(48,216,164,.15)'),borderWidth:1,type:'bar',yAxisID:'y2',order:3,borderRadius:4,barPercentage:.5}
   ];
   if(hasGas) datasets.unshift({label:'Gas $/gal',data:gas,borderColor:'#ebb832',backgroundColor:'rgba(235,184,50,.08)',pointRadius:isDesktop?ptR-1:3,pointBackgroundColor:'#ebb832',pointBorderColor:'#fff',pointBorderWidth:ptBW,borderWidth:2.5,tension:.4,yAxisID:'y',fill:true,order:2});
-
-  const scales = {
+  const scales={
     x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
     y1:{position:'right',min:minY1,max:maxY1,ticks:{color:roasColor,font:{family:'IBM Plex Mono',size:cFont},callback:v=>v.toFixed(1)+'×',padding:tickPad},grid:{display:false},title:{display:true,text:roasLabel,color:roasColor,font:{family:'IBM Plex Mono',size:cFont}},afterFit:forceAxisWidth(gasAxisWidth)},
     y2:{display:false,min:0,max:5}
   };
-  if(hasGas) scales.y = {position:'left',min:gasMin,max:gasMax,ticks:{color:'#ebb832',font:{family:'IBM Plex Mono',size:cFont},callback:v=>'$'+v.toFixed(2),padding:tickPad},grid:{color:cGridLight},title:{display:true,text:'Gas Price',color:'#ebb832',font:{family:'IBM Plex Mono',size:cFont}},afterFit:forceAxisWidth(gasAxisWidth)};
+  if(hasGas) scales.y={position:'left',min:gasMin,max:gasMax,ticks:{color:'#ebb832',font:{family:'IBM Plex Mono',size:cFont},callback:v=>'$'+v.toFixed(2),padding:tickPad},grid:{color:cGridLight},title:{display:true,text:'Gas Price',color:'#ebb832',font:{family:'IBM Plex Mono',size:cFont}},afterFit:forceAxisWidth(gasAxisWidth)};
 
-  fuelChartInstance = new Chart(document.getElementById('fuelChart'),{
+  fuelChartInst=new Chart(document.getElementById('fuelChart'),{
     type:'line',
     data:{labels:chartLabels,datasets},
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      layout:{padding:cPad},
-      interaction:{mode:'index',intersect:false},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:cPad},interaction:{mode:'index',intersect:false},
       plugins:{
         legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
         tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,
@@ -913,6 +867,9 @@ function buildFuelChart(){
     }
   });
 }
+
+// ===== INITIAL RENDER =====
+render(D);
 </script>
 </body>
 </html>
