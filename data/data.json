@@ -1,9 +1,9 @@
 {
   "meta": {
-    "updatedAt": "2026-05-24T13:19:58.196Z",
+    "updatedAt": "2026-05-25T14:48:40.614Z",
     "dateRange": {
       "start": "2026-05-01",
-      "end": "2026-05-24"
+      "end": "2026-05-25"
     },
     "monthLabel": "May 2026"
   },
@@ -401,6 +401,15 @@
       "cpa_z": -0.696,
       "n_biz": 45,
       "dow": "Sat",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-05-24",
+      "status": "normal",
+      "cpa_z": -0.192,
+      "n_biz": 45,
+      "dow": "Sun",
       "incident_source": null,
       "incident_description": null
     }
