@@ -1,9 +1,9 @@
 {
   "meta": {
-    "updatedAt": "2026-05-26T15:19:08.256Z",
+    "updatedAt": "2026-05-27T15:34:14.448Z",
     "dateRange": {
       "start": "2026-05-01",
-      "end": "2026-05-26"
+      "end": "2026-05-27"
     },
     "monthLabel": "May 2026"
   },
@@ -421,9 +421,22 @@
       "dow": "Mon",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-05-26",
+      "status": "normal",
+      "cpa_z": 0.365,
+      "n_biz": 45,
+      "dow": "Tue",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
+    {
+      "date": "2026-05-25",
+      "price": 4.475
+    },
     {
       "date": "2026-05-18",
       "price": 4.49
@@ -467,10 +480,6 @@
     {
       "date": "2026-03-09",
       "price": 3.502
-    },
-    {
-      "date": "2026-03-02",
-      "price": 3.015
     }
   ],
   "outages": [],
