@@ -109,15 +109,12 @@ async function fetchTripleWhale() {
 
   applyMetric('totalSales', 'revenue');
   applyMetric('totalOrders', 'orders');
-  applyMetric('totalAdSpend', 'adSpend');
-  applyMetric('blendedROAS', 'blendedRoas');
-  applyMetric('facebookSpend', 'metaSpend');
-  applyMetric('facebookROAS', 'metaRoas');
-  applyMetric('facebookCPA', 'metaCpa');
-  applyMetric('facebookCPM', 'metaCpm');
-  // Try alternate IDs
-  applyMetric('metaSpend', 'metaSpend');
-  applyMetric('metaROAS', 'metaRoas');
+  applyMetric('adsSpend', 'adSpend');
+  applyMetric('totalRoas', 'blendedRoas');
+  applyMetric('fb_ads_spend', 'metaSpend');
+  applyMetric('fb_ads_purchase_roas', 'metaRoas');
+  applyMetric('facebookCpa', 'metaCpa');
+  applyMetric('averageFacebookCpm', 'metaCpm');
 
   const days = Object.values(dayMap).sort((a, b) => a.date.localeCompare(b.date));
   console.log(`  ✅ Got ${days.length} days of TW data`);
