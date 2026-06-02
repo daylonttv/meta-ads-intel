@@ -47,32 +47,38 @@ async function fetchTripleWhale() {
   console.log(`  Shop domain: ${shopDomain}`);
   console.log(`  Date range: ${startDate} → ${endDate}`);
 
-  // Try multiple endpoint + field name combinations (TW API has changed over time)
+  // Try multiple endpoint + auth + field name combinations (TW API has changed over time)
   const attempts = [
     {
       url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': TW_API_KEY },
       body: { start: startDate, end: endDate, period: 'day', shopDomain },
     },
     {
       url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${TW_API_KEY}` },
+      body: { start: startDate, end: endDate, period: 'day', shopDomain },
+    },
+    {
+      url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': TW_API_KEY },
       body: { start: startDate, end: endDate, period: 'day', shop_domain: shopDomain },
     },
     {
-      url: 'https://api.triplewhale.com/api/v2/attribution/summary',
-      body: { start: startDate, end: endDate, period: 'day', shopDomain },
+      url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${TW_API_KEY}` },
+      body: { start: startDate, end: endDate, period: 'day', shop_domain: shopDomain },
     },
   ];
 
-  for (const { url, body } of attempts) {
+  for (const { url, headers, body } of attempts) {
     try {
-      console.log(`  Trying ${url} body: ${JSON.stringify(body)}`);
+      const authType = headers['x-api-key'] ? 'x-api-key' : 'Bearer';
+      const bodyKey = body.shopDomain ? 'shopDomain' : 'shop_domain';
+      console.log(`  Trying auth=${authType} bodyKey=${bodyKey}`);
       const res = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': TW_API_KEY,
-          'User-Agent': 'meta-ads-intel/1.0',
-        },
+        headers,
         body: JSON.stringify(body),
       });
 
@@ -369,13 +375,28 @@ async function main() {
     } catch (e) { /* fresh start */ }
   }
 
+  // Skip Gemini if we already have events for this date range fetched recently (<20h ago).
+  // Gemini has a tight daily quota — no point re-fetching when the data is still fresh.
+  const existingMacroAge = existing.meta?.updatedAt
+    ? (Date.now() - new Date(existing.meta.updatedAt).getTime()) / 3600000
+    : 999;
+  const existingMacroRange = existing.meta?.dateRange;
+  const macroIsFresh = existingMacroAge < 20
+    && existingMacroRange?.start === startDate
+    && existingMacroRange?.end === endDate
+    && (existing.macroEvents?.length || 0) > 0;
+
+  if (macroIsFresh) {
+    console.log(`🌍 Skipping Gemini — cached macro events are ${existingMacroAge.toFixed(1)}h old (same date range)`);
+  }
+
   // Fetch all sources in parallel
   const [tripleWhale, breezeway, gasPrices, outages, macroEvents] = await Promise.allSettled([
     fetchTripleWhale(),
     fetchBreezeway(),
     fetchGasPrices(),
     fetchOutages(),
-    fetchMacroEvents(),
+    macroIsFresh ? Promise.resolve(null) : fetchMacroEvents(),
   ]);
 
   const data = {
