@@ -47,20 +47,31 @@ async function fetchTripleWhale() {
   console.log(`  Shop domain: ${shopDomain}`);
   console.log(`  Date range: ${startDate} → ${endDate}`);
 
-  // Try both snake_case and camelCase field names (TW API has been inconsistent)
-  const requestBodies = [
-    { start: startDate, end: endDate, period: 'day', shopDomain },
-    { start: startDate, end: endDate, period: 'day', shop_domain: shopDomain },
+  // Try multiple endpoint + field name combinations (TW API has changed over time)
+  const attempts = [
+    {
+      url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
+      body: { start: startDate, end: endDate, period: 'day', shopDomain },
+    },
+    {
+      url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
+      body: { start: startDate, end: endDate, period: 'day', shop_domain: shopDomain },
+    },
+    {
+      url: 'https://api.triplewhale.com/api/v2/attribution/summary',
+      body: { start: startDate, end: endDate, period: 'day', shopDomain },
+    },
   ];
 
-  for (const body of requestBodies) {
+  for (const { url, body } of attempts) {
     try {
-      console.log(`  Trying request body: ${JSON.stringify(body)}`);
-      const res = await fetch('https://api.triplewhale.com/api/v2/summary-page/summary', {
+      console.log(`  Trying ${url} body: ${JSON.stringify(body)}`);
+      const res = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': TW_API_KEY,
+          'User-Agent': 'meta-ads-intel/1.0',
         },
         body: JSON.stringify(body),
       });
@@ -287,12 +298,12 @@ Respond ONLY with a valid JSON array, no markdown fences, no preamble:
 [{"date":"YYYY-MM-DD","description":"...","details":"...","intensity":1,"category":"wallet","icon":"💰","source":"..."}]`;
 
   // Retry up to 3 times with exponential backoff on rate limit (429)
-  const models = ['gemini-2.0-flash', 'gemini-1.5-flash'];
+  const models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'];
   for (const model of models) {
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
         if (attempt > 1) {
-          const wait = attempt * 15000; // 15s, 30s
+          const wait = attempt * 20000; // 20s, 40s
           console.log(`  Retrying Gemini (attempt ${attempt}/3, waiting ${wait / 1000}s)...`);
           await new Promise(r => setTimeout(r, wait));
         }
