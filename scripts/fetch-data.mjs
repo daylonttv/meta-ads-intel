@@ -1,7 +1,7 @@
 /**
  * fetch-data.mjs
  * Pulls data from all sources and writes data/data.json
- * 
+ *
  * Sources:
  *  1. Triple Whale Summary API — daily revenue, spend, ROAS, CPA, CPM, orders
  *  2. Breezeway Bad Day Detector — scrape for platform health status
@@ -20,12 +20,15 @@ const EIA_API_KEY = process.env.EIA_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const STATUSGATOR_API_KEY = process.env.STATUSGATOR_API_KEY;
 
-// Date range: current month to today
+// Rolling 30-day window ending yesterday (today's data isn't finalized when the job runs)
 const now = new Date();
-const year = now.getFullYear();
-const month = now.getMonth(); // 0-indexed
-const startDate = new Date(year, month, 1).toISOString().split('T')[0];
-const endDate = now.toISOString().split('T')[0];
+const endD = new Date(now);
+endD.setDate(now.getDate() - 1);
+const startD = new Date(now);
+startD.setDate(now.getDate() - 30);
+
+const startDate = startD.toISOString().split('T')[0];
+const endDate = endD.toISOString().split('T')[0];
 const monthLabel = now.toLocaleString('en-US', { month: 'long', year: 'numeric' });
 
 console.log(`📊 Fetching data for ${startDate} to ${endDate}`);
@@ -40,56 +43,83 @@ async function fetchTripleWhale() {
     return null;
   }
 
-  try {
-    const res = await fetch('https://api.triplewhale.com/api/v2/summary-page/summary', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': TW_API_KEY,
-      },
-      body: JSON.stringify({
-        start: startDate,
-        end: endDate,
-        period: 'day',
-        shop_domain: TW_SHOP_DOMAIN,
-      }),
-    });
+  const shopDomain = TW_SHOP_DOMAIN.trim();
+  console.log(`  Shop domain: ${shopDomain}`);
+  console.log(`  Date range: ${startDate} → ${endDate}`);
 
-    if (!res.ok) {
-      const text = await res.text();
-      console.error(`Triple Whale API error ${res.status}: ${text}`);
-      return null;
-    }
+  // Try both snake_case and camelCase field names (TW API has been inconsistent)
+  const requestBodies = [
+    { start: startDate, end: endDate, period: 'day', shopDomain },
+    { start: startDate, end: endDate, period: 'day', shop_domain: shopDomain },
+  ];
 
-    const data = await res.json();
-    
-    // Extract daily metrics
-    const days = [];
-    const dayData = data?.data || data?.summary || data;
-    
-    // The API returns data grouped by day — normalize to our format
-    if (Array.isArray(dayData)) {
-      for (const day of dayData) {
-        days.push({
-          date: day.date || day.day,
-          revenue: day.totalRevenue || day.total_revenue || 0,
-          orders: day.totalOrders || day.total_orders || 0,
-          adSpend: day.totalAdSpend || day.total_ad_spend || 0,
-          blendedRoas: day.blendedRoas || day.blended_roas || 0,
-          metaSpend: day.facebookSpend || day.facebook_spend || day.metaSpend || 0,
-          metaRoas: day.facebookRoas || day.facebook_roas || day.metaRoas || 0,
-          metaCpa: day.facebookCpa || day.facebook_cpa || day.metaCpa || 0,
-          metaCpm: day.facebookCpm || day.facebook_cpm || day.metaCpm || 0,
-        });
+  for (const body of requestBodies) {
+    try {
+      console.log(`  Trying request body: ${JSON.stringify(body)}`);
+      const res = await fetch('https://api.triplewhale.com/api/v2/summary-page/summary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': TW_API_KEY,
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.warn(`  Triple Whale attempt failed ${res.status}: ${text.slice(0, 200)}`);
+        continue;
       }
-    }
 
-    console.log(`  ✅ Got ${days.length} days of TW data`);
-    return days;
-  } catch (err) {
-    console.error('Triple Whale fetch failed:', err.message);
-    return null;
+      const data = await res.json();
+      console.log(`  Raw TW response keys: ${Object.keys(data).join(', ')}`);
+
+      // Extract daily metrics — handle multiple response shapes
+      const dayData = data?.data || data?.summary || data?.days || data?.metrics || data;
+
+      const days = [];
+      if (Array.isArray(dayData)) {
+        for (const day of dayData) {
+          days.push({
+            date: day.date || day.day,
+            revenue: day.totalRevenue ?? day.total_revenue ?? 0,
+            orders: day.totalOrders ?? day.total_orders ?? 0,
+            adSpend: day.totalAdSpend ?? day.total_ad_spend ?? 0,
+            blendedRoas: day.blendedRoas ?? day.blended_roas ?? 0,
+            metaSpend: day.facebookSpend ?? day.facebook_spend ?? day.metaSpend ?? day.meta_spend ?? 0,
+            metaRoas: day.facebookRoas ?? day.facebook_roas ?? day.metaRoas ?? day.meta_roas ?? 0,
+            metaCpa: day.facebookCpa ?? day.facebook_cpa ?? day.metaCpa ?? day.meta_cpa ?? 0,
+            metaCpm: day.facebookCpm ?? day.facebook_cpm ?? day.metaCpm ?? day.meta_cpm ?? 0,
+          });
+        }
+      } else if (dayData && typeof dayData === 'object') {
+        // Some versions return an object keyed by date
+        for (const [date, metrics] of Object.entries(dayData)) {
+          if (typeof metrics === 'object' && metrics !== null) {
+            days.push({
+              date,
+              revenue: metrics.totalRevenue ?? metrics.total_revenue ?? 0,
+              orders: metrics.totalOrders ?? metrics.total_orders ?? 0,
+              adSpend: metrics.totalAdSpend ?? metrics.total_ad_spend ?? 0,
+              blendedRoas: metrics.blendedRoas ?? metrics.blended_roas ?? 0,
+              metaSpend: metrics.facebookSpend ?? metrics.facebook_spend ?? metrics.metaSpend ?? 0,
+              metaRoas: metrics.facebookRoas ?? metrics.facebook_roas ?? metrics.metaRoas ?? 0,
+              metaCpa: metrics.facebookCpa ?? metrics.facebook_cpa ?? metrics.metaCpa ?? 0,
+              metaCpm: metrics.facebookCpm ?? metrics.facebook_cpm ?? metrics.metaCpm ?? 0,
+            });
+          }
+        }
+      }
+
+      console.log(`  ✅ Got ${days.length} days of TW data`);
+      return days;
+    } catch (err) {
+      console.warn(`  Triple Whale attempt threw: ${err.message}`);
+    }
   }
+
+  console.error('Triple Whale: all attempts failed');
+  return null;
 }
 
 // ============================================================
@@ -118,9 +148,8 @@ async function fetchGasPrices() {
   }
 
   try {
-    // Weekly US regular all formulations retail gasoline prices
     const url = `https://api.eia.gov/v2/petroleum/pri/gnd/data/?api_key=${EIA_API_KEY}&frequency=weekly&data[0]=value&facets[series][]=${encodeURIComponent('EMM_EPMR_PTE_NUS_DPG')}&sort[0][column]=period&sort[0][direction]=desc&length=12`;
-    
+
     const res = await fetch(url);
     if (!res.ok) {
       console.error(`EIA API error ${res.status}`);
@@ -145,47 +174,44 @@ async function fetchGasPrices() {
 // 4. STATUSGATOR — Meta Outage Incidents
 // ============================================================
 async function fetchOutages() {
-  console.log('🐊 Fetching StatusGator outage data...');
-  if (!STATUSGATOR_API_KEY) {
-    console.warn('⚠️  STATUSGATOR_API_KEY not set, trying public scrape...');
-    return await scrapeMetaStatus();
-  }
+  console.log('🐊 Fetching outage data...');
 
-  try {
-    const res = await fetch('https://api.statusgator.com/v2/services/meta/incidents', {
-      headers: { 'Authorization': `Bearer ${STATUSGATOR_API_KEY}` },
-    });
+  if (STATUSGATOR_API_KEY) {
+    try {
+      const res = await fetch('https://api.statusgator.com/v2/services/meta/incidents', {
+        headers: { 'Authorization': `Bearer ${STATUSGATOR_API_KEY}` },
+      });
 
-    if (!res.ok) {
-      console.warn(`StatusGator API error ${res.status}, falling back to scrape`);
-      return await scrapeMetaStatus();
+      if (res.ok) {
+        const data = await res.json();
+        const incidents = (data || [])
+          .filter(i => {
+            const d = new Date(i.created_at || i.started_at);
+            return d >= new Date(startDate) && d <= new Date(endDate + 'T23:59:59Z');
+          })
+          .map(i => ({
+            date: (i.created_at || i.started_at || '').split('T')[0],
+            title: i.title || i.name,
+            status: i.status,
+            service: i.service?.name || 'Meta',
+          }));
+        console.log(`  ✅ Got ${incidents.length} outage incidents from StatusGator`);
+        return incidents;
+      }
+      console.warn(`StatusGator API error ${res.status}, falling back to public sources`);
+    } catch (err) {
+      console.warn(`StatusGator fetch failed: ${err.message}`);
     }
-
-    const data = await res.json();
-    const incidents = (data || [])
-      .filter(i => {
-        const d = new Date(i.created_at || i.started_at);
-        return d >= new Date(startDate) && d <= new Date(endDate);
-      })
-      .map(i => ({
-        date: (i.created_at || i.started_at || '').split('T')[0],
-        title: i.title || i.name,
-        status: i.status,
-        service: i.service?.name || 'Meta',
-      }));
-
-    console.log(`  ✅ Got ${incidents.length} outage incidents`);
-    return incidents;
-  } catch (err) {
-    console.error('StatusGator fetch failed:', err.message);
-    return [];
+  } else {
+    console.warn('⚠️  STATUSGATOR_API_KEY not set, trying public sources...');
   }
+
+  return await scrapeMetaStatus();
 }
 
-// Fallback: scrape Meta's public status page
 async function scrapeMetaStatus() {
+  // Try Meta's developer status API
   try {
-    // Try Meta's developer status API first
     const devRes = await fetch('https://developers.facebook.com/status/summary/');
     if (devRes.ok) {
       const devData = await devRes.json();
@@ -205,18 +231,34 @@ async function scrapeMetaStatus() {
         return devIncidents;
       }
     }
-    // Fallback: metastatus.com
-    const msRes = await fetch('https://metastatus.com/');
-    if (msRes.ok) {
-      console.log(`  ℹ️  metastatus.com reachable but no JSON API — no incidents recorded`);
+  } catch (e) {
+    console.warn(`  developers.facebook.com failed: ${e.message}`);
+  }
+
+  // Try Meta's graph API status endpoint
+  try {
+    const graphRes = await fetch('https://www.metastatus.com/api/v2/summary.json');
+    if (graphRes.ok) {
+      const graphData = await graphRes.json();
+      const status = graphData?.status?.indicator;
+      if (status && status !== 'none') {
+        console.log(`  ✅ Got Meta status from metastatus.com: ${status}`);
+        return [{
+          date: endDate,
+          title: `Meta platform status: ${status}`,
+          status: graphData?.status?.description || status,
+          service: 'Meta',
+        }];
+      }
     }
   } catch (e) { /* silent */ }
-  console.warn('  ⚠️  No outage data available');
+
+  console.warn('  ⚠️  No outage data available from any public source');
   return [];
 }
 
 // ============================================================
-// 5. GEMINI API — Auto-curate Macro Events
+// 5. GEMINI API — Auto-curate Macro Events (with retry)
 // ============================================================
 async function fetchMacroEvents() {
   console.log('🌍 Generating macro events via Gemini API...');
@@ -244,41 +286,63 @@ For each event, provide:
 Respond ONLY with a valid JSON array, no markdown fences, no preamble:
 [{"date":"YYYY-MM-DD","description":"...","details":"...","intensity":1,"category":"wallet","icon":"💰","source":"..."}]`;
 
-  try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.3, maxOutputTokens: 2000 },
-          tools: [{ googleSearch: {} }],
-        }),
+  // Retry up to 3 times with exponential backoff on rate limit (429)
+  const models = ['gemini-2.0-flash', 'gemini-1.5-flash'];
+  for (const model of models) {
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        if (attempt > 1) {
+          const wait = attempt * 15000; // 15s, 30s
+          console.log(`  Retrying Gemini (attempt ${attempt}/3, waiting ${wait / 1000}s)...`);
+          await new Promise(r => setTimeout(r, wait));
+        }
+
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { temperature: 0.3, maxOutputTokens: 2000 },
+              tools: [{ googleSearch: {} }],
+            }),
+          }
+        );
+
+        if (res.status === 429) {
+          console.warn(`  Gemini ${model} rate limited (429), attempt ${attempt}/3`);
+          continue;
+        }
+
+        if (!res.ok) {
+          const errText = await res.text();
+          console.error(`Gemini ${model} error ${res.status}: ${errText.slice(0, 200)}`);
+          break; // Non-429 error — don't retry this model
+        }
+
+        const data = await res.json();
+        const text = data.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
+
+        const jsonMatch = text.match(/\[[\s\S]*\]/);
+        if (jsonMatch) {
+          const events = JSON.parse(jsonMatch[0]);
+          console.log(`  ✅ Got ${events.length} macro events (${model})`);
+          return events;
+        }
+
+        console.warn('  ⚠️  Could not parse macro events from Gemini response');
+        console.warn(`  Raw text: ${text.slice(0, 300)}`);
+        return null;
+      } catch (err) {
+        console.error(`Gemini ${model} attempt ${attempt} threw: ${err.message}`);
       }
-    );
-
-    if (!res.ok) {
-      console.error(`Gemini API error ${res.status}`);
-      return null;
     }
-
-    const data = await res.json();
-    const text = data.candidates[0].content.parts.map(p => p.text).join('');
-
-    const jsonMatch = text.match(/\[[\s\S]*\]/);
-    if (jsonMatch) {
-      const events = JSON.parse(jsonMatch[0]);
-      console.log(`  ✅ Got ${events.length} macro events`);
-      return events;
-    }
-
-    console.warn('  ⚠️  Could not parse macro events from Gemini response');
-    return null;
-  } catch (err) {
-    console.error('Gemini API fetch failed:', err.message);
-    return null;
+    console.warn(`  ${model} exhausted retries, trying next model...`);
   }
+
+  console.error('Gemini: all models and retries failed');
+  return null;
 }
 
 // ============================================================
