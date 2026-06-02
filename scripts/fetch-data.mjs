@@ -70,30 +70,56 @@ async function fetchTripleWhale() {
   }
 
   const data = await res.json();
-  console.log(`  Raw TW response type: ${Array.isArray(data) ? 'array['+data.length+']' : typeof data}`);
-  console.log(`  Raw TW sample: ${JSON.stringify(data).slice(0, 300)}`);
+  const metrics = data?.metrics;
+  if (!Array.isArray(metrics)) {
+    console.error(`  Unexpected TW response shape: ${JSON.stringify(data).slice(0, 200)}`);
+    return null;
+  }
 
-  // Response is [{metricName, value}] aggregates — or may be daily array, log to confirm
-  const dayData = data?.data || data?.summary || data?.days || (Array.isArray(data) ? data : null);
+  // Each metric has charts.current = [{x: dayOfYear, y: value}]
+  // x is 1-indexed day of year. Map back to calendar date using startDate's year.
+  const year = new Date(startDate).getFullYear();
+  const isLeap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 
-  const days = [];
-  if (Array.isArray(dayData)) {
-    for (const day of dayData) {
-      if (!day.date && !day.day) continue; // skip non-day entries
-      days.push({
-        date: day.date || day.day,
-        revenue: day.totalRevenue ?? day.total_revenue ?? day.revenue ?? 0,
-        orders: day.totalOrders ?? day.total_orders ?? day.orders ?? 0,
-        adSpend: day.totalAdSpend ?? day.total_ad_spend ?? day.adSpend ?? 0,
-        blendedRoas: day.blendedRoas ?? day.blended_roas ?? 0,
-        metaSpend: day.facebookSpend ?? day.facebook_spend ?? day.metaSpend ?? day.meta_spend ?? 0,
-        metaRoas: day.facebookRoas ?? day.facebook_roas ?? day.metaRoas ?? day.meta_roas ?? 0,
-        metaCpa: day.facebookCpa ?? day.facebook_cpa ?? day.metaCpa ?? day.meta_cpa ?? 0,
-        metaCpm: day.facebookCpm ?? day.facebook_cpm ?? day.metaCpm ?? day.meta_cpm ?? 0,
-      });
+  function dayOfYearToDate(doy) {
+    const d = new Date(year, 0, 1);
+    d.setDate(d.getDate() + doy - 1);
+    return d.toISOString().split('T')[0];
+  }
+
+  // Index metrics by metricId for easy lookup
+  const byId = {};
+  for (const m of metrics) {
+    byId[m.metricId || m.id] = m;
+  }
+  console.log(`  TW metric IDs: ${Object.keys(byId).join(', ')}`);
+
+  // Build day-indexed map
+  const dayMap = {};
+  function applyMetric(metricKey, field, transform) {
+    const m = byId[metricKey];
+    if (!m) return;
+    for (const pt of (m.charts?.current || [])) {
+      const date = dayOfYearToDate(pt.x);
+      if (date < startDate || date > endDate) continue;
+      if (!dayMap[date]) dayMap[date] = { date };
+      dayMap[date][field] = transform ? transform(pt.y) : (pt.y ?? 0);
     }
   }
 
+  applyMetric('totalSales', 'revenue');
+  applyMetric('totalOrders', 'orders');
+  applyMetric('totalAdSpend', 'adSpend');
+  applyMetric('blendedROAS', 'blendedRoas');
+  applyMetric('facebookSpend', 'metaSpend');
+  applyMetric('facebookROAS', 'metaRoas');
+  applyMetric('facebookCPA', 'metaCpa');
+  applyMetric('facebookCPM', 'metaCpm');
+  // Try alternate IDs
+  applyMetric('metaSpend', 'metaSpend');
+  applyMetric('metaROAS', 'metaRoas');
+
+  const days = Object.values(dayMap).sort((a, b) => a.date.localeCompare(b.date));
   console.log(`  ✅ Got ${days.length} days of TW data`);
   return days.length > 0 ? days : null;
 }
