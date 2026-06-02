@@ -47,96 +47,55 @@ async function fetchTripleWhale() {
   console.log(`  Shop domain: ${shopDomain}`);
   console.log(`  Date range: ${startDate} → ${endDate}`);
 
-  // Try multiple endpoint + auth + field name combinations (TW API has changed over time)
-  const attempts = [
-    {
-      url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': TW_API_KEY },
-      body: { start: startDate, end: endDate, period: 'day', shopDomain },
-    },
-    {
-      url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${TW_API_KEY}` },
-      body: { start: startDate, end: endDate, period: 'day', shopDomain },
-    },
-    {
-      url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': TW_API_KEY },
-      body: { start: startDate, end: endDate, period: 'day', shop_domain: shopDomain },
-    },
-    {
-      url: 'https://api.triplewhale.com/api/v2/summary-page/summary',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${TW_API_KEY}` },
-      body: { start: startDate, end: endDate, period: 'day', shop_domain: shopDomain },
-    },
-  ];
+  const todayHour = new Date().getUTCHours() + 1; // base-1, 1–25
 
-  for (const { url, headers, body } of attempts) {
-    try {
-      const authType = headers['x-api-key'] ? 'x-api-key' : 'Bearer';
-      const bodyKey = body.shopDomain ? 'shopDomain' : 'shop_domain';
-      console.log(`  Trying auth=${authType} bodyKey=${bodyKey}`);
-      const res = await fetch(url, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(body),
+  // Correct endpoint and body format per TW API v2 docs
+  const res = await fetch('https://api.triplewhale.com/api/v2/summary-page/get-data', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': TW_API_KEY,
+    },
+    body: JSON.stringify({
+      shopDomain,
+      period: { start: startDate, end: endDate },
+      todayHour,
+    }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error(`  Triple Whale API error ${res.status}: ${text.slice(0, 400)}`);
+    return null;
+  }
+
+  const data = await res.json();
+  console.log(`  Raw TW response type: ${Array.isArray(data) ? 'array['+data.length+']' : typeof data}`);
+  console.log(`  Raw TW sample: ${JSON.stringify(data).slice(0, 300)}`);
+
+  // Response is [{metricName, value}] aggregates — or may be daily array, log to confirm
+  const dayData = data?.data || data?.summary || data?.days || (Array.isArray(data) ? data : null);
+
+  const days = [];
+  if (Array.isArray(dayData)) {
+    for (const day of dayData) {
+      if (!day.date && !day.day) continue; // skip non-day entries
+      days.push({
+        date: day.date || day.day,
+        revenue: day.totalRevenue ?? day.total_revenue ?? day.revenue ?? 0,
+        orders: day.totalOrders ?? day.total_orders ?? day.orders ?? 0,
+        adSpend: day.totalAdSpend ?? day.total_ad_spend ?? day.adSpend ?? 0,
+        blendedRoas: day.blendedRoas ?? day.blended_roas ?? 0,
+        metaSpend: day.facebookSpend ?? day.facebook_spend ?? day.metaSpend ?? day.meta_spend ?? 0,
+        metaRoas: day.facebookRoas ?? day.facebook_roas ?? day.metaRoas ?? day.meta_roas ?? 0,
+        metaCpa: day.facebookCpa ?? day.facebook_cpa ?? day.metaCpa ?? day.meta_cpa ?? 0,
+        metaCpm: day.facebookCpm ?? day.facebook_cpm ?? day.metaCpm ?? day.meta_cpm ?? 0,
       });
-
-      if (!res.ok) {
-        const text = await res.text();
-        console.warn(`  Triple Whale attempt failed ${res.status}: ${text.slice(0, 200)}`);
-        continue;
-      }
-
-      const data = await res.json();
-      console.log(`  Raw TW response keys: ${Object.keys(data).join(', ')}`);
-
-      // Extract daily metrics — handle multiple response shapes
-      const dayData = data?.data || data?.summary || data?.days || data?.metrics || data;
-
-      const days = [];
-      if (Array.isArray(dayData)) {
-        for (const day of dayData) {
-          days.push({
-            date: day.date || day.day,
-            revenue: day.totalRevenue ?? day.total_revenue ?? 0,
-            orders: day.totalOrders ?? day.total_orders ?? 0,
-            adSpend: day.totalAdSpend ?? day.total_ad_spend ?? 0,
-            blendedRoas: day.blendedRoas ?? day.blended_roas ?? 0,
-            metaSpend: day.facebookSpend ?? day.facebook_spend ?? day.metaSpend ?? day.meta_spend ?? 0,
-            metaRoas: day.facebookRoas ?? day.facebook_roas ?? day.metaRoas ?? day.meta_roas ?? 0,
-            metaCpa: day.facebookCpa ?? day.facebook_cpa ?? day.metaCpa ?? day.meta_cpa ?? 0,
-            metaCpm: day.facebookCpm ?? day.facebook_cpm ?? day.metaCpm ?? day.meta_cpm ?? 0,
-          });
-        }
-      } else if (dayData && typeof dayData === 'object') {
-        // Some versions return an object keyed by date
-        for (const [date, metrics] of Object.entries(dayData)) {
-          if (typeof metrics === 'object' && metrics !== null) {
-            days.push({
-              date,
-              revenue: metrics.totalRevenue ?? metrics.total_revenue ?? 0,
-              orders: metrics.totalOrders ?? metrics.total_orders ?? 0,
-              adSpend: metrics.totalAdSpend ?? metrics.total_ad_spend ?? 0,
-              blendedRoas: metrics.blendedRoas ?? metrics.blended_roas ?? 0,
-              metaSpend: metrics.facebookSpend ?? metrics.facebook_spend ?? metrics.metaSpend ?? 0,
-              metaRoas: metrics.facebookRoas ?? metrics.facebook_roas ?? metrics.metaRoas ?? 0,
-              metaCpa: metrics.facebookCpa ?? metrics.facebook_cpa ?? metrics.metaCpa ?? 0,
-              metaCpm: metrics.facebookCpm ?? metrics.facebook_cpm ?? metrics.metaCpm ?? 0,
-            });
-          }
-        }
-      }
-
-      console.log(`  ✅ Got ${days.length} days of TW data`);
-      return days;
-    } catch (err) {
-      console.warn(`  Triple Whale attempt threw: ${err.message}`);
     }
   }
 
-  console.error('Triple Whale: all attempts failed');
-  return null;
+  console.log(`  ✅ Got ${days.length} days of TW data`);
+  return days.length > 0 ? days : null;
 }
 
 // ============================================================
