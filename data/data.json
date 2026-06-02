@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updatedAt": "2026-06-02T21:34:11.544Z",
+    "updatedAt": "2026-06-02T21:40:20.949Z",
     "dateRange": {
       "start": "2026-05-03",
       "end": "2026-06-01"
@@ -9,191 +9,149 @@
   },
   "tripleWhale": [
     {
-      "date": "2026-05-01",
-      "revenue": 18562.02,
-      "orders": 234,
-      "adSpend": 5245.03,
-      "blendedRoas": 3.54,
-      "metaSpend": 3357.75,
-      "metaRoas": 2.63,
-      "metaCpa": 26.86,
-      "metaCpm": 10.14
-    },
-    {
-      "date": "2026-05-02",
-      "revenue": 22876.44,
-      "orders": 283,
-      "adSpend": 5895.97,
-      "blendedRoas": 3.88,
-      "metaSpend": 3720.76,
-      "metaRoas": 3.07,
-      "metaCpa": 26.02,
-      "metaCpm": 10.67
-    },
-    {
       "date": "2026-05-03",
-      "revenue": 21959.54,
-      "orders": 272,
-      "adSpend": 6100.05,
-      "blendedRoas": 3.6,
-      "metaSpend": 4107.81,
-      "metaRoas": 2.88,
-      "metaCpa": 26.5,
-      "metaCpm": 10
+      "revenue": 21959.540000000008,
+      "orders": 272
     },
     {
       "date": "2026-05-04",
-      "revenue": 19485.18,
-      "orders": 248,
-      "adSpend": 6029.41,
-      "blendedRoas": 3.23,
-      "metaSpend": 3943.91,
-      "metaRoas": 2.85,
-      "metaCpa": 25.28,
-      "metaCpm": 9.08
+      "revenue": 19485.18000000001,
+      "orders": 248
     },
     {
       "date": "2026-05-05",
-      "revenue": 19330.01,
-      "orders": 250,
-      "adSpend": 5644.03,
-      "blendedRoas": 3.42,
-      "metaSpend": 3529.42,
-      "metaRoas": 3.19,
-      "metaCpa": 23.37,
-      "metaCpm": 9.44
+      "revenue": 19330.01000000002,
+      "orders": 250
     },
     {
       "date": "2026-05-06",
-      "revenue": 28886.73,
-      "orders": 372,
-      "adSpend": 6206.82,
-      "blendedRoas": 4.65,
-      "metaSpend": 3990.34,
-      "metaRoas": 3.49,
-      "metaCpa": 21.69,
-      "metaCpm": 10.42
+      "revenue": 28886.730000000014,
+      "orders": 372
     },
     {
       "date": "2026-05-07",
       "revenue": 16591.04,
-      "orders": 224,
-      "adSpend": 5116.15,
-      "blendedRoas": 3.24,
-      "metaSpend": 3332.38,
-      "metaRoas": 2.9,
-      "metaCpa": 25.63,
-      "metaCpm": 10.2
+      "orders": 224
     },
     {
       "date": "2026-05-08",
-      "revenue": 16854.45,
-      "orders": 206,
-      "adSpend": 5624.14,
-      "blendedRoas": 3,
-      "metaSpend": 3733.01,
-      "metaRoas": 2.67,
-      "metaCpa": 31.37,
-      "metaCpm": 10.15
+      "revenue": 16854.449999999993,
+      "orders": 206
     },
     {
       "date": "2026-05-09",
-      "revenue": 24395.44,
-      "orders": 285,
-      "adSpend": 5757.8,
-      "blendedRoas": 4.24,
-      "metaSpend": 3640.37,
-      "metaRoas": 2.98,
-      "metaCpa": 27.17,
-      "metaCpm": 10.73
+      "revenue": 24395.440000000024,
+      "orders": 285
     },
     {
       "date": "2026-05-10",
-      "revenue": 26105.7,
-      "orders": 319,
-      "adSpend": 6448.71,
-      "blendedRoas": 4.05,
-      "metaSpend": 3978.84,
-      "metaRoas": 3.31,
-      "metaCpa": 25.02,
-      "metaCpm": 9.54
+      "revenue": 26105.69999999999,
+      "orders": 319
     },
     {
       "date": "2026-05-11",
-      "revenue": 19075.07,
-      "orders": 270,
-      "adSpend": 5987.69,
-      "blendedRoas": 3.19,
-      "metaSpend": 3844.6,
-      "metaRoas": 3.05,
-      "metaCpa": 23.59,
-      "metaCpm": 9.52
+      "revenue": 19075.07000000001,
+      "orders": 270
     },
     {
       "date": "2026-05-12",
-      "revenue": 16737.76,
-      "orders": 206,
-      "adSpend": 5524.44,
-      "blendedRoas": 3.03,
-      "metaSpend": 3563.8,
-      "metaRoas": 2.13,
-      "metaCpa": 33.62,
-      "metaCpm": 11.05
+      "revenue": 16737.760000000002,
+      "orders": 206
     },
     {
       "date": "2026-05-13",
-      "revenue": 19783.52,
-      "orders": 245,
-      "adSpend": 5535.09,
-      "blendedRoas": 3.57,
-      "metaSpend": 3559.92,
-      "metaRoas": 2.67,
-      "metaCpa": 27.81,
-      "metaCpm": 9.86
+      "revenue": 19783.520000000004,
+      "orders": 245
     },
     {
       "date": "2026-05-14",
       "revenue": 14038.89,
-      "orders": 188,
-      "adSpend": 5171.04,
-      "blendedRoas": 2.71,
-      "metaSpend": 3305.51,
-      "metaRoas": 2.52,
-      "metaCpa": 28.74,
-      "metaCpm": 9.29
+      "orders": 188
     },
     {
       "date": "2026-05-15",
-      "revenue": 12929.24,
-      "orders": 166,
-      "adSpend": 4950.73,
-      "blendedRoas": 2.61,
-      "metaSpend": 3080.52,
-      "metaRoas": 2.25,
-      "metaCpa": 35.82,
-      "metaCpm": 8.74
+      "revenue": 12937.999999999998,
+      "orders": 166
     },
     {
       "date": "2026-05-16",
-      "revenue": 16599.96,
-      "orders": 214,
-      "adSpend": 5067.51,
-      "blendedRoas": 3.28,
-      "metaSpend": 3258.61,
-      "metaRoas": 2.47,
-      "metaCpa": 29.62,
-      "metaCpm": 9.38
+      "revenue": 16720.209999999995,
+      "orders": 215
     },
     {
       "date": "2026-05-17",
-      "revenue": 19271.71,
-      "orders": 241,
-      "adSpend": 5878.49,
-      "blendedRoas": 3.28,
-      "metaSpend": 3669.52,
-      "metaRoas": 3.01,
-      "metaCpa": 27.38,
-      "metaCpm": 9.02
+      "revenue": 20373.51999999999,
+      "orders": 246
+    },
+    {
+      "date": "2026-05-18",
+      "revenue": 15320.389999999992,
+      "orders": 196
+    },
+    {
+      "date": "2026-05-19",
+      "revenue": 15476.330000000004,
+      "orders": 180
+    },
+    {
+      "date": "2026-05-20",
+      "revenue": 21925.28000000001,
+      "orders": 285
+    },
+    {
+      "date": "2026-05-21",
+      "revenue": 18761.840000000022,
+      "orders": 231
+    },
+    {
+      "date": "2026-05-22",
+      "revenue": 17522.590000000004,
+      "orders": 248
+    },
+    {
+      "date": "2026-05-23",
+      "revenue": 20133.660000000014,
+      "orders": 269
+    },
+    {
+      "date": "2026-05-24",
+      "revenue": 18633.890000000003,
+      "orders": 261
+    },
+    {
+      "date": "2026-05-25",
+      "revenue": 16589.410000000007,
+      "orders": 224
+    },
+    {
+      "date": "2026-05-26",
+      "revenue": 14994.289999999994,
+      "orders": 196
+    },
+    {
+      "date": "2026-05-27",
+      "revenue": 17858.39999999999,
+      "orders": 245
+    },
+    {
+      "date": "2026-05-28",
+      "revenue": 18159.00000000001,
+      "orders": 254
+    },
+    {
+      "date": "2026-05-29",
+      "revenue": 11672.759999999997,
+      "orders": 153
+    },
+    {
+      "date": "2026-05-30",
+      "revenue": 14947.000000000002,
+      "orders": 196
+    },
+    {
+      "date": "2026-05-31",
+      "revenue": 22801.53000000001,
+      "orders": 295
     }
   ],
   "breezeway": [
