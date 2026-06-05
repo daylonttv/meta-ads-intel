@@ -304,7 +304,6 @@ Respond ONLY with a valid JSON array, no markdown fences, no preamble:
             body: JSON.stringify({
               contents: [{ parts: [{ text: prompt }] }],
               generationConfig: { temperature: 0.3, maxOutputTokens: 2000 },
-              tools: [{ googleSearch: {} }],
             }),
           }
         );
