@@ -413,7 +413,7 @@ function checkPw(){
   </div>
   <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> Why track this?</button>
   <div class="collapse">
-    <div class="ax" style="margin-top:0">When something big happens in the world, it affects our ads in two ways. First, people's Facebook and Instagram feeds fill up with news, outrage, and commentary — which means they're doomscrolling instead of shopping. Second, economic events (gas prices, inflation reports, tariff news) directly affect whether people feel comfortable spending on non-essentials like specialty cheese. This section tracks both: what was dominating feeds and what was hitting wallets.</div>
+    <div class="ax" style="margin-top:0">When something big happens in the world, it affects our ads in two ways. First, people's Facebook and Instagram feeds fill up with news, outrage, and commentary — doomscrolling displaces product discovery. Ad impressions still serve but <strong>conversion intent drops</strong>. Second, economic events (gas prices, inflation, tariff news) affect whether people feel comfortable spending on non-essentials. A <span style="color:var(--r)">↓ suppresses spending</span> tag means the event was a mood/wallet negative. A <span style="color:var(--g)">↑ boosts spending</span> tag means gift intent was elevated. The <span style="color:var(--b)">📱 HIGH</span> badge means feeds were saturated for 2+ days. Green vertical lines on charts = gift-giving holidays.</div>
   </div>
   <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
     <span style="font-size:.6rem;color:var(--t3);font-family:var(--mono)">ROAS VIEW:</span>
@@ -424,6 +424,24 @@ function checkPw(){
     <div class="c chart-card">
       <div id="macroChartTitle" style="font-size:.52rem;color:var(--t3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;padding-bottom:6px">Event Timeline × Gardner's Daily Meta ROAS</div>
       <div class="chart-wrap"><canvas id="macroChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- GOOGLE TRENDS -->
+  <div id="trendsSection" style="display:none;margin-top:10px">
+    <div style="text-align:center;margin-bottom:8px">
+      <button id="trendsBtn" onclick="toggleTrends()" style="padding:8px 18px;border-radius:8px;border:1px solid var(--b);background:var(--bd);color:var(--b);font-family:var(--sans);font-size:.72rem;font-weight:600;cursor:pointer;transition:all .15s">📈 Show Google Search Interest</button>
+    </div>
+    <div id="trendsWrap" style="display:none">
+      <div class="macro-chart-wrap">
+        <div class="c chart-card">
+          <div style="font-size:.52rem;color:var(--t3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:0 10px 6px">Search interest: "Wisconsin Cheese" &amp; "Cheese Gift" — Google Trends (0–100)</div>
+          <div class="chart-wrap"><canvas id="trendsChart"></canvas></div>
+        </div>
+      </div>
+      <div class="ax" style="margin-top:8px">
+        <strong>Search interest index (0–100)</strong> shows how often these terms were searched relative to the peak in this period. Rising "cheese gift" interest ahead of a holiday predicts better ROAS — people are actively looking for gift ideas. A spike in "Wisconsin cheese" that doesn't accompany a gift occasion may indicate brand awareness lift from a prior campaign.
+      </div>
     </div>
   </div>
 
@@ -450,7 +468,7 @@ function checkPw(){
   </div>
 
   <div class="c" style="padding:12px">
-    <div style="font-size:.6rem;color:var(--t3);font-family:var(--mono);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px">💰 = WALLET IMPACT · 📱 = FEED DOMINATION · 🔴 = PLATFORM ISSUE</div>
+    <div style="font-size:.55rem;color:var(--t3);font-family:var(--mono);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px;line-height:1.9">💰 WALLET · 📱 FEED · 🔴 PLATFORM · 🗓️ SEASONAL &nbsp;·&nbsp; <span style="color:var(--r)">↓ spending</span> = mood suppressor &nbsp;·&nbsp; <span style="color:var(--g)">↑ spending</span> = gift/positive intent &nbsp;·&nbsp; <span style="color:var(--b)">📱 HIGH</span> = feed saturated 2+ days</div>
     <div id="macroTimeline" style="display:flex;flex-direction:column;gap:6px"><!-- populated by JS --></div>
   </div>
 
@@ -529,6 +547,8 @@ const bwRaw = RAW.breezeway || [];
 const gasPricesRaw = RAW.gasPrices || [];
 const outagesRaw = RAW.outages || [];
 const macroRaw = RAW.macroEvents || [];
+const holidaysRaw = RAW.holidays || [];
+const trendsRaw = RAW.googleTrends || [];
 const meta = RAW.meta || {};
 
 // ===== MERGE TW + BREEZEWAY =====
@@ -562,14 +582,56 @@ document.getElementById('footer').innerHTML = `Last updated: ${updatedAt}<br>
   Benchmarks: Polar, Varos, MHI, Ryze AI · Charts: Chart.js 4.4 · Design: Open Props 2.0`;
 
 const macroEl = document.getElementById('macroTimeline');
-macroEl.innerHTML = macroRaw.length ? macroRaw.map(e => {
-  const cls = e.intensity>=3?'':e.intensity>=2?'w':'ok';
-  const borderColor = e.intensity>=3?'var(--r)':e.intensity>=2?'var(--a)':'var(--p)';
+// Merge Gemini macro events + hardcoded holidays, sorted by date
+const allTimelineItems = [
+  ...macroRaw.map(e => ({...e, _type:'event'})),
+  ...holidaysRaw.map(h => ({
+    _type: 'holiday',
+    date: h.date,
+    description: h.name,
+    icon: h.icon,
+    category: 'seasonal',
+    intensity: h.boost ? 2 : 1,
+    mood_impact: h.mood_impact || 'neutral',
+    feed_dominance: 'low',
+    source: 'Retail Calendar',
+    details: h.boost
+      ? `${h.name} is a key gift-giving occasion on the US retail calendar. For a specialty food gifting brand like Gardner's, expect elevated purchase intent in the 7–14 days leading up to this date as shoppers look for premium food gifts. Meta ROAS typically rises before major gifting holidays as high-intent audiences self-select. Budget toward this window if inventory allows.`
+      : `${h.name} is a US cultural holiday that may affect consumer attention and social feed content. While not a primary gift-giving occasion for specialty cheese, feed activity changes around major holidays can affect ad delivery and CTR.`,
+  }))
+].sort((a,b) => a.date.localeCompare(b.date));
+
+function moodBadge(mood) {
+  if (mood === 'suppresses_spending') return '<span style="font-size:.48rem;padding:2px 6px;border-radius:4px;background:rgba(239,107,99,.15);color:var(--r);margin-left:5px;white-space:nowrap;flex-shrink:0">↓ spending</span>';
+  if (mood === 'boosts_spending') return '<span style="font-size:.48rem;padding:2px 6px;border-radius:4px;background:rgba(48,216,164,.12);color:var(--g);margin-left:5px;white-space:nowrap;flex-shrink:0">↑ spending</span>';
+  return '';
+}
+function feedBadge(dom) {
+  if (dom === 'high') return '<span style="font-size:.48rem;padding:2px 6px;border-radius:4px;background:rgba(94,157,247,.12);color:var(--b);margin-left:4px;white-space:nowrap;flex-shrink:0">📱 HIGH</span>';
+  if (dom === 'medium') return '<span style="font-size:.48rem;padding:2px 6px;border-radius:4px;background:rgba(94,157,247,.07);color:var(--b);margin-left:4px;white-space:nowrap;flex-shrink:0">📱 MED</span>';
+  return '';
+}
+
+macroEl.innerHTML = allTimelineItems.length ? allTimelineItems.map(e => {
+  const isHoliday = e._type === 'holiday';
+  const mood = e.mood_impact || 'neutral';
+  const dom = e.feed_dominance || 'low';
+  let borderColor, cls;
+  if (isHoliday) {
+    borderColor = e.boost || mood === 'boosts_spending' ? 'var(--g)' : 'var(--border)';
+    cls = 'ok';
+  } else {
+    borderColor = mood === 'suppresses_spending' ? 'var(--r)' : mood === 'boosts_spending' ? 'var(--g)' : (e.intensity>=3 ? 'var(--r)' : e.intensity>=2 ? 'var(--a)' : 'var(--p)');
+    cls = mood === 'suppresses_spending' ? '' : mood === 'boosts_spending' ? 'ok' : (e.intensity>=3 ? '' : e.intensity>=2 ? 'w' : 'ok');
+  }
   const dateLabel = e.date ? e.date.split('-').slice(1).map(s=>parseInt(s)).join('/') : '';
-  const detail = e.details || 'No additional context available for this event.';
+  const detail = e.details || 'No additional context available.';
+  const badges = moodBadge(mood) + feedBadge(dom);
   return `<div class="oi ${cls} me-row" style="border-left-color:${borderColor};display:block;cursor:pointer;padding:8px 12px" onclick="this.classList.toggle('me-open');this.querySelector('.me-expand').classList.toggle('open')">
-    <div style="display:flex;gap:10px;align-items:flex-start">
-      <span class="od">${dateLabel}</span><span style="flex:1">${e.icon||''} ${e.description}</span><span class="os" style="display:flex;align-items:center;gap:2px">${e.source||''}&nbsp;<span class="me-chev">▶</span></span>
+    <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">
+      <span class="od" style="flex-shrink:0">${dateLabel}</span>
+      <span style="flex:1;min-width:0">${e.icon||''} ${e.description}</span>
+      <span style="display:flex;align-items:center;gap:2px;flex-shrink:0;flex-wrap:wrap">${badges}<span class="os" style="margin-left:4px">${e.source||''}&nbsp;<span class="me-chev">▶</span></span></span>
     </div>
     <div class="me-expand"><div class="me-expand-inner">${detail}</div></div>
   </div>`;
@@ -591,9 +653,43 @@ const roasAxisColor='#93c5fd', lineColor='#7bb8ff';
 const ptR=isWide?8:isDesktop?7:5, ptHR=isWide?11:9, ptBW=isWide?3:2.5;
 
 // ===== MODULE-LEVEL STATE (set by render, used by setRoasView/buildFuelChart) =====
-let revChartInst=null, cpaChartInst=null, macroChartInst=null, fuelChartInst=null;
-let currentRoasView='meta', fuelVisible=false;
+let revChartInst=null, cpaChartInst=null, macroChartInst=null, fuelChartInst=null, trendsChartInst=null;
+let currentRoasView='meta', fuelVisible=false, trendsVisible=false;
 let DAYS=[], metaRoas=[], blendedRoas=[], ptC=[], blendedPtC=[], mrMin=1, mrMax=5, chartLabels=[], gasDaily=[];
+
+// ===== HOLIDAY LINE PLUGIN =====
+// Draws vertical dashed lines + emoji labels on all charts for holidays in range
+const holidayLinePlugin = {
+  id: 'holidayLines',
+  afterDraw(chart) {
+    if (!holidaysRaw.length || !DAYS.length) return;
+    const { ctx, chartArea, scales } = chart;
+    if (!scales.x || !chartArea) return;
+    ctx.save();
+    holidaysRaw.forEach(h => {
+      const idx = DAYS.findIndex(d => d.date === h.date);
+      if (idx < 0) return;
+      const x = scales.x.getPixelForValue(idx);
+      if (x < chartArea.left || x > chartArea.right) return;
+      const isBoost = h.mood_impact === 'boosts_spending' || h.boost;
+      ctx.strokeStyle = isBoost ? 'rgba(48,216,164,.35)' : 'rgba(94,157,247,.2)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 3]);
+      ctx.beginPath();
+      ctx.moveTo(x, chartArea.top);
+      ctx.lineTo(x, chartArea.bottom);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font = `${isDesktop ? 9 : 8}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.globalAlpha = 0.75;
+      ctx.fillText(h.icon, x, chartArea.top + 10);
+      ctx.globalAlpha = 1;
+    });
+    ctx.restore();
+  }
+};
+Chart.register(holidayLinePlugin);
 
 // ===== GAS INTERPOLATION =====
 function interpolateGas(weeklyPrices, days) {
@@ -617,9 +713,12 @@ function render(days) {
   const avg = (arr,key) => arr.length ? arr.reduce((s,d)=>s+d[key],0)/arr.length : 0;
 
   // Destroy existing charts
-  [revChartInst,cpaChartInst,macroChartInst].forEach(c=>{if(c)c.destroy();});
+  [revChartInst,cpaChartInst,macroChartInst,trendsChartInst].forEach(c=>{if(c)c.destroy();});
   if (fuelChartInst) { fuelChartInst.destroy(); fuelChartInst=null; }
-  revChartInst=cpaChartInst=macroChartInst=null;
+  revChartInst=cpaChartInst=macroChartInst=trendsChartInst=null;
+  // Show Google Trends section only when we have data
+  const trendsSecEl = document.getElementById('trendsSection');
+  if (trendsSecEl) trendsSecEl.style.display = trendsRaw.length ? 'block' : 'none';
 
   const normalDays = days.filter(d=>d.s==='n');
   const badDays = days.filter(d=>d.s!=='n');
@@ -716,8 +815,24 @@ function render(days) {
   const majorEvents = macroRaw.filter(e=>e.intensity>=3&&datesInRange.has(e.date));
   const walletEvents = macroRaw.filter(e=>e.category==='wallet'&&datesInRange.has(e.date));
   const feedEvents = macroRaw.filter(e=>e.category==='feed'&&datesInRange.has(e.date));
+  const suppressEvents = macroRaw.filter(e=>e.mood_impact==='suppresses_spending'&&datesInRange.has(e.date));
+  const boostEvents = macroRaw.filter(e=>e.mood_impact==='boosts_spending'&&datesInRange.has(e.date));
+  const highFeed = macroRaw.filter(e=>e.feed_dominance==='high'&&datesInRange.has(e.date));
+  const holidaysInView = holidaysRaw.filter(h=>datesInRange.has(h.date));
+  const boostHolidays = holidaysInView.filter(h=>h.boost||h.mood_impact==='boosts_spending');
+  let macroSummary = '';
+  if (macroRaw.length) {
+    const parts = [];
+    if (majorEvents.length) parts.push(`<strong>${majorEvents.length} major event${majorEvents.length!==1?'s':''}</strong>`);
+    if (suppressEvents.length) parts.push(`<strong style="color:var(--r)">${suppressEvents.length} spending-suppressing</strong>`);
+    if (boostEvents.length||boostHolidays.length) parts.push(`<strong style="color:var(--g)">${boostEvents.length+boostHolidays.length} spending-boosting</strong>`);
+    if (highFeed.length) parts.push(`<strong>${highFeed.length} high-dominance feed event${highFeed.length!==1?'s':''}</strong>`);
+    macroSummary = parts.length
+      ? `${parts.join(', ')} in this period across ${walletEvents.length} wallet-impact and ${feedEvents.length} feed-domination signals. Days with suppressing events and platform instability together typically show the worst ROAS.`
+      : `${walletEvents.length} wallet-impact and ${feedEvents.length} feed-domination events this period.`;
+  }
   document.getElementById('macroAnalysis').innerHTML = macroRaw.length
-    ? `<strong>${majorEvents.length} major events</strong> occurred during this period: ${walletEvents.length} wallet-impact, ${feedEvents.length} feed-domination. The worst performance days tend to cluster around high-intensity macro events combined with platform instability.`
+    ? macroSummary
     : '<em>Macro analysis will appear after the first data refresh.</em>';
 
   // Reliability
@@ -825,6 +940,7 @@ function render(days) {
   });
 
   if (fuelVisible) buildFuelChart();
+  if (trendsVisible) buildTrendsChart();
 }
 
 // ===== DATE RANGE SELECTOR =====
@@ -936,6 +1052,51 @@ function buildFuelChart(){
       scales
     }
   });
+}
+
+// ===== GOOGLE TRENDS CHART =====
+function buildTrendsChart() {
+  if (!trendsRaw.length || !DAYS.length) return;
+  const kw1 = DAYS.map(d => { const pt=trendsRaw.find(t=>t.date===d.date); return pt ? (pt['wisconsin cheese']??null) : null; });
+  const kw2 = DAYS.map(d => { const pt=trendsRaw.find(t=>t.date===d.date); return pt ? (pt['cheese gift']??null) : null; });
+  if (trendsChartInst) { trendsChartInst.destroy(); trendsChartInst=null; }
+  trendsChartInst = new Chart(document.getElementById('trendsChart'),{
+    type:'line',
+    data:{labels:chartLabels,datasets:[
+      {label:'Wisconsin Cheese',data:kw1,borderColor:'#5e9df7',backgroundColor:'rgba(94,157,247,.1)',fill:true,tension:.35,pointRadius:ptR-1,pointBackgroundColor:'#5e9df7',pointBorderColor:'#fff',pointBorderWidth:ptBW,borderWidth:2.5,spanGaps:true},
+      {label:'Cheese Gift',data:kw2,borderColor:'#a78bfa',backgroundColor:'rgba(167,139,250,.07)',fill:true,tension:.35,pointRadius:ptR-1,pointBackgroundColor:'#a78bfa',pointBorderColor:'#fff',pointBorderWidth:ptBW,borderWidth:2.5,spanGaps:true}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:cPad},interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
+        tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,
+          callbacks:{label:ctx=>`  ${ctx.dataset.label}: ${ctx.parsed.y!==null?ctx.parsed.y+'/100':'—'}`}
+        }
+      },
+      scales:{
+        x:{ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},maxRotation:0,padding:4},grid:{color:cGridColor}},
+        y:{min:0,max:100,ticks:{color:cTickColor,font:{family:'IBM Plex Mono',size:cFont},callback:v=>v,padding:tickPad},grid:{color:cGridLight},afterFit:forceAxisWidth(leftAxisWidth)}
+      }
+    }
+  });
+}
+
+// ===== TRENDS TOGGLE =====
+function toggleTrends(){
+  const wrap=document.getElementById('trendsWrap');
+  const btn=document.getElementById('trendsBtn');
+  if(wrap.style.display==='none'){
+    trendsVisible=true;
+    wrap.style.display='block';
+    btn.textContent='📈 Hide Google Search Interest';
+    btn.style.background='rgba(94,157,247,.2)';
+    if(!trendsChartInst) buildTrendsChart();
+  } else {
+    trendsVisible=false;
+    wrap.style.display='none';
+    btn.textContent='📈 Show Google Search Interest';
+    btn.style.background='var(--bd)';
+  }
 }
 
 // ===== MOBILE HANDLERS =====

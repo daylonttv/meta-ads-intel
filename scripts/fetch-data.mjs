@@ -4,10 +4,12 @@
  *
  * Sources:
  *  1. Triple Whale Summary API — daily revenue, spend, ROAS, CPA, CPM, orders
- *  2. Breezeway Bad Day Detector — scrape for platform health status
+ *  2. Breezeway Bad Day Detector — platform health across ~45 DTC brands
  *  3. EIA API — weekly US gas prices
  *  4. StatusGator — Meta platform outage incidents
- *  5. Gemini API + web search — auto-curated macro events
+ *  5. Gemini API — macro events with feed-domination + mood-impact classification
+ *  6. Google Trends (unofficial) — "wisconsin cheese" + "cheese gift" search interest
+ *  7. Holiday Calendar — hardcoded retail + gifting calendar for the date range
  */
 
 import { mkdir, writeFile, readFile } from 'fs/promises';
@@ -34,6 +36,98 @@ const monthLabel = now.toLocaleString('en-US', { month: 'long', year: 'numeric' 
 console.log(`📊 Fetching data for ${startDate} to ${endDate}`);
 
 // ============================================================
+// HOLIDAY CALENDAR — no API needed, always fresh
+// ============================================================
+function computeHolidaysForYear(year) {
+  function nthWeekday(y, month, n, dow) {
+    const d = new Date(y, month, 1);
+    let count = 0;
+    while (d.getMonth() === month) {
+      if (d.getDay() === dow) { count++; if (count === n) return new Date(d); }
+      d.setDate(d.getDate() + 1);
+    }
+    return null;
+  }
+  function lastWeekday(y, month, dow) {
+    const d = new Date(y, month + 1, 0);
+    while (d.getDay() !== dow) d.setDate(d.getDate() - 1);
+    return d;
+  }
+  function fmt(d) { return d.toISOString().split('T')[0]; }
+
+  // Anonymous Gregorian algorithm for Easter
+  function easter(y) {
+    const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25);
+    const g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4;
+    const l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451);
+    const month=Math.floor((h+l-7*m+114)/31)-1,day=((h+l-7*m+114)%31)+1;
+    return new Date(y, month, day);
+  }
+
+  const thx = nthWeekday(year, 10, 4, 4);
+  const blackFriday = new Date(thx); blackFriday.setDate(thx.getDate() + 1);
+  const cyberMonday = new Date(blackFriday); cyberMonday.setDate(blackFriday.getDate() + 3);
+
+  return [
+    { date: `${year}-01-01`, name: "New Year's Day", icon: '🎆', mood_impact: 'neutral', boost: false },
+    { date: `${year}-02-14`, name: "Valentine's Day", icon: '💝', mood_impact: 'boosts_spending', boost: true },
+    { date: `${year}-03-17`, name: "St. Patrick's Day", icon: '🍀', mood_impact: 'neutral', boost: false },
+    { date: fmt(easter(year)), name: 'Easter', icon: '🐣', mood_impact: 'boosts_spending', boost: true },
+    { date: fmt(nthWeekday(year, 4, 2, 0)), name: "Mother's Day", icon: '💐', mood_impact: 'boosts_spending', boost: true },
+    { date: fmt(lastWeekday(year, 4, 1)), name: 'Memorial Day', icon: '🏳️', mood_impact: 'neutral', boost: false },
+    { date: fmt(nthWeekday(year, 5, 3, 0)), name: "Father's Day", icon: '👔', mood_impact: 'boosts_spending', boost: true },
+    { date: `${year}-07-04`, name: 'Independence Day', icon: '🎆', mood_impact: 'neutral', boost: false },
+    { date: fmt(nthWeekday(year, 8, 1, 1)), name: 'Labor Day', icon: '🏷️', mood_impact: 'neutral', boost: false },
+    { date: `${year}-10-31`, name: 'Halloween', icon: '🎃', mood_impact: 'neutral', boost: false },
+    { date: fmt(thx), name: 'Thanksgiving', icon: '🦃', mood_impact: 'boosts_spending', boost: true },
+    { date: fmt(blackFriday), name: 'Black Friday', icon: '🛒', mood_impact: 'boosts_spending', boost: true },
+    { date: fmt(cyberMonday), name: 'Cyber Monday', icon: '💻', mood_impact: 'boosts_spending', boost: true },
+    { date: `${year}-12-25`, name: 'Christmas Day', icon: '🎄', mood_impact: 'boosts_spending', boost: true },
+    { date: `${year}-12-31`, name: "New Year's Eve", icon: '🎉', mood_impact: 'neutral', boost: false },
+  ];
+}
+
+function getHolidaysInRange(start, end) {
+  const y1 = new Date(start).getFullYear();
+  const y2 = new Date(end).getFullYear();
+  const years = y1 === y2 ? [y1] : [y1, y2];
+  return years.flatMap(y => computeHolidaysForYear(y)).filter(h => h.date >= start && h.date <= end);
+}
+
+// ============================================================
+// ANOMALY DETECTION — for Gemini context injection
+// ============================================================
+function getAnomalyContext(twDays) {
+  if (!twDays || twDays.length < 5) return '';
+  const validRoas = twDays.filter(d => d.metaRoas > 0.1);
+  const validCpa = twDays.filter(d => d.metaCpa > 1);
+  if (validRoas.length < 3) return '';
+
+  const avgRoas = validRoas.reduce((s, d) => s + d.metaRoas, 0) / validRoas.length;
+  const avgCpa = validCpa.length ? validCpa.reduce((s, d) => s + d.metaCpa, 0) / validCpa.length : 0;
+
+  const anomalies = twDays.filter(d => {
+    const rAnomaly = d.metaRoas > 0.1 && Math.abs(d.metaRoas - avgRoas) / avgRoas > 0.25;
+    const cAnomaly = avgCpa > 0 && d.metaCpa > 1 && Math.abs(d.metaCpa - avgCpa) / avgCpa > 0.30;
+    return rAnomaly || cAnomaly;
+  }).map(d => {
+    const parts = [];
+    if (d.metaRoas > 0.1) {
+      const pct = ((d.metaRoas - avgRoas) / avgRoas * 100).toFixed(0);
+      parts.push(`ROAS ${d.metaRoas.toFixed(2)}× (avg ${avgRoas.toFixed(2)}×, ${+pct >= 0 ? '+' : ''}${pct}%)`);
+    }
+    if (d.metaCpa > 1 && avgCpa > 0) {
+      const pct = ((d.metaCpa - avgCpa) / avgCpa * 100).toFixed(0);
+      parts.push(`CPA $${d.metaCpa.toFixed(0)} (avg $${avgCpa.toFixed(0)}, ${+pct >= 0 ? '+' : ''}${pct}%)`);
+    }
+    return `  ${d.date}: ${parts.join(', ')}`;
+  });
+
+  if (!anomalies.length) return '';
+  return `\n\nOUR ANOMALOUS PERFORMANCE DAYS — prioritize explaining these specific dates:\n${anomalies.join('\n')}`;
+}
+
+// ============================================================
 // 1. TRIPLE WHALE — Summary Page API
 // ============================================================
 async function fetchTripleWhale() {
@@ -47,9 +141,8 @@ async function fetchTripleWhale() {
   console.log(`  Shop domain: ${shopDomain}`);
   console.log(`  Date range: ${startDate} → ${endDate}`);
 
-  const todayHour = new Date().getUTCHours() + 1; // base-1, 1–25
+  const todayHour = new Date().getUTCHours() + 1;
 
-  // Correct endpoint and body format per TW API v2 docs
   const res = await fetch('https://api.triplewhale.com/api/v2/summary-page/get-data', {
     method: 'POST',
     headers: {
@@ -76,34 +169,27 @@ async function fetchTripleWhale() {
     return null;
   }
 
-  // Each metric has charts.current = [{x: dayOfYear, y: value}]
-  // x is 1-indexed day of year. Map back to calendar date using startDate's year.
+  // x = 1-indexed day-of-year; convert back to calendar date
   const year = new Date(startDate).getFullYear();
-  const isLeap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-
   function dayOfYearToDate(doy) {
     const d = new Date(year, 0, 1);
     d.setDate(d.getDate() + doy - 1);
     return d.toISOString().split('T')[0];
   }
 
-  // Index metrics by metricId for easy lookup
   const byId = {};
-  for (const m of metrics) {
-    byId[m.metricId || m.id] = m;
-  }
+  for (const m of metrics) { byId[m.metricId || m.id] = m; }
   console.log(`  TW metric IDs: ${Object.keys(byId).join(', ')}`);
 
-  // Build day-indexed map
   const dayMap = {};
-  function applyMetric(metricKey, field, transform) {
+  function applyMetric(metricKey, field) {
     const m = byId[metricKey];
     if (!m) return;
     for (const pt of (m.charts?.current || [])) {
       const date = dayOfYearToDate(pt.x);
       if (date < startDate || date > endDate) continue;
       if (!dayMap[date]) dayMap[date] = { date };
-      dayMap[date][field] = transform ? transform(pt.y) : (pt.y ?? 0);
+      dayMap[date][field] = pt.y ?? 0;
     }
   }
 
@@ -148,19 +234,10 @@ async function fetchGasPrices() {
 
   try {
     const url = `https://api.eia.gov/v2/petroleum/pri/gnd/data/?api_key=${EIA_API_KEY}&frequency=weekly&data[0]=value&facets[series][]=${encodeURIComponent('EMM_EPMR_PTE_NUS_DPG')}&sort[0][column]=period&sort[0][direction]=desc&length=12`;
-
     const res = await fetch(url);
-    if (!res.ok) {
-      console.error(`EIA API error ${res.status}`);
-      return null;
-    }
-
+    if (!res.ok) { console.error(`EIA API error ${res.status}`); return null; }
     const data = await res.json();
-    const prices = (data?.response?.data || []).map(d => ({
-      date: d.period,
-      price: parseFloat(d.value),
-    }));
-
+    const prices = (data?.response?.data || []).map(d => ({ date: d.period, price: parseFloat(d.value) }));
     console.log(`  ✅ Got ${prices.length} weeks of gas price data`);
     return prices;
   } catch (err) {
@@ -180,7 +257,6 @@ async function fetchOutages() {
       const res = await fetch('https://api.statusgator.com/v2/services/meta/incidents', {
         headers: { 'Authorization': `Bearer ${STATUSGATOR_API_KEY}` },
       });
-
       if (res.ok) {
         const data = await res.json();
         const incidents = (data || [])
@@ -197,7 +273,7 @@ async function fetchOutages() {
         console.log(`  ✅ Got ${incidents.length} outage incidents from StatusGator`);
         return incidents;
       }
-      console.warn(`StatusGator API error ${res.status}, falling back to public sources`);
+      console.warn(`StatusGator API error ${res.status}`);
     } catch (err) {
       console.warn(`StatusGator fetch failed: ${err.message}`);
     }
@@ -209,7 +285,6 @@ async function fetchOutages() {
 }
 
 async function scrapeMetaStatus() {
-  // Try Meta's developer status API
   try {
     const devRes = await fetch('https://developers.facebook.com/status/summary/');
     if (devRes.ok) {
@@ -234,20 +309,14 @@ async function scrapeMetaStatus() {
     console.warn(`  developers.facebook.com failed: ${e.message}`);
   }
 
-  // Try Meta's graph API status endpoint
   try {
     const graphRes = await fetch('https://www.metastatus.com/api/v2/summary.json');
     if (graphRes.ok) {
       const graphData = await graphRes.json();
       const status = graphData?.status?.indicator;
       if (status && status !== 'none') {
-        console.log(`  ✅ Got Meta status from metastatus.com: ${status}`);
-        return [{
-          date: endDate,
-          title: `Meta platform status: ${status}`,
-          status: graphData?.status?.description || status,
-          service: 'Meta',
-        }];
+        console.log(`  ✅ Got Meta status: ${status}`);
+        return [{ date: endDate, title: `Meta platform status: ${status}`, status: graphData?.status?.description || status, service: 'Meta' }];
       }
     }
   } catch (e) { /* silent */ }
@@ -257,41 +326,63 @@ async function scrapeMetaStatus() {
 }
 
 // ============================================================
-// 5. GEMINI API — Auto-curate Macro Events (with retry)
+// 5. GEMINI API — Macro events with feed-domination + mood classification
 // ============================================================
-async function fetchMacroEvents() {
+async function fetchMacroEvents(existingTW) {
   console.log('🌍 Generating macro events via Gemini API...');
   if (!GEMINI_API_KEY) {
     console.warn('⚠️  GEMINI_API_KEY not set, skipping macro events');
     return null;
   }
 
-  const prompt = `You are analyzing macro events that could affect US e-commerce ad performance for a specialty food brand (artisan cheese shipped nationally, avg order ~$45, gifting-heavy).
+  const anomalyContext = getAnomalyContext(existingTW);
+  const holidaysInWindow = getHolidaysInRange(startDate, endDate);
+  const holidayContext = holidaysInWindow.length
+    ? `\n\nKNOWN HOLIDAYS IN THIS WINDOW: ${holidaysInWindow.map(h => `${h.date} ${h.name}`).join(', ')}`
+    : '';
 
-For the date range ${startDate} to ${endDate}, identify the major events in each of these categories:
-1. WALLET IMPACT (💰) — gas prices, CPI/inflation data, consumer confidence surveys, tariffs, retail spending reports
-2. FEED DOMINATION (📱) — news events that dominated social media feeds (political, cultural, disasters, major sports)
-3. PLATFORM ISSUE (🔴) — any known Meta/Facebook/Instagram ad platform outages or delivery issues
+  const prompt = `You are analyzing events that affected Meta ad performance and consumer behavior for Gardner's Wisconsin Cheese — a premium DTC specialty food brand (artisan cheese shipped nationally, avg order ~$45, gifting-heavy, repeat gifters, primarily US audience).
 
-For each event, provide:
-- date: exact date (YYYY-MM-DD)
-- description: one punchy headline sentence (max 15 words)
-- details: 3-4 sentences that FIRST explain what the event/metric actually IS (e.g. "The U of Michigan Consumer Sentiment Index is a monthly survey of 500 households measuring financial confidence — it has run since 1952 and a score below 60 signals meaningful pessimism"), THEN explain what this specific reading/development means in historical context, THEN explain the expected impact on Meta ROAS and CPA for a DTC food brand in plain language a marketing manager would understand. Do NOT use generic phrases like "wallets feel tight" or "expect lower conversion rates" without first establishing what the event actually is and why this instance is noteworthy.
+DATE RANGE: ${startDate} to ${endDate}${anomalyContext}${holidayContext}
+
+Identify 8–14 significant events across these four categories. Focus on US events. Be specific — include actual data points where applicable.
+
+CATEGORY DEFINITIONS:
+
+1. WALLET IMPACT (💰) — consumer financial signals:
+Gas prices, CPI/inflation releases, consumer confidence surveys (U of Michigan Sentiment Index — below 70 = pessimism, below 60 = alarm), Conference Board Consumer Confidence, tariff/trade announcements, retail spending reports, major employment/layoff news. ALWAYS include the actual reading (e.g. "U of M Sentiment fell to 52.2 in May from 57.0 in April"). Specialty food is discretionary — financial anxiety correlates with reduced gifting spend.
+
+2. FEED DOMINATION (📱) — events that took over social media feeds for 24+ hours:
+Major news events, tragedies, political moments (big votes, rulings, crises), viral cultural moments, major sporting events, celebrity deaths, national emergencies, major viral controversies. These matter because doomscrolling/news-following displaces product discovery — ad impressions still serve but conversion intent drops sharply.
+
+3. PLATFORM ISSUE (🔴) — Meta/Facebook/Instagram ad delivery problems:
+Algorithm updates, ad auction changes, iOS/Android privacy changes, ad policy changes, delivery bugs, CPM anomalies widely reported by DTC advertisers.
+
+4. SEASONAL MOMENT (🗓️) — upcoming retail/gift occasions:
+Gift-giving holidays, shopping moments, or seasonal purchase shifts relevant to specialty food gifting in the next 2 weeks from the end of the date range.
+
+For each event, provide ALL of these fields:
+- date: exact date or best estimate (YYYY-MM-DD), closest to when the event peaked or was announced
+- description: one punchy headline (max 15 words), include actual data point if available
+- details: 3–4 sentences. (1) What is this event/metric and its historical baseline — explain it as if the reader has never heard of it. (2) What specifically happened this instance and why it's notable. (3) Expected impact on Meta ROAS and CPA for a DTC food gifting brand. (4) Optional: actionable implication.
 - intensity: 1 (minor), 2 (notable), 3 (major)
-- category: wallet | feed | platform
-- icon: 💰 | 📱 | 🔴
-- source: publication or agency name
+- category: wallet | feed | platform | seasonal
+- icon: 💰 | 📱 | 🔴 | 🗓️
+- mood_impact: "suppresses_spending" (tragedies, crises, economic anxiety, outrage cycles) | "boosts_spending" (celebrations, gift occasions, positive economic data, viral feel-good moments) | "neutral"
+- feed_dominance: "high" (topic saturated feeds 2+ days), "medium" (dominated for ~24h), "low" (hours or minor reach)
+- source: publication or agency (e.g. "Reuters", "U of Michigan", "Meta Business Blog", "Axios")
 
-Respond ONLY with a valid JSON array, no markdown fences, no preamble:
-[{"date":"YYYY-MM-DD","description":"...","details":"...","intensity":1,"category":"wallet","icon":"💰","source":"..."}]`;
+${anomalyContext ? 'IMPORTANT: Try to explain the anomalous performance days listed above. Look for events on or just before those dates.' : ''}
 
-  // Retry up to 3 times with exponential backoff on rate limit (429)
+Respond ONLY with a valid JSON array. No markdown fences, no preamble, no trailing text.
+[{"date":"YYYY-MM-DD","description":"...","details":"...","intensity":2,"category":"feed","icon":"📱","mood_impact":"suppresses_spending","feed_dominance":"high","source":"AP News"}]`;
+
   const models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'];
   for (const model of models) {
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
         if (attempt > 1) {
-          const wait = attempt * 20000; // 20s, 40s
+          const wait = attempt * 20000;
           console.log(`  Retrying Gemini (attempt ${attempt}/3, waiting ${wait / 1000}s)...`);
           await new Promise(r => setTimeout(r, wait));
         }
@@ -303,7 +394,7 @@ Respond ONLY with a valid JSON array, no markdown fences, no preamble:
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: { temperature: 0.3, maxOutputTokens: 2000 },
+              generationConfig: { temperature: 0.3, maxOutputTokens: 3000 },
             }),
           }
         );
@@ -312,23 +403,25 @@ Respond ONLY with a valid JSON array, no markdown fences, no preamble:
           console.warn(`  Gemini ${model} rate limited (429), attempt ${attempt}/3`);
           continue;
         }
-
         if (!res.ok) {
           const errText = await res.text();
           console.error(`Gemini ${model} error ${res.status}: ${errText.slice(0, 200)}`);
-          break; // Non-429 error — don't retry this model
+          break;
         }
 
         const data = await res.json();
         const text = data.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
-
         const jsonMatch = text.match(/\[[\s\S]*\]/);
         if (jsonMatch) {
           const events = JSON.parse(jsonMatch[0]);
+          // Backfill missing fields for forward compat
+          events.forEach(e => {
+            if (!e.mood_impact) e.mood_impact = 'neutral';
+            if (!e.feed_dominance) e.feed_dominance = 'low';
+          });
           console.log(`  ✅ Got ${events.length} macro events (${model})`);
           return events;
         }
-
         console.warn('  ⚠️  Could not parse macro events from Gemini response');
         console.warn(`  Raw text: ${text.slice(0, 300)}`);
         return null;
@@ -344,22 +437,67 @@ Respond ONLY with a valid JSON array, no markdown fences, no preamble:
 }
 
 // ============================================================
+// 6. GOOGLE TRENDS (unofficial 2-step API, no npm required)
+// ============================================================
+async function fetchGoogleTrends() {
+  console.log('📈 Fetching Google Trends...');
+  const keywords = ['wisconsin cheese', 'cheese gift'];
+
+  const req = JSON.stringify({
+    comparisonItem: keywords.map(kw => ({ keyword: kw, geo: 'US', time: `${startDate} ${endDate}` })),
+    category: 0,
+    property: '',
+  });
+
+  const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Accept': 'application/json, text/plain, */*',
+    'Referer': 'https://trends.google.com/',
+  };
+
+  // Step 1: get widget tokens
+  const exploreUrl = `https://trends.google.com/trends/api/explore?hl=en-US&tz=300&req=${encodeURIComponent(req)}`;
+  const exploreRes = await fetch(exploreUrl, { headers });
+  if (!exploreRes.ok) throw new Error(`Google Trends explore ${exploreRes.status}`);
+
+  const exploreText = await exploreRes.text();
+  // Response begins with )]}'\n — strip it
+  const exploreJson = JSON.parse(exploreText.replace(/^\)]\}'\n/, ''));
+  const timelineWidget = exploreJson.widgets?.find(w => w.id === 'TIMESERIES');
+  if (!timelineWidget?.token) throw new Error('No TIMESERIES widget token');
+
+  // Step 2: get actual time-series data
+  const dataReq = JSON.stringify(timelineWidget.request);
+  const dataUrl = `https://trends.google.com/trends/api/widgetdata/multiline?hl=en-US&tz=300&req=${encodeURIComponent(dataReq)}&token=${encodeURIComponent(timelineWidget.token)}`;
+  const dataRes = await fetch(dataUrl, { headers });
+  if (!dataRes.ok) throw new Error(`Google Trends widgetdata ${dataRes.status}`);
+
+  const dataText = await dataRes.text();
+  const dataJson = JSON.parse(dataText.replace(/^\)]\}'\n/, ''));
+  const timelineData = dataJson?.default?.timelineData || [];
+
+  const result = timelineData.map(pt => ({
+    date: new Date(parseInt(pt.time) * 1000).toISOString().split('T')[0],
+    'wisconsin cheese': pt.value[0] ?? 0,
+    'cheese gift': pt.value[1] ?? 0,
+  }));
+
+  console.log(`  ✅ Got ${result.length} days of Google Trends data`);
+  return result;
+}
+
+// ============================================================
 // MAIN — Fetch all, merge, write data.json
 // ============================================================
 async function main() {
-  // Load existing data as fallback
   let existing = {};
   const dataPath = 'data/data.json';
   if (existsSync(dataPath)) {
-    try {
-      existing = JSON.parse(await readFile(dataPath, 'utf-8'));
-    } catch (e) { /* fresh start */ }
+    try { existing = JSON.parse(await readFile(dataPath, 'utf-8')); } catch (e) { /* fresh start */ }
   }
 
-  // Skip Gemini if we have events that are less than 25h old with reasonable coverage.
-  // The rolling window shifts by 1 day each run so we intentionally ignore exact date range
-  // equality — events covering "last month" are still valid the next day.
-  // Gemini free tier has a tight daily quota; re-fetching every run burns it fast.
+  // Age-based cache for Gemini (1 plain request/day is well within free tier)
   const existingMacroAge = existing.meta?.updatedAt
     ? (Date.now() - new Date(existing.meta.updatedAt).getTime()) / 3600000
     : 999;
@@ -369,14 +507,33 @@ async function main() {
     console.log(`🌍 Skipping Gemini — cached macro events are ${existingMacroAge.toFixed(1)}h old`);
   }
 
+  // Age-based cache for Google Trends
+  const existingTrendsAge = existing.meta?.updatedAt
+    ? (Date.now() - new Date(existing.meta.updatedAt).getTime()) / 3600000
+    : 999;
+  const trendsIsFresh = existingTrendsAge < 25 && (existing.googleTrends?.length || 0) > 0;
+
+  if (trendsIsFresh) {
+    console.log(`📈 Skipping Google Trends — cached data is ${existingTrendsAge.toFixed(1)}h old`);
+  }
+
   // Fetch all sources in parallel
-  const [tripleWhale, breezeway, gasPrices, outages, macroEvents] = await Promise.allSettled([
+  const [tripleWhale, breezeway, gasPrices, outages, macroEvents, googleTrends] = await Promise.allSettled([
     fetchTripleWhale(),
     fetchBreezeway(),
     fetchGasPrices(),
     fetchOutages(),
-    macroIsFresh ? Promise.resolve(null) : fetchMacroEvents(),
+    macroIsFresh
+      ? Promise.resolve(null)
+      : fetchMacroEvents(existing.tripleWhale || []),
+    trendsIsFresh
+      ? Promise.resolve(null)
+      : fetchGoogleTrends().catch(err => { console.warn(`  ⚠️  Google Trends failed: ${err.message} — skipping`); return null; }),
   ]);
+
+  // Holidays are always recomputed from code — no API, no cache needed
+  const holidays = getHolidaysInRange(startDate, endDate);
+  console.log(`🗓️  ${holidays.length} holidays in range: ${holidays.map(h => h.name).join(', ')}`);
 
   const data = {
     meta: {
@@ -389,9 +546,10 @@ async function main() {
     gasPrices: gasPrices.value || existing.gasPrices || [],
     outages: outages.value || existing.outages || [],
     macroEvents: macroEvents.value || existing.macroEvents || [],
+    holidays,
+    googleTrends: googleTrends.value || existing.googleTrends || [],
   };
 
-  // Write output
   await mkdir('data', { recursive: true });
   await writeFile(dataPath, JSON.stringify(data, null, 2));
   console.log(`\n✅ Data written to ${dataPath}`);
@@ -400,6 +558,8 @@ async function main() {
   console.log(`   Gas prices: ${data.gasPrices?.length || 0}`);
   console.log(`   Outages: ${data.outages?.length || 0}`);
   console.log(`   Macro events: ${data.macroEvents?.length || 0}`);
+  console.log(`   Holidays: ${data.holidays?.length || 0}`);
+  console.log(`   Google Trends days: ${data.googleTrends?.length || 0}`);
 }
 
 main().catch(err => {
