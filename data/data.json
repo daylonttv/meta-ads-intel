@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updatedAt": "2026-06-05T14:47:25.336Z",
+    "updatedAt": "2026-06-05T19:26:09.216Z",
     "dateRange": {
       "start": "2026-05-06",
       "end": "2026-06-04"
@@ -704,5 +704,22 @@
       "icon": "📱",
       "source": "BofA"
     }
-  ]
+  ],
+  "holidays": [
+    {
+      "date": "2026-05-10",
+      "name": "Mother's Day",
+      "icon": "💐",
+      "mood_impact": "boosts_spending",
+      "boost": true
+    },
+    {
+      "date": "2026-05-25",
+      "name": "Memorial Day",
+      "icon": "🏳️",
+      "mood_impact": "neutral",
+      "boost": false
+    }
+  ],
+  "googleTrends": []
 }
