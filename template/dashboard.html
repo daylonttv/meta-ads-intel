@@ -260,13 +260,13 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 </div>
 <script>
 (function(){
-  if(localStorage.getItem('gouda_auth')==='1'){document.getElementById('gate').style.display='none';}
+  try{if(localStorage.getItem('gouda_auth')==='1'){document.getElementById('gate').style.display='none';}}catch(e){}
 })();
 function checkPw(){
   const v=document.getElementById('pwInput').value;
   if(v==='Cheesyday'){
-    localStorage.setItem('gouda_auth','1');
     document.getElementById('gate').style.display='none';
+    try{localStorage.setItem('gouda_auth','1');}catch(e){}
   } else {
     const err=document.getElementById('pwErr');
     err.style.opacity='1';
