@@ -357,19 +357,17 @@ async function main() {
     } catch (e) { /* fresh start */ }
   }
 
-  // Skip Gemini if we already have events for this date range fetched recently (<20h ago).
-  // Gemini has a tight daily quota — no point re-fetching when the data is still fresh.
+  // Skip Gemini if we have events that are less than 25h old with reasonable coverage.
+  // The rolling window shifts by 1 day each run so we intentionally ignore exact date range
+  // equality — events covering "last month" are still valid the next day.
+  // Gemini free tier has a tight daily quota; re-fetching every run burns it fast.
   const existingMacroAge = existing.meta?.updatedAt
     ? (Date.now() - new Date(existing.meta.updatedAt).getTime()) / 3600000
     : 999;
-  const existingMacroRange = existing.meta?.dateRange;
-  const macroIsFresh = existingMacroAge < 20
-    && existingMacroRange?.start === startDate
-    && existingMacroRange?.end === endDate
-    && (existing.macroEvents?.length || 0) > 0;
+  const macroIsFresh = existingMacroAge < 25 && (existing.macroEvents?.length || 0) > 0;
 
   if (macroIsFresh) {
-    console.log(`🌍 Skipping Gemini — cached macro events are ${existingMacroAge.toFixed(1)}h old (same date range)`);
+    console.log(`🌍 Skipping Gemini — cached macro events are ${existingMacroAge.toFixed(1)}h old`);
   }
 
   // Fetch all sources in parallel
