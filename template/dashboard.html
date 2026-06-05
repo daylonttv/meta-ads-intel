@@ -864,8 +864,7 @@ function render(days) {
   mrMax=Math.ceil(Math.max(...days.map(d=>d.mr))*2)/2+0.5;
   const cpaMin=Math.floor(Math.min(...days.map(d=>d.cpa))/5)*5-5;
   const cpaMax=Math.ceil(Math.max(...days.map(d=>d.cpa))/5)*5+5;
-  const chartMonth=new Date(days[0]?.date||Date.now()).toLocaleString('en-US',{month:'short',timeZone:'UTC'});
-  chartLabels = days.map(d=>chartMonth+' '+d.d);
+  chartLabels = days.map(d=>new Date(d.date+'T00:00:00Z').toLocaleString('en-US',{month:'short',timeZone:'UTC'})+' '+d.d);
   gasDaily = interpolateGas(gasPricesRaw, days);
 
   // Macro chart data — key by full date string to avoid month-boundary collisions
