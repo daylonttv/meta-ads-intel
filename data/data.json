@@ -1,23 +1,13 @@
 {
   "meta": {
-    "updatedAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-06-06T13:29:14.555Z",
     "dateRange": {
-      "start": "2026-05-06",
-      "end": "2026-06-04"
+      "start": "2026-05-07",
+      "end": "2026-06-05"
     },
     "monthLabel": "June 2026"
   },
   "tripleWhale": [
-    {
-      "date": "2026-05-06",
-      "revenue": 28886.730000000014,
-      "orders": 372,
-      "blendedRoas": 4.654031938442514,
-      "metaSpend": 3990.3400363978,
-      "metaRoas": 3.486299361321465,
-      "metaCpa": 21.68663063259674,
-      "metaCpm": 10.41902324470816
-    },
     {
       "date": "2026-05-07",
       "revenue": 16591.04,
@@ -282,7 +272,7 @@
       "date": "2026-06-02",
       "revenue": 14617.680000000004,
       "orders": 189,
-      "blendedRoas": 2.880292537776726,
+      "blendedRoas": 2.880313837053445,
       "metaSpend": 3494.8100467696786,
       "metaRoas": 2.383013640311343,
       "metaCpa": 30.65622848043578,
@@ -292,23 +282,24 @@
       "date": "2026-06-03",
       "revenue": 17865.040000000005,
       "orders": 228,
-      "blendedRoas": 3.2188927850804427,
+      "blendedRoas": 3.2189583605640526,
       "metaSpend": 3743.159982347861,
       "metaRoas": 2.496609814585514,
       "metaCpa": 30.186774051192426,
       "metaCpm": 10.447203775535277
+    },
+    {
+      "date": "2026-06-04",
+      "revenue": 14949.849999999999,
+      "orders": 190,
+      "blendedRoas": 2.82218488335423,
+      "metaSpend": 3582.409973958507,
+      "metaRoas": 2.217398367444084,
+      "metaCpa": 35.121666411357914,
+      "metaCpm": 10.801388081717251
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-05-06",
-      "status": "normal",
-      "cpa_z": 0.468,
-      "n_biz": 44,
-      "dow": "Wed",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-05-07",
       "status": "normal",
@@ -567,6 +558,15 @@
       "cpa_z": 0.176,
       "n_biz": 45,
       "dow": "Thu",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-06-05",
+      "status": "normal",
+      "cpa_z": -0.175,
+      "n_biz": 45,
+      "dow": "Fri",
       "incident_source": null,
       "incident_description": null
     }
