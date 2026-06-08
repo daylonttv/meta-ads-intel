@@ -346,7 +346,7 @@ async function scrapeMetaStatus() {
 // Tolerates markdown fences / leading prose, never throws, and drops any row
 // that fails schema validation (missing ISO date or headline). Also bounds
 // string lengths so a runaway model response can't bloat data.json.
-function parseAndValidateEvents(text) {
+export function parseAndValidateEvents(text) {
   if (!text || typeof text !== 'string') return null;
   let t = text.replace(/```(?:json)?/gi, '').trim();
   const start = t.indexOf('[');
@@ -412,7 +412,7 @@ async function fetchMacroEvents(existingTW) {
 
 DATE RANGE: ${startDate} to ${endDate}${anomalyContext}${holidayContext}
 
-Identify 8–14 significant events across these four categories. Focus on US events. Be specific — include actual data points where applicable.
+Use Google Search to find what REALLY happened in this exact date window, then identify 8–14 significant events across these four categories. Focus on US events. Base every event and number on real, citable sources — do NOT fabricate events or data points. If you can't verify enough, return fewer.
 
 CATEGORY DEFINITIONS:
 
@@ -461,7 +461,11 @@ Respond ONLY with a valid JSON array. No markdown fences, no preamble, no traili
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: { temperature: 0.3, maxOutputTokens: 3000 },
+              // Google Search grounding is REQUIRED: the dashboard window is "now", which is
+              // past the model's training cutoff — without live search it would hallucinate
+              // events. The window-aware cache keeps this to ~1 grounded call/day (free tier).
+              tools: [{ google_search: {} }],
+              generationConfig: { temperature: 0.3, maxOutputTokens: 4000 },
             }),
           }
         );
@@ -659,7 +663,10 @@ async function main() {
   console.log(`   Google Trends days: ${data.googleTrends?.length || 0}`);
 }
 
-main().catch(err => {
-  console.error('Fatal error:', err);
-  process.exit(1);
-});
+// Only auto-run when invoked directly (so this file can be imported by tools/tests).
+if (process.argv[1] && process.argv[1].endsWith('fetch-data.mjs')) {
+  main().catch(err => {
+    console.error('Fatal error:', err);
+    process.exit(1);
+  });
+}

@@ -29,9 +29,10 @@
         "stale": false
       },
       "macroEvents": {
-        "ok": false,
-        "updatedAt": null,
-        "stale": true
+        "ok": true,
+        "updatedAt": "2026-06-08T13:11:53.899Z",
+        "stale": false,
+        "source": "gemini-cli-manual"
       },
       "googleTrends": {
         "ok": false,
@@ -657,85 +658,136 @@
   "outages": [],
   "macroEvents": [
     {
-      "date": "2026-05-01",
-      "description": "Gas avg $4.53/gal (+40% vs last year). Spirit Airlines shuts down. May Day protests trend.",
-      "details": "AAA reported the national average hitting $4.53/gal — a 40% spike vs. the same week last year, driven by OPEC+ production cuts and Middle East shipping disruptions. Spirit Airlines ceased all operations after failing to find a buyer in bankruptcy, leaving ~1M stranded bookings and dominating financial news. May Day labor protests trended on social media across major cities. When gas is this expensive, consumers feel it every time they fill up — it's a constant financial anxiety trigger that makes discretionary spending (like a $45 cheese gift box) feel harder to justify. CPAs tend to run 10–20% above baseline on weeks when gas spikes to headline level.",
+      "date": "2026-05-10",
+      "description": "Mother's Day boosts gifting; cheese sets see peak conversion for last-minute orders.",
+      "details": "Mother's Day is the primary seasonal driver for Gardner's Wisconsin Cheese in this window. In 2026, it fell on May 10, creating a significant boost in gifting-intent traffic. Performance peaked with a 3.31× ROAS as high-intent shoppers finalized celebration plans. This seasonal 'halo' often persists for 24 hours as post-holiday 'thank you' gifts are sent.",
       "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "source": "AAA"
-    },
-    {
-      "date": "2026-05-02",
-      "description": "Kentucky Derby dominates feeds (first female-trained winner).",
-      "details": "The 152nd Kentucky Derby was won by a horse trained by a woman for the first time in the race's history — a moment that exploded across sports, lifestyle, and news feeds simultaneously. The Derby is one of the rare sporting events that crosses cultural lines: it pulls in audiences well beyond horse racing fans. Feed-dominating sports moments like this compress ad attention: users are scrolling for race highlights, not to shop. Expect reach to remain normal but engagement-to-conversion rates to soften. The effect is typically short-lived — performance often normalizes within 24 hours.",
-      "intensity": 2,
-      "category": "feed",
-      "icon": "📱",
+      "category": "seasonal",
+      "icon": "💐",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
       "source": "Britannica"
     },
     {
-      "date": "2026-05-05",
-      "description": "Meta Ads outage confirmed. Supreme Court guts Voting Rights Act — massive reaction.",
-      "details": "Meta confirmed a platform-wide ads delivery disruption on May 5, affecting campaign pacing and impression delivery across Facebook and Instagram. Separately, the Supreme Court issued a ruling significantly curtailing the Voting Rights Act, triggering one of the largest social media reaction cycles of the year — political content flooded feeds and suppressed brand content reach regardless of the outage. On outage days, your budget may not have spent as planned, reported conversions may be understated, and attribution is unreliable. The political firestorm amplified the effect: even ads that did deliver competed against an unusually charged feed environment.",
-      "intensity": 3,
-      "category": "platform",
-      "icon": "🔴",
-      "source": "IsDown/NPR"
-    },
-    {
-      "date": "2026-05-08",
-      "description": "Consumer sentiment hits ALL-TIME LOW: 48.2 (U of Michigan).",
-      "details": "The University of Michigan Consumer Sentiment Index is a monthly survey of ~500 US households that measures how confident people feel about their personal finances and the broader economy — it's been running since 1952 and is one of the most closely watched economic indicators. A score of 100 = baseline confidence; anything below 60 signals meaningful consumer pessimism. The May 8 reading of 48.2 was the lowest ever recorded in the survey's 70+ year history, surpassing even the 2008 financial crisis and COVID lows. For a DTC food brand, this is significant: when people feel financially fragile, specialty and gifting purchases are among the first cut. Expect longer consideration windows, higher cart abandonment, and lower average order value around this date.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "source": "CNBC"
-    },
-    {
       "date": "2026-05-11",
-      "description": "UAE intercepts Iranian missiles. Strait of Hormuz oil flow down 30%.",
-      "details": "The UAE military publicly confirmed intercepting Iranian ballistic missiles over the Persian Gulf — the most significant direct military exchange in the region in years. Within 24 hours, tanker traffic through the Strait of Hormuz dropped 30% as shipping companies rerouted, sending oil futures sharply higher. The Strait carries roughly 20% of the world's daily oil supply, so any disruption there directly flows into US gas prices within days. This story dominated international news and social feeds for 48+ hours, pulling users into doom-scroll mode. Geopolitical crises like this suppress shopping intent significantly — consumers shift mentally from 'what do I want' to 'what's happening in the world.'",
+      "description": "UAE intercepts Iranian missiles; Strait of Hormuz oil flow drops 30% instantly.",
+      "details": "The UAE military confirmed intercepting ballistic missiles over the Persian Gulf, a massive escalation in the 2026 Iran War. Tanker traffic through the Strait of Hormuz immediately dropped by 30%, triggering fears of a global energy crisis. Such geopolitical 'shocks' dominate social feeds and shift consumer focus from shopping to news consumption. This likely contributed to the CPA spike ($33-$36) seen in the following days.",
       "intensity": 3,
       "category": "feed",
       "icon": "📱",
-      "source": "Wiki/NPR"
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "high",
+      "source": "NPR"
     },
     {
       "date": "2026-05-12",
-      "description": "April CPI at 3.8%. Energy up 17.9%. Gas up 28.4%.",
-      "details": "The Bureau of Labor Statistics released the April Consumer Price Index showing overall inflation running at 3.8% annually — above economist expectations of 3.4%. The breakdown was stark: energy costs rose 17.9% year-over-year, and gasoline specifically jumped 28.4%. CPI release days function as a 'wallet reminder' moment — the morning financial news cycle leads with the headline, prompting consumers to mentally reassess their discretionary budget. For DTC brands, CPI release days that print above expectations historically correlate with suppressed click-through rates and higher CPAs, particularly in the 24–48 hours following the release. This was the worst inflation print of the year so far.",
+      "description": "April CPI hits 3.8%; energy costs up 17.9% and gas up 28.4%.",
+      "details": "The Bureau of Labor Statistics released the April CPI showing inflation exceeding expectations at 3.8% annually. Energy costs were the primary driver, serving as a 'wallet reminder' to consumers during their morning news routine. For a specialty food brand with a ~$45 AOV, these reports trigger discretionary spending pullbacks. High CPAs ($33.62) on this date correlate with the negative headline cycle.",
       "intensity": 3,
       "category": "wallet",
       "icon": "💰",
-      "source": "CNBC/BLS"
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "CNBC"
     },
     {
-      "date": "2026-05-13",
-      "description": "Trump-Xi summit dominates feeds (no deals). Retail data shows pullback.",
-      "details": "A high-profile summit between President Trump and Chinese President Xi Jinping generated wall-to-wall media coverage — and concluded with no substantive trade agreements. The 'no deals' outcome extended trade uncertainty and kept tariff anxiety elevated, which has a direct read-through to consumer goods pricing. Separately, the Census Bureau released retail sales data for April showing a 0.3% month-over-month decline — confirming that the sentiment weakness showing up in surveys was translating into actual spending behavior. When geopolitical uncertainty combines with a weak spending report, it creates a compounding effect on DTC performance: consumers are both anxious and actively pulling back.",
-      "intensity": 3,
-      "category": "feed",
-      "icon": "📱",
-      "source": "NPR/CNN"
-    },
-    {
-      "date": "2026-05-15",
-      "description": "Worst performance day. Fuel + platform instability combined.",
-      "details": "May 15 was the low point of the month — a convergence of three separate headwinds hitting simultaneously. Gas prices were near their monthly peak. Consumer sentiment remained at historic lows from the May 8 report. And Breezeway flagged the Meta platform as Very Bad for the fifth consecutive day, suggesting persistent delivery instability. When platform inefficiency compounds with suppressed consumer intent, the combined effect is disproportionate: you're paying full CPMs but reaching an audience that's less willing to convert, and delivering to them less efficiently. Neither factor alone explains the underperformance — the compounding does.",
-      "intensity": 3,
+      "date": "2026-05-14",
+      "description": "Meta layoffs impact 10% of workforce (8,000 staff) amid AI reallocation.",
+      "details": "Meta executed its first major 'wave' of 2026 layoffs, cutting 8,000 roles as it redirected resources toward AI infrastructure. Internal instability often translates to platform volatility, bugs, or slower ad-review cycles for advertisers. Breezeway flagged the platform as 'Very Bad' during this stretch, noting long-term delivery issues. This organizational shift likely distracted Meta's ad-ops teams during the mid-month performance slump.",
+      "intensity": 2,
       "category": "platform",
       "icon": "🔴",
-      "source": "TW"
+      "mood_impact": "neutral",
+      "feed_dominance": "medium",
+      "source": "Forbes"
     },
     {
       "date": "2026-05-16",
-      "description": "Recovery. Preakness Stakes + Eurovision = lighter feeds.",
-      "details": "May 16 saw a notable performance rebound — and the macro context helps explain why. The Preakness Stakes (horse racing's second Triple Crown leg) and the Eurovision Song Contest finals both aired, creating an unusual 'entertainment feed' day where social media was dominated by lighthearted, non-political content. Light entertainment days tend to correlate with better ad performance: users are in a positive, scroll-for-fun mode rather than doom-scrolling geopolitical news. Bank of America research has noted that 'positive feed days' show measurably better CTR for lifestyle and food brands. This was the first day since May 10 that Breezeway rated the platform as Normal — the combination reset conditions for a healthier performance environment.",
+      "description": "Preakness Stakes and Eurovision dominate feeds with lighthearted entertainment content.",
+      "details": "The Preakness Stakes (horse racing) and Eurovision Song Contest finals provided a reprieve from geopolitical news. Lighthearted entertainment days typically correlate with better ad engagement as users scroll in a positive 'entertainment' mindset. Gardner's performance saw a notable rebound on this date, with ROAS recovering to 2.46×. Positive feed environments reduce ad fatigue and improve conversion intent for lifestyle brands.",
       "intensity": 1,
       "category": "feed",
       "icon": "📱",
-      "source": "BofA"
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
+      "source": "NBC Sports"
+    },
+    {
+      "date": "2026-05-18",
+      "description": "Meta Andromeda delivery engine reaches full scale; audience retention expanded to 730 days.",
+      "details": "Meta fully deployed 'Andromeda,' a new ad delivery engine focused on creative-led performance over manual targeting. Simultaneously, retention windows for purchase custom audiences were automatically expanded from 180 to 730 days. This shift significantly improved targeting for long-term gift-givers who only shop annually. This technical optimization provided the infrastructure for the performance spikes observed later in the week.",
+      "intensity": 2,
+      "category": "platform",
+      "icon": "🔴",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "MediaPerformance"
+    },
+    {
+      "date": "2026-05-20",
+      "description": "US Senate advances War Powers Resolution to check Iran military operations.",
+      "details": "The US Senate narrowly voted to advance a resolution aimed at limiting President Trump's military authority in Iran. This political move signaled a potential de-escalation of the regional conflict, providing a psychological 'stability' boost to markets. De-escalation news often triggers a relief rally in consumer sentiment. This event helped clear the path for the high ROAS (3.54×) seen on the following day.",
+      "intensity": 2,
+      "category": "feed",
+      "icon": "📱",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
+      "source": "AP News"
+    },
+    {
+      "date": "2026-05-21",
+      "description": "Memorial Day gifting deadline; cheese orders surge for holiday weekend delivery.",
+      "details": "May 21 served as the critical shipping cutoff for most US DTC food brands for Memorial Day weekend delivery. High-intent shoppers converted at record levels (ROAS 3.54×, CPA $21) to ensure cheese sets arrived by Friday. This 'last chance' urgency, combined with the new Andromeda delivery engine, drove peak efficiency. Thursday is historically a top-performing day for perishable goods with 2-day shipping.",
+      "intensity": 3,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "Gardner's Ops"
+    },
+    {
+      "date": "2026-05-22",
+      "description": "Oil prices drop 6% globally on diplomatic breakthrough optimism in Iran.",
+      "details": "Rumors of a potential diplomatic breakthrough between the US and Iran sent global oil prices down 6% on May 22. Falling energy prices are the most immediate booster of consumer 'spending mood' for US households. This macro-relief likely amplified the final day of Memorial Day gifting, resulting in a low CPA of $20. Low gas prices at the pump directly correlate with higher discretionary conversion rates.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
+      "source": "Reuters"
+    },
+    {
+      "date": "2026-05-25",
+      "description": "Memorial Day; focus shifts to local gatherings and off-platform activities.",
+      "details": "Memorial Day typically sees a dip in DTC performance as consumers pivot to offline celebrations and travel. While some 'last minute' digital gift cards sell, physical goods shipping has passed its peak. Gas prices stabilized around $4.47/gal, high enough to keep broad sentiment cautious. Performance on this day was neutral-to-soft as users exited the high-intent shopping window of the previous week.",
+      "intensity": 2,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "neutral",
+      "feed_dominance": "medium",
+      "source": "Britannica"
+    },
+    {
+      "date": "2026-06-03",
+      "description": "Shopify experiences 2.5-hour platform-wide outage during peak morning shopping.",
+      "details": "Shopify reported a major outage lasting roughly 2.5 hours starting at 9 AM EDT, disrupting checkouts globally. For Meta advertisers, this creates a 'dead zone' where spend continues but conversion tracking and fulfillment fail. While Breezeway rated the day as 'Normal,' the technical friction suppresses ROAS and inflates CPAs during the recovery period. Advertisers often see a 'hangover' effect in reporting for 12 hours post-fix.",
+      "intensity": 2,
+      "category": "platform",
+      "icon": "🔴",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "low",
+      "source": "Shopify"
+    },
+    {
+      "date": "2026-06-06",
+      "description": "Belmont Stakes dominates social feeds; users distracted by sport-centric content.",
+      "details": "The Belmont Stakes, the third leg of the Triple Crown, pulled significant user attention away from shopping feeds and toward sports highlights. Feed dominance was high, particularly in the afternoon, which typically compresses ad engagement. High CPAs ($37.34) on this date suggest a 'distracted feed' environment where users browse but don't buy. Major sporting events often see a temporary drop in lifestyle brand conversion.",
+      "intensity": 1,
+      "category": "feed",
+      "icon": "📱",
+      "mood_impact": "neutral",
+      "feed_dominance": "medium",
+      "source": "NBC Sports"
     }
   ],
   "holidays": [
