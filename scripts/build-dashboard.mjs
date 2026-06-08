@@ -9,10 +9,10 @@
 import { readFile, writeFile } from 'fs/promises';
 import { existsSync } from 'fs';
 
-// Escape a JSON string so it can be safely embedded inside an inline <script>.
-// Prevents untrusted strings (Gemini/API/Breezeway text) from terminating the
-// tag (</script>) or the JS string literal (U+2028 / U+2029 line separators,
-// which are valid in JSON but illegal in JS string literals).
+// Escape a JSON object literal so it can be safely embedded inside an inline <script>.
+// Prevents untrusted strings (Gemini/API/Breezeway text) from terminating the tag via
+// </script>, and escapes U+2028 / U+2029 — valid in JSON but historically unsafe as raw
+// characters in JS source — so the embedded literal parses everywhere.
 const LS = String.fromCharCode(0x2028); // U+2028 LINE SEPARATOR
 const PS = String.fromCharCode(0x2029); // U+2029 PARAGRAPH SEPARATOR
 function escapeForScript(jsonStr) {
@@ -58,7 +58,7 @@ async function build() {
   if (monthLabel) {
     html = html.replace(
       /<title>.*?<\/title>/,
-      `<title>Meta Ads Intel — ${monthLabel}</title>`
+      `<title>G.O.U.D.A-LYTICS — ${monthLabel}</title>`
     );
   }
 

@@ -200,7 +200,9 @@ async function fetchTripleWhale() {
       const date = dayOfYearToDate(pt.x);
       if (date < startDate || date > endDate) continue;
       if (!dayMap[date]) dayMap[date] = { date };
-      dayMap[date][field] = pt.y ?? 0;
+      // Preserve missing metrics as null (not 0) so they're excluded from averages
+      // rather than counted as a real zero.
+      dayMap[date][field] = pt.y ?? null;
     }
   }
 
@@ -365,10 +367,17 @@ function parseAndValidateEvents(text) {
   const DOMS = new Set(['high', 'medium', 'low']);
   const ICONS = { wallet: '💰', feed: '📱', platform: '🔴', seasonal: '🗓️' };
 
+  // Accept events within the window, allowing ~3 weeks past the end for upcoming
+  // "seasonal" items the prompt asks for. Reject impossible dates (e.g. 2026-99-99).
+  const minEventDate = startDate;
+  const maxEventDate = (() => { const d = new Date(endDate + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + 21); return d.toISOString().split('T')[0]; })();
+
   const valid = [];
   for (const e of arr) {
     if (!e || typeof e !== 'object') continue;
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(e.date || '')) continue;          // require ISO date
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(e.date || '')) continue;          // require ISO date shape
+    if (Number.isNaN(Date.parse(e.date + 'T00:00:00Z'))) continue;    // reject impossible dates
+    if (e.date < minEventDate || e.date > maxEventDate) continue;     // keep within window (+21d)
     if (!e.description || typeof e.description !== 'string') continue; // require headline
     const category = CATS.has(e.category) ? e.category : 'feed';
     valid.push({
@@ -503,6 +512,14 @@ function stripXssiPrefix(text) {
 async function fetchGoogleTrends() {
   console.log('📈 Fetching Google Trends...');
   const keywords = ['wisconsin cheese', 'cheese gift'];
+  // Google Trends `tz` is minutes offset; derive it for Central on the run date so it's
+  // correct under both CST (360) and CDT (300) instead of being hardcoded.
+  const tzMin = (() => {
+    const d = new Date();
+    const loc = new Date(d.toLocaleString('en-US', { timeZone: TZ }));
+    const utc = new Date(d.toLocaleString('en-US', { timeZone: 'UTC' }));
+    return Math.round((utc - loc) / 60000);
+  })();
 
   const req = JSON.stringify({
     comparisonItem: keywords.map(kw => ({ keyword: kw, geo: 'US', time: `${startDate} ${endDate}` })),
@@ -518,7 +535,7 @@ async function fetchGoogleTrends() {
   };
 
   // Step 1: get widget tokens
-  const exploreUrl = `https://trends.google.com/trends/api/explore?hl=en-US&tz=300&req=${encodeURIComponent(req)}`;
+  const exploreUrl = `https://trends.google.com/trends/api/explore?hl=en-US&tz=${tzMin}&req=${encodeURIComponent(req)}`;
   const exploreRes = await fetch(exploreUrl, { headers });
   if (!exploreRes.ok) throw new Error(`Google Trends explore ${exploreRes.status}`);
 
@@ -529,7 +546,7 @@ async function fetchGoogleTrends() {
 
   // Step 2: get actual time-series data
   const dataReq = JSON.stringify(timelineWidget.request);
-  const dataUrl = `https://trends.google.com/trends/api/widgetdata/multiline?hl=en-US&tz=300&req=${encodeURIComponent(dataReq)}&token=${encodeURIComponent(timelineWidget.token)}`;
+  const dataUrl = `https://trends.google.com/trends/api/widgetdata/multiline?hl=en-US&tz=${tzMin}&req=${encodeURIComponent(dataReq)}&token=${encodeURIComponent(timelineWidget.token)}`;
   const dataRes = await fetch(dataUrl, { headers });
   if (!dataRes.ok) throw new Error(`Google Trends widgetdata ${dataRes.status}`);
 

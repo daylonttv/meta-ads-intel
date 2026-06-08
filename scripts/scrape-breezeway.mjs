@@ -35,22 +35,24 @@ export async function scrapeBreezeway(startDate, endDate) {
     throw new Error(`Breezeway returned non-array (${typeof allDays}) — schema may have changed`);
   }
 
-  // Filter to date range
+  // Filter to date range (drop rows with malformed/missing dates)
   const filtered = allDays.filter(d => {
+    if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d.date || '')) return false;
     if (startDate && d.date < startDate) return false;
     if (endDate && d.date > endDate) return false;
     return true;
   });
 
-  // Normalize status to our format
+  // Normalize: coerce numeric fields to finite numbers or null; bound incident strings.
+  const num = v => { const n = Number(v); return Number.isFinite(n) ? n : null; };
   return filtered.map(d => ({
     date: d.date,
     status: normalizeStatus(d.hyb_status),
-    cpa_z: d.cpa_z,
-    n_biz: d.n_biz,
+    cpa_z: num(d.cpa_z),
+    n_biz: num(d.n_biz),
     dow: d.dow,
-    incident_source: d.incident_source || null,
-    incident_description: d.incident_description || null,
+    incident_source: typeof d.incident_source === 'string' ? d.incident_source.slice(0, 200) : null,
+    incident_description: typeof d.incident_description === 'string' ? d.incident_description.slice(0, 1000) : null,
   }));
 }
 
