@@ -1,13 +1,27 @@
 /**
  * build-dashboard.mjs
  * Reads data/data.json + template/dashboard.html → outputs index.html
- * 
+ *
  * Injects the data as a JS variable so the HTML is fully self-contained.
  * Anyone can open index.html in a browser with no server needed.
  */
 
-import { readFile, writeFile, mkdir } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import { existsSync } from 'fs';
+
+// Escape a JSON string so it can be safely embedded inside an inline <script>.
+// Prevents untrusted strings (Gemini/API/Breezeway text) from terminating the
+// tag (</script>) or the JS string literal (U+2028 / U+2029 line separators,
+// which are valid in JSON but illegal in JS string literals).
+const LS = String.fromCharCode(0x2028); // U+2028 LINE SEPARATOR
+const PS = String.fromCharCode(0x2029); // U+2029 PARAGRAPH SEPARATOR
+function escapeForScript(jsonStr) {
+  return jsonStr
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(new RegExp(LS, 'g'), '\\u2028')
+    .replace(new RegExp(PS, 'g'), '\\u2029');
+}
 
 async function build() {
   // Read data
@@ -26,10 +40,9 @@ async function build() {
   }
   let html = await readFile(templatePath, 'utf-8');
 
-  // Inject data as a global JS variable
-  // The template references window.__DASHBOARD_DATA__
-  const dataScript = `<script>window.__DASHBOARD_DATA__ = ${JSON.stringify(data)};</script>`;
-  
+  // Inject data as a global JS variable. The template references window.__DASHBOARD_DATA__.
+  const dataScript = `<script>window.__DASHBOARD_DATA__ = ${escapeForScript(JSON.stringify(data))};</script>`;
+
   // Insert before closing </head> or before first <script>
   if (html.includes('<!-- DATA_INJECTION_POINT -->')) {
     html = html.replace('<!-- DATA_INJECTION_POINT -->', dataScript);

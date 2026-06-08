@@ -14,11 +14,26 @@
 
 const BREEZEWAY_URL = 'https://headwinds.s3.us-east-1.amazonaws.com/cpa_z_data.json';
 
+// Map Breezeway's hyb_status to our internal status. Unknown/new values are
+// preserved as 'unknown' (not silently treated as 'normal') so schema changes
+// or new warning states surface instead of being hidden.
+function normalizeStatus(raw) {
+  const v = (raw || '').toUpperCase().trim();
+  if (v === 'VERY BAD') return 'very_bad';
+  if (v === 'BAD') return 'bad';
+  if (v === 'NORMAL' || v === 'OK' || v === 'GOOD' || v === '') return 'normal';
+  console.warn(`  ⚠️  Breezeway unknown hyb_status "${raw}" — preserving as 'unknown'`);
+  return 'unknown';
+}
+
 export async function scrapeBreezeway(startDate, endDate) {
   const res = await fetch(BREEZEWAY_URL);
   if (!res.ok) throw new Error(`Breezeway S3 fetch failed: ${res.status}`);
 
   const allDays = await res.json();
+  if (!Array.isArray(allDays)) {
+    throw new Error(`Breezeway returned non-array (${typeof allDays}) — schema may have changed`);
+  }
 
   // Filter to date range
   const filtered = allDays.filter(d => {
@@ -30,9 +45,7 @@ export async function scrapeBreezeway(startDate, endDate) {
   // Normalize status to our format
   return filtered.map(d => ({
     date: d.date,
-    status: d.hyb_status === 'VERY BAD' ? 'very_bad'
-          : d.hyb_status === 'BAD' ? 'bad'
-          : 'normal',
+    status: normalizeStatus(d.hyb_status),
     cpa_z: d.cpa_z,
     n_biz: d.n_biz,
     dow: d.dow,

@@ -10,30 +10,31 @@
 <!-- DATA_INJECTION_POINT -->
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+:where(button,a,input,[tabindex]):focus-visible{outline:2px solid var(--a);outline-offset:2px;border-radius:6px}
 :root{
-  --bg:#070b12;--card:#0d1420;--card2:#121b2a;--border:#182133;
-  --t1:#edf1f7;--t2:#a0aec0;--t3:#647892;
-  --g:#30d8a4;--gd:rgba(48,216,164,.1);
-  --r:#ef6b63;--rd:rgba(239,107,99,.12);
-  --a:#ebb832;--ad:rgba(235,184,50,.12);
+  --bg:#080a10;--card:#0d1420;--card2:#121b2a;--border:#1c2740;
+  --t1:#edf1f7;--t2:#aeb9ca;--t3:#8595ab;
+  --g:#3fb98a;--gd:rgba(63,185,138,.12);
+  --r:#e0655d;--rd:rgba(224,101,93,.12);
+  --a:#e0a527;--ad:rgba(224,165,39,.13);
   --b:#5e9df7;--bd:rgba(94,157,247,.08);
-  --p:#a78bfa;--pd:rgba(167,139,250,.08);
+  --p:#c79a5b;--pd:rgba(199,154,91,.1);
   --mono:'IBM Plex Mono',monospace;--sans:'Sora',sans-serif;
 }
 html{scroll-behavior:smooth;scroll-padding-top:52px}
 body{background:var(--bg);color:var(--t1);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 20%,rgba(94,157,247,.04) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(167,139,250,.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(224,165,39,.025) 0%,transparent 55%);pointer-events:none;z-index:0}
 .w{max-width:540px;margin:0 auto;padding:16px 10px 64px;position:relative;z-index:1}
 
 /* ===== STICKY NAV ===== */
 .nav{position:sticky;top:0;z-index:100;background:rgba(7,11,18,.88);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-bottom:1px solid var(--border);margin:0 -10px;padding:0 10px}
-.nav::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(94,157,247,.2),rgba(167,139,250,.2),transparent)}
+.nav::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:rgba(224,165,39,.18)}
 .nav-inner{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:8px 0;-webkit-overflow-scrolling:touch}
 .nav-inner::-webkit-scrollbar{display:none}
 .nav-inner::after{content:'';flex-shrink:0;width:14px}
 .nav-btn{flex-shrink:0;padding:6px 14px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--t3);font-family:var(--sans);font-size:.68rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
 .nav-btn:hover{color:var(--t2);background:rgba(94,157,247,.05);border-color:rgba(94,157,247,.1)}
-.nav-btn.active{background:linear-gradient(135deg,rgba(94,157,247,.12),rgba(167,139,250,.08));color:var(--b);border-color:rgba(94,157,247,.2);box-shadow:0 0 12px rgba(94,157,247,.1)}
+.nav-btn.active{background:rgba(94,157,247,.12);color:var(--b);border-color:rgba(94,157,247,.28)}
 
 /* ===== DESKTOP ===== */
 @media(min-width:768px){
@@ -126,11 +127,11 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 
 /* ===== HEADER ===== */
 .hdr{text-align:center;padding:28px 0 28px;position:relative}
-.hdr::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(94,157,247,.08) 0%,transparent 70%);pointer-events:none}
-.hdr::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(94,157,247,.3),rgba(167,139,250,.3),transparent)}
-.hdr h1{font-size:1.5rem;font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#fff 10%,#7cb8ff 40%,#b090ff 70%,#ff8a80 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 40px rgba(94,157,247,.15)}
+.hdr::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:280px;height:200px;background:radial-gradient(circle,rgba(224,165,39,.06) 0%,transparent 70%);pointer-events:none}
+.hdr::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;background:rgba(224,165,39,.22)}
+.hdr h1{font-size:1.5rem;font-weight:800;letter-spacing:-.03em;color:#f0d9a8}
 .hdr .sub{font-size:.72rem;color:var(--t2);margin-top:6px;font-weight:400}
-.pill{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:4px 16px;background:linear-gradient(135deg,rgba(94,157,247,.1),rgba(48,216,164,.08));border:1px solid rgba(94,157,247,.2);border-radius:99px;font-family:var(--mono);font-size:.62rem;color:var(--b)}
+.pill{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:4px 16px;background:rgba(224,165,39,.1);border:1px solid rgba(224,165,39,.25);border-radius:99px;font-family:var(--mono);font-size:.62rem;color:var(--a)}
 .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 8px var(--g);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px var(--g)}50%{opacity:.4;box-shadow:0 0 2px var(--g)}}
 
@@ -151,7 +152,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 
 /* ===== CARDS ===== */
 .c{background:linear-gradient(180deg,var(--card) 0%,rgba(10,16,28,.8) 100%);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px;position:relative;overflow:hidden}
-.c::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 10%,rgba(94,157,247,.18) 50%,transparent 90%)}
+.c::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:rgba(255,255,255,.04)}
 .c.chart-card{overflow:visible;padding:10px 0 8px 0}
 
 /* ===== CHARTS ===== */
@@ -187,7 +188,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 .st .n{font-size:.54rem;color:var(--t3);margin-top:2px;font-style:italic}
 
 /* ===== ANALYSIS ===== */
-.ax{background:linear-gradient(135deg,rgba(94,157,247,.05),rgba(167,139,250,.04));border:1px solid rgba(94,157,247,.15);border-radius:12px;padding:16px;margin-top:12px;font-size:.76rem;color:var(--t2);line-height:1.75}
+.ax{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:12px;font-size:.76rem;color:var(--t2);line-height:1.75}
 .ax strong{color:var(--t1)}
 
 /* ===== OUTAGE ===== */
@@ -223,7 +224,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
 .drbar label{font-size:.54rem;color:var(--t3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.07em;flex-shrink:0;margin-right:2px}
 .drpill{padding:4px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--t3);font-family:var(--mono);font-size:.61rem;font-weight:600;cursor:pointer;transition:all .18s;white-space:nowrap}
 .drpill:hover{color:var(--t2);border-color:rgba(94,157,247,.2)}
-.drpill.active{background:linear-gradient(135deg,rgba(94,157,247,.12),rgba(167,139,250,.08));color:var(--b);border-color:rgba(94,157,247,.25)}
+.drpill.active{background:rgba(94,157,247,.12);color:var(--b);border-color:rgba(94,157,247,.3)}
 .drpill-ct{font-size:.54rem;color:var(--t3);font-family:var(--mono);margin-left:auto;white-space:nowrap}
 /* ===== TOOLTIPS ===== */
 .tip-wrap{position:relative;cursor:help}
@@ -253,7 +254,7 @@ body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%
       onfocus="this.style.borderColor='rgba(94,157,247,.5)'"
       onblur="this.style.borderColor='#182133'">
     <button onclick="checkPw()"
-      style="width:100%;padding:11px;border-radius:8px;border:none;background:linear-gradient(135deg,rgba(94,157,247,.18),rgba(167,139,250,.12));color:#edf1f7;font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600;cursor:pointer;letter-spacing:.05em;transition:opacity .2s"
+      style="width:100%;padding:11px;border-radius:8px;border:none;background:rgba(224,165,39,.2);color:#edf1f7;font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600;cursor:pointer;letter-spacing:.05em;transition:opacity .2s"
       onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">ENTER</button>
     <div id="pwErr" style="color:#ef6b63;font-size:.65rem;margin-top:10px;height:14px;transition:opacity .2s;opacity:0">Incorrect password</div>
   </div>
@@ -333,7 +334,7 @@ function checkPw(){
   </div>
   <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> How to read these charts</button>
   <div class="collapse">
-    <div class="ax" style="margin-top:0">Bars = our daily Meta spend, colored by Breezeway's platform rating. Blue line = our Meta ROAS. Notice how spend stays flat but ROAS drops on red/amber days — same budget, worse results. The CPA chart below shows the inverse: cost per acquisition spikes on bad days. The dashed purple line is our May average.</div>
+    <div class="ax" style="margin-top:0">Bars = daily Meta spend, colored by Breezeway's platform rating (<span style="color:var(--g)">green</span> / <span style="color:var(--a)">amber</span> / <span style="color:var(--r)">red</span>). The line = Meta ROAS. The two axes are independent, so read it as: on flagged days, did ROAS tend to dip while spend held? The CPA chart's dashed line is the period average. Apparent alignment is a prompt to investigate, not proof of cause.</div>
   </div>
   <div class="charts-pair">
     <div class="c chart-card"><div class="chart-wrap"><canvas id="revChart"></canvas></div></div>
@@ -369,7 +370,7 @@ function checkPw(){
   </div>
   <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> About this data</button>
   <div class="collapse">
-    <div class="ax" style="margin-top:0">Known Meta platform incidents from three independent monitoring services (StatusGator, IsDown, Ad Status Monitor) plus Meta's own status page at metastatus.com. Meta's official page often lags 30–120 minutes behind actual issues — the independent monitors are faster.</div>
+    <div class="ax" style="margin-top:0">Meta platform incidents from StatusGator (when an API key is configured) and Meta's public status endpoints. When no incident feed is available, this falls back to showing Breezeway-flagged platform days for the period. The Tools section links additional monitors (IsDown, Ad Status Monitor) you can check manually.</div>
   </div>
   <div class="c" id="outagesList"><!-- populated by JS --></div>
   <div class="sg" id="outageStats"><!-- populated by JS --></div>
@@ -390,17 +391,7 @@ function checkPw(){
 
   <button class="collapse-toggle" onclick="toggle(this)"><span class="arrow">▶</span> What this means</button>
   <div class="collapse">
-    <div class="ax" style="margin-top:0">
-      <strong style="color:var(--g)">Blended ROAS 3.43× is solid</strong> — above the all-ecom median (2.87×) and within the F&B range (3–5×). Our overall marketing mix is working.
-      <br><br>
-      <strong style="color:var(--a)">Meta ROAS 2.10× is below where we should be.</strong> The F&B floor is 2.5×. On Normal days we averaged 2.21× — still below, but platform instability accounts for ~12% of the gap.
-      <br><br>
-      <strong style="color:var(--a)">Meta CPA $35.88 is at the top of the F&B range</strong> ($15–35). On Normal days: $34.82 (within range). On Bad/Very Bad days: $40.15 (above even the all-ecom median).
-      <br><br>
-      <strong>Meta CPM $9.86</strong> is 21% above F&B bench ($8.14) but well below US average ($23.00).
-      <br><br>
-      <strong>Bottom line:</strong> Blended is healthy. Meta is underperforming vs. F&B benchmarks — roughly half explained by platform instability, the rest is a real optimization opportunity.
-    </div>
+    <div class="ax" id="benchMeaning" style="margin-top:0"><!-- populated by JS from live data --></div>
   </div>
 </div>
 
@@ -460,11 +451,7 @@ function checkPw(){
         <div class="chart-wrap"><canvas id="fuelChart"></canvas></div>
       </div>
     </div>
-    <div class="ax">
-      <strong>What you're seeing:</strong> The orange area shows the US average gas price rising through May (interpolated from AAA/EIA weekly data). The blue line is our Meta ROAS. Gas went from ~$4.40/gal at the start of May to $4.63 by mid-month — the highest point of 2026. Our worst ROAS days (May 12, 15) coincide with peak gas prices AND platform instability. Consumers paying $60+ to fill a tank are less likely to impulse-buy specialty cheese online.
-      <br><br>
-      <em style="font-size:.65rem">Gas price data: AAA national averages (weekly, interpolated to daily). Actual daily prices may vary ±$0.05. Wisconsin gas was slightly below national avg (~$4.30–4.45 range).</em>
-    </div>
+    <div class="ax" id="fuelAnalysis"><!-- populated by JS from live gas data --></div>
   </div>
 
   <div class="c" style="padding:12px">
@@ -524,12 +511,13 @@ function toggle(btn){
 }
 
 // ===== STICKY NAV SCROLL =====
-function go(id){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-}
 const sections = ['charts','daily','outages','bench','macro','reliability','tools'];
+function go(id){
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+  const i=sections.indexOf(id);
+  document.querySelectorAll('.nav-btn').forEach((b,bi)=>b.classList.toggle('active',bi===i));
+}
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
@@ -551,21 +539,43 @@ const holidaysRaw = RAW.holidays || [];
 const trendsRaw = RAW.googleTrends || [];
 const meta = RAW.meta || {};
 
-// ===== MERGE TW + BREEZEWAY =====
+// ===== HTML ESCAPE (defense-in-depth for any API/Gemini/Breezeway text in innerHTML) =====
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+// ===== MERGE TW + BREEZEWAY onto a continuous day spine =====
+// Build every calendar day in meta.dateRange and left-join TW + Breezeway, so a
+// platform-flagged day with no Triple Whale row still appears instead of vanishing.
 const bwMap = {};
 bwRaw.forEach(b => { bwMap[b.date] = b.status; });
-const D = tw.map(day => {
-  const bwStatus = bwMap[day.date] || 'normal';
+const twMap = {};
+tw.forEach(t => { twMap[t.date] = t; });
+function eachDateUTC(start, end){
+  const out=[]; if(!start||!end) return out;
+  let d=new Date(start+'T00:00:00Z'); const e=new Date(end+'T00:00:00Z');
+  while(d<=e){ out.push(d.toISOString().split('T')[0]); d.setUTCDate(d.getUTCDate()+1); }
+  return out;
+}
+const spine = (meta.dateRange?.start && meta.dateRange?.end)
+  ? eachDateUTC(meta.dateRange.start, meta.dateRange.end)
+  : tw.map(t=>t.date);
+const D = spine.map(date => {
+  const day = twMap[date];
+  const bwStatus = bwMap[date] || 'normal';
   const s = bwStatus === 'very_bad' ? 'v' : bwStatus === 'bad' ? 'b' : 'n';
+  const dd = String(new Date(date+'T00:00:00Z').getUTCDate());
+  if (!day) {
+    // No Triple Whale row for this day — metrics stay null so they're excluded from
+    // averages/charts rather than counted as real zeros.
+    return { d:dd, date, s, rev:null, roas:null, mr:null, cpa:null, sp:null, ord:null, cpm:null, hasTW:false };
+  }
   return {
-    d: String(new Date(day.date).getUTCDate()),
-    date: day.date, s,
+    d: dd, date, s,
     rev: day.revenue||0, roas: day.blendedRoas||0, mr: day.metaRoas||0,
-    cpa: day.metaCpa||0, sp: day.metaSpend||0, ord: day.orders||0, cpm: day.metaCpm||0,
+    cpa: day.metaCpa||0, sp: day.metaSpend||0, ord: day.orders||0, cpm: day.metaCpm||0, hasTW:true,
   };
 });
 
-if (D.length === 0) {
+if (D.length === 0 || tw.length === 0) {
   document.querySelector('.w').innerHTML = `<div class="hdr"><h1>Meta Ads Intelligence Hub</h1>
     <p class="sub" style="margin-top:20px;color:var(--a)">⚠️ No data available yet. Run the fetch script or trigger the GitHub Action.</p>
     <p class="sub" style="margin-top:10px">Last attempted: ${meta.updatedAt || 'never'}</p></div>`;
@@ -621,7 +631,7 @@ macroEl.innerHTML = allTimelineItems.length ? allTimelineItems.map(e => {
     borderColor = e.boost || mood === 'boosts_spending' ? 'var(--g)' : 'var(--border)';
     cls = 'ok';
   } else {
-    borderColor = mood === 'suppresses_spending' ? 'var(--r)' : mood === 'boosts_spending' ? 'var(--g)' : (e.intensity>=3 ? 'var(--r)' : e.intensity>=2 ? 'var(--a)' : 'var(--p)');
+    borderColor = mood === 'suppresses_spending' ? 'var(--r)' : mood === 'boosts_spending' ? 'var(--g)' : (e.intensity>=3 ? 'var(--r)' : e.intensity>=2 ? 'var(--a)' : 'var(--b)');
     cls = mood === 'suppresses_spending' ? '' : mood === 'boosts_spending' ? 'ok' : (e.intensity>=3 ? '' : e.intensity>=2 ? 'w' : 'ok');
   }
   const dateLabel = e.date ? e.date.split('-').slice(1).map(s=>parseInt(s)).join('/') : '';
@@ -629,11 +639,11 @@ macroEl.innerHTML = allTimelineItems.length ? allTimelineItems.map(e => {
   const badges = moodBadge(mood) + feedBadge(dom);
   return `<div class="oi ${cls} me-row" style="border-left-color:${borderColor};display:block;cursor:pointer;padding:8px 12px" onclick="this.classList.toggle('me-open');this.querySelector('.me-expand').classList.toggle('open')">
     <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">
-      <span class="od" style="flex-shrink:0">${dateLabel}</span>
-      <span style="flex:1;min-width:0">${e.icon||''} ${e.description}</span>
-      <span style="display:flex;align-items:center;gap:2px;flex-shrink:0;flex-wrap:wrap">${badges}<span class="os" style="margin-left:4px">${e.source||''}&nbsp;<span class="me-chev">▶</span></span></span>
+      <span class="od" style="flex-shrink:0">${esc(dateLabel)}</span>
+      <span style="flex:1;min-width:0">${esc(e.icon||'')} ${esc(e.description)}</span>
+      <span style="display:flex;align-items:center;gap:2px;flex-shrink:0;flex-wrap:wrap">${badges}<span class="os" style="margin-left:4px">${esc(e.source||'')}&nbsp;<span class="me-chev">▶</span></span></span>
     </div>
-    <div class="me-expand"><div class="me-expand-inner">${detail}</div></div>
+    <div class="me-expand"><div class="me-expand-inner">${esc(detail)}</div></div>
   </div>`;
 }).join('') : '<div class="oi ok"><span>Macro events will be auto-curated on next data refresh</span></div>';
 
@@ -710,7 +720,9 @@ function interpolateGas(weeklyPrices, days) {
 // ===== MAIN RENDER =====
 function render(days) {
   DAYS = days;
-  const avg = (arr,key) => arr.length ? arr.reduce((s,d)=>s+d[key],0)/arr.length : 0;
+  // Null-safe: only count days that actually have the metric (excludes spine-filled gaps).
+  const nums = (arr,key) => arr.map(d=>d[key]).filter(x=>x!=null && !isNaN(x));
+  const avg = (arr,key) => { const v=nums(arr,key); return v.length ? v.reduce((s,x)=>s+x,0)/v.length : 0; };
 
   // Destroy existing charts
   [revChartInst,cpaChartInst,macroChartInst,trendsChartInst].forEach(c=>{if(c)c.destroy();});
@@ -724,8 +736,11 @@ function render(days) {
   const badDays = days.filter(d=>d.s!=='n');
   const monthName = new Date(days[0]?.date||Date.now()).toLocaleString('en-US',{month:'short',timeZone:'UTC'}).toUpperCase();
 
-  // Header range
-  document.getElementById('hdrRange').textContent = `${monthName} ${days[0]?.d||'?'}–${days[days.length-1]?.d||'?'} · TRIPLE WHALE LIVE`;
+  // Header range (handles cross-month windows; TW tag reflects real freshness)
+  const fmtMD = ds => ds ? new Date(ds+'T00:00:00Z').toLocaleString('en-US',{month:'short',day:'numeric',timeZone:'UTC'}) : '?';
+  const twSrc = meta.sources?.tripleWhale;
+  const twTag = !twSrc ? 'TRIPLE WHALE' : twSrc.stale ? 'TW DATA STALE' : twSrc.ok ? 'TRIPLE WHALE LIVE' : 'TW UNAVAILABLE';
+  document.getElementById('hdrRange').textContent = `${fmtMD(days[0]?.date)} – ${fmtMD(days[days.length-1]?.date)} · ${twTag}`;
   document.getElementById('rangeDisplay').textContent = `${days.length} day${days.length!==1?'s':''}`;
 
   // Stats
@@ -744,25 +759,32 @@ function render(days) {
   const dropVal = hasBoth ? `${Math.abs(+roasDrop)}%` : '—';
   const inflVal = hasBoth ? `+${Math.abs(+cpaInflation)}%` : '—';
   document.getElementById('statsGrid').innerHTML = `
-    <div class="st tip-wrap" data-tip="Average Meta Return on Ad Spend on days when Breezeway rated the platform as Normal — this is your true baseline, what you earn when Meta isn't fighting you."><div class="v" style="color:var(--g)">${nrVal}</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
-    <div class="st tip-wrap" data-tip="Average Meta ROAS on Breezeway-flagged Bad or Very Bad days. Lower than Normal Days = platform instability is costing you real efficiency."><div class="v" style="color:var(--r)">${brVal}</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
-    <div class="st tip-wrap" data-tip="Cost Per Acquisition on normal platform days. This is your true baseline CPA — what a conversion actually costs when Meta's delivery is healthy."><div class="v" style="color:var(--g)">${ncVal}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
-    <div class="st tip-wrap" data-tip="Cost Per Acquisition on degraded platform days. Higher than Normal Days = you're paying more per sale because of platform issues, not your ads."><div class="v" style="color:var(--r)">${bcVal}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
-    <div class="st tip-wrap" data-tip="How much lower Meta ROAS was on bad days compared to normal days. This is the efficiency cost of platform instability — same budget, fewer results."><div class="v" style="color:var(--a)">${dropVal}</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
-    <div class="st tip-wrap" data-tip="How much more each conversion cost on bad platform days vs. normal. This is wasted spend caused by Meta instability — not your targeting or creative."><div class="v" style="color:var(--a)">${inflVal}</div><div class="l">CPA Inflation</div><div class="n">bad vs normal</div></div>`;
-  document.getElementById('statsAnalysis').innerHTML = badDays.length
-    ? `<strong>The correlation is clear.</strong> On Breezeway-flagged days, Meta ROAS averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days — a <strong>${Math.abs(roasDrop)}% efficiency drop</strong>. Meta spend was relatively flat across all days — same budget consumed, fewer conversions delivered.`
-    : `<strong>All days were rated Normal by Breezeway this period.</strong> Average Meta ROAS: ${avgMetaRoas.toFixed(2)}×, CPA: $${avgMetaCpa.toFixed(2)}.`;
+    <div class="st tip-wrap" data-tip="Average Meta Return on Ad Spend on days Breezeway rated the platform Normal — your baseline on days the platform looked healthy."><div class="v" style="color:var(--g)">${nrVal}</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
+    <div class="st tip-wrap" data-tip="Average Meta ROAS on Breezeway-flagged Bad/Very Bad days. Lower than Normal days suggests platform instability may be weighing on efficiency (correlation, not proof)."><div class="v" style="color:var(--r)">${brVal}</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
+    <div class="st tip-wrap" data-tip="Cost Per Acquisition on Normal-rated platform days — your baseline CPA when Meta's delivery looked healthy."><div class="v" style="color:var(--g)">${ncVal}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
+    <div class="st tip-wrap" data-tip="Cost Per Acquisition on platform-flagged days. Higher than Normal days coincides with platform issues — worth investigating before blaming targeting or creative."><div class="v" style="color:var(--r)">${bcVal}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
+    <div class="st tip-wrap" data-tip="Difference in Meta ROAS on flagged vs Normal days. A larger gap is consistent with platform instability affecting efficiency — same budget, fewer results."><div class="v" style="color:var(--a)">${dropVal}</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
+    <div class="st tip-wrap" data-tip="How much more each conversion cost on flagged vs Normal days. Higher cost that lines up with platform-flagged days (correlation, not a proven cause)."><div class="v" style="color:var(--a)">${inflVal}</div><div class="l">CPA Inflation</div><div class="n">bad vs normal</div></div>`;
+  const enoughSample = normalDays.length>=3 && badDays.length>=3;
+  document.getElementById('statsAnalysis').innerHTML = !badDays.length
+    ? `<strong>All days were rated Normal by Breezeway this period.</strong> Average Meta ROAS: ${avgMetaRoas.toFixed(2)}×, CPA: $${avgMetaCpa.toFixed(2)}.`
+    : enoughSample
+      ? `On Breezeway-flagged days, Meta ROAS averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days (a <strong>${Math.abs(roasDrop)}% difference</strong>), while Meta spend stayed relatively flat. This is a <strong>correlation</strong>, not proof of cause — but it's the pattern you'd expect if platform instability were dragging efficiency. <span style="color:var(--t3)">(${normalDays.length} normal / ${badDays.length} flagged days)</span>`
+      : `Meta ROAS on flagged days averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days. <span style="color:var(--a)">Small sample (${normalDays.length} normal / ${badDays.length} flagged) — treat as directional only, not a reliable correlation.</span>`;
 
   // Day strip
   const strip = document.getElementById('strip');
   strip.innerHTML = '';
-  const maxR = Math.max(...days.map(d=>d.rev));
+  const revVals = nums(days,'rev');
+  const maxR = revVals.length ? Math.max(...revVals) : 0;
   days.forEach(d => {
-    const dow = new Date(d.date).toLocaleString('en-US',{weekday:'short',timeZone:'UTC'});
+    const dow = new Date(d.date+'T00:00:00Z').toLocaleString('en-US',{weekday:'short',timeZone:'UTC'});
     const r = document.createElement('div');
     r.className = `dr ${d.s==='v'?'v':d.s==='b'?'b':'n'}`;
-    r.innerHTML = `<span class="dd">${d.d}<small>${dow}</small></span><span class="ds2">${d.s==='v'?'V.BAD':d.s==='b'?'BAD':'OK'}</span><div class="db"><div class="dbf" style="width:${(d.rev/maxR*100).toFixed(0)}%"></div></div><span class="dro">${d.mr}×</span><span class="dcp">$${d.cpa.toFixed(0)}</span>`;
+    const wpct = (maxR>0 && d.rev!=null) ? (d.rev/maxR*100).toFixed(0) : 0;
+    const mrTxt = d.mr!=null ? d.mr+'×' : '—';
+    const cpaTxt = d.cpa!=null ? '$'+d.cpa.toFixed(0) : '—';
+    r.innerHTML = `<span class="dd">${d.d}<small>${dow}</small></span><span class="ds2">${d.s==='v'?'V.BAD':d.s==='b'?'BAD':'OK'}</span><div class="db"><div class="dbf" style="width:${wpct}%"></div></div><span class="dro">${mrTxt}</span><span class="dcp">${cpaTxt}</span>`;
     strip.appendChild(r);
   });
 
@@ -775,7 +797,7 @@ function render(days) {
   if (outagesInRange.length) {
     outageEl.innerHTML = outagesInRange.map(o=>{
       const cls = o.status==='resolved'?'ok':'';
-      return `<div class="oi ${cls}"><span class="od">${o.date}</span><span>${o.title}</span><span class="os">${o.service||''}</span></div>`;
+      return `<div class="oi ${cls}"><span class="od">${esc(o.date)}</span><span>${esc(o.title)}</span><span class="os">${esc(o.service||'')}</span></div>`;
     }).join('');
   } else {
     const badBw = days.filter(d=>d.s!=='n');
@@ -783,14 +805,14 @@ function render(days) {
     const seenDates = new Set(platformEvents.map(e=>e.date));
     const platformHtml = platformEvents.map(e=>{
       const dl=e.date.split('-').slice(1).map(s=>parseInt(s)).join('/');
-      return `<div class="oi"><span class="od">${dl}</span><span>${e.icon||'🔴'} ${e.description}</span><span class="os">${e.source||'Macro'}</span></div>`;
+      return `<div class="oi"><span class="od">${esc(dl)}</span><span>${esc(e.icon||'🔴')} ${esc(e.description)}</span><span class="os">${esc(e.source||'Macro')}</span></div>`;
     }).join('');
     const breezeHtml = badBw.filter(d=>!seenDates.has(d.date)).map(d=>{
       const bwDay=bwFull[d.date];
       const zScore=bwDay?.cpa_z!=null?` · CPA z-score: ${bwDay.cpa_z.toFixed(2)}`:'';
       const nBiz=bwDay?.n_biz?` · ${bwDay.n_biz} brands`:'';
-      const incident=bwDay?.incident_description?`<div style="font-size:.6rem;color:var(--t3);margin-top:4px;line-height:1.4">${bwDay.incident_description.replace(/\r?\n/g,' ').substring(0,200)}${bwDay.incident_description.length>200?'…':''}</div>`:'';
-      return `<div class="oi ${d.s==='v'?'':'w'}"><span class="od">${monthName} ${d.d}</span><span>Breezeway: ${d.s==='v'?'Very Bad':'Bad'}${zScore}${nBiz}${incident}</span><span class="os">${bwDay?.incident_source||'Breezeway'}</span></div>`;
+      const incident=bwDay?.incident_description?`<div style="font-size:.6rem;color:var(--t3);margin-top:4px;line-height:1.4">${esc(bwDay.incident_description.replace(/\r?\n/g,' ').substring(0,200))}${bwDay.incident_description.length>200?'…':''}</div>`:'';
+      return `<div class="oi ${d.s==='v'?'':'w'}"><span class="od">${monthName} ${d.d}</span><span>Breezeway: ${d.s==='v'?'Very Bad':'Bad'}${zScore}${nBiz}${incident}</span><span class="os">${esc(bwDay?.incident_source||'Breezeway')}</span></div>`;
     }).join('');
     outageEl.innerHTML = (platformHtml+breezeHtml) || '<div class="oi ok"><span>No incidents detected this period</span></div>';
   }
@@ -810,6 +832,20 @@ function render(days) {
       <tr><td class="m">Daily Orders</td><td class="o">${Math.round(avgOrders)}</td><td class="o">—</td><td class="o">—</td></tr>
       <tr><td class="m">Daily Ad Spend</td><td class="o">$${Math.round(avgAdSpend).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
     </tbody></table>`;
+
+  // Benchmark interpretation — computed from THIS period's live averages (no hardcoded claims).
+  const fbRoasFloor=2.5, allEcomRoas=2.87, fbCpaHi=35, fbCpm=8.14;
+  const vColor = good => good ? 'var(--g)' : 'var(--a)';
+  document.getElementById('benchMeaning').innerHTML = `
+    <strong style="color:${vColor(avgBlendedRoas>=allEcomRoas)}">Blended ROAS ${avgBlendedRoas.toFixed(2)}×</strong> is ${avgBlendedRoas>=allEcomRoas?'above':'below'} the all-ecom median (${allEcomRoas}×)${avgBlendedRoas>=3?' and within the typical F&B range (3–5×)':''}.
+    <br><br>
+    <strong style="color:${vColor(avgMetaRoas>=fbRoasFloor)}">Meta ROAS ${avgMetaRoas.toFixed(2)}×</strong> is ${avgMetaRoas>=fbRoasFloor?'at/above':'below'} the F&B floor (${fbRoasFloor}×).${hasBoth?` Normal days averaged ${avgMrNormal.toFixed(2)}× vs ${avgMrBad.toFixed(2)}× on flagged days.`:''}
+    <br><br>
+    <strong style="color:${vColor(avgMetaCpa<=fbCpaHi)}">Meta CPA $${avgMetaCpa.toFixed(2)}</strong> is ${avgMetaCpa<=fbCpaHi?'within':'above'} the F&B range ($15–35).
+    <br><br>
+    <strong>Meta CPM $${avgMetaCpm.toFixed(2)}</strong> vs F&B benchmark ~$${fbCpm}.
+    <br><br>
+    <span style="color:var(--t3);font-size:.95em">Benchmark ranges are static industry references (Polar, Varos, MHI) for context — not live competitor data. Gardner's figures are this period's averages from Triple Whale.</span>`;
 
   // Macro analysis (list stays static; analysis reflects filtered range)
   const majorEvents = macroRaw.filter(e=>e.intensity>=3&&datesInRange.has(e.date));
@@ -858,19 +894,20 @@ function render(days) {
   blendedPtC = days.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4');
   const bgC = days.map(d=>d.s==='v'?'rgba(239,107,99,.3)':d.s==='b'?'rgba(235,184,50,.25)':'rgba(48,216,164,.18)');
   const brC = days.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4');
-  const spMin=Math.floor(Math.min(...days.map(d=>d.sp))/500)*500;
-  const spMax=Math.ceil(Math.max(...days.map(d=>d.sp))/500)*500;
-  mrMin=Math.max(0.5,Math.floor(Math.min(...days.map(d=>d.mr))*2)/2);
-  mrMax=Math.ceil(Math.max(...days.map(d=>d.mr))*2)/2+0.5;
-  const cpaMin=Math.floor(Math.min(...days.map(d=>d.cpa))/5)*5-5;
-  const cpaMax=Math.ceil(Math.max(...days.map(d=>d.cpa))/5)*5+5;
+  const spVals=nums(days,'sp'), mrVals=nums(days,'mr'), cpaVals=nums(days,'cpa');
+  const spMin=spVals.length?Math.floor(Math.min(...spVals)/500)*500:0;
+  const spMax=spVals.length?Math.ceil(Math.max(...spVals)/500)*500:500;
+  mrMin=mrVals.length?Math.max(0.5,Math.floor(Math.min(...mrVals)*2)/2):0.5;
+  mrMax=mrVals.length?Math.ceil(Math.max(...mrVals)*2)/2+0.5:5;
+  const cpaMin=cpaVals.length?Math.floor(Math.min(...cpaVals)/5)*5-5:0;
+  const cpaMax=cpaVals.length?Math.ceil(Math.max(...cpaVals)/5)*5+5:50;
   chartLabels = days.map(d=>new Date(d.date+'T00:00:00Z').toLocaleString('en-US',{month:'short',timeZone:'UTC'})+' '+d.d);
   gasDaily = interpolateGas(gasPricesRaw, days);
 
   // Macro chart data — key by full date string to avoid month-boundary collisions
   const macroByDay={};
   macroRaw.forEach(e=>{if(datesInRange.has(e.date)){macroByDay[e.date]=Math.max(macroByDay[e.date]||0,e.intensity||1);}});
-  const macroIntensity=days.map(d=>macroByDay[d.date]||1);
+  const macroIntensity=days.map(d=>macroByDay[d.date]||0); // 0 = no event (no phantom baseline bar)
   const macroChartLabels=days.map(d=>{const ev=macroRaw.filter(e=>e.date===d.date);return ev.length?(ev[0].description||'').substring(0,30):''});
 
   // Spend + ROAS chart
@@ -899,7 +936,7 @@ function render(days) {
     type:'bar',
     data:{labels:chartLabels,datasets:[
       {label:'Meta CPA',data:days.map(d=>d.cpa),backgroundColor:days.map(d=>d.s==='v'?'rgba(239,107,99,.45)':d.s==='b'?'rgba(235,184,50,.4)':'rgba(48,216,164,.3)'),borderColor:days.map(d=>d.s==='v'?'#ef6b63':d.s==='b'?'#ebb832':'#30d8a4'),borderWidth:1.5,borderRadius:5},
-      {type:'line',label:`Avg ($${avgCpa.toFixed(2)})`,data:Array(days.length).fill(avgCpa),borderColor:'rgba(176,144,255,.6)',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false}
+      {type:'line',label:`Avg ($${avgCpa.toFixed(2)})`,data:Array(days.length).fill(avgCpa),borderColor:'rgba(160,174,192,.55)',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false}
     ]},
     options:{responsive:true,maintainAspectRatio:false,layout:{padding:cPad},
       plugins:{
@@ -1022,6 +1059,20 @@ function buildFuelChart(){
   const gasMax=gasVals.length?Math.ceil(Math.max(...gasVals)*20)/20+0.05:5.0;
 
   document.getElementById('fuelChartTitle').textContent='⛽ US Avg Gas Price × '+roasLabel+' × Breezeway Status';
+
+  // Fuel narrative — generated from THIS window's actual gas data (no hardcoded story).
+  const fa=document.getElementById('fuelAnalysis');
+  if(fa){
+    if(hasGas){
+      const first=gasVals[0], last=gasVals[gasVals.length-1];
+      const dir=last>first?'rose':last<first?'eased':'held roughly flat';
+      const lo=Math.min(...gasVals).toFixed(2), hi=Math.max(...gasVals).toFixed(2);
+      fa.innerHTML = `<strong>What you're seeing:</strong> US average regular gas (gold area, EIA weekly data interpolated to daily) ${dir} from $${first.toFixed(2)} to $${last.toFixed(2)} over this window (range $${lo}–$${hi}). The line is our ${esc(roasLabel)}. This overlay is <strong>exploratory</strong>: gas price is a rough proxy for discretionary-spending pressure, and the two axes are independent — apparent alignment is a prompt to investigate, not a proven cause.<br><br><em style="font-size:.65rem">Source: EIA US regular weekly average, interpolated to daily. Wisconsin typically runs slightly below the national average.</em>`;
+    } else {
+      fa.innerHTML = `<em>Gas price data unavailable for this period.</em>`;
+    }
+  }
+
   const datasets=[
     {label:roasLabel,data:roasData,borderColor:roasColor,pointBackgroundColor:roasPts,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:2.5,tension:.3,yAxisID:'y1',fill:false,order:1},
     {label:'Breezeway Status',data:DAYS.map(d=>d.s==='v'?3:d.s==='b'?2:1),backgroundColor:statusBg,borderColor:DAYS.map(d=>d.s==='v'?'rgba(239,107,99,.3)':d.s==='b'?'rgba(235,184,50,.25)':'rgba(48,216,164,.15)'),borderWidth:1,type:'bar',yAxisID:'y2',order:3,borderRadius:4,barPercentage:.5}
@@ -1056,14 +1107,15 @@ function buildFuelChart(){
 // ===== GOOGLE TRENDS CHART =====
 function buildTrendsChart() {
   if (!trendsRaw.length || !DAYS.length) return;
-  const kw1 = DAYS.map(d => { const pt=trendsRaw.find(t=>t.date===d.date); return pt ? (pt['wisconsin cheese']??null) : null; });
-  const kw2 = DAYS.map(d => { const pt=trendsRaw.find(t=>t.date===d.date); return pt ? (pt['cheese gift']??null) : null; });
+  const tMap={}; trendsRaw.forEach(t=>{tMap[t.date]=t;});
+  const kw1 = DAYS.map(d => { const pt=tMap[d.date]; return pt ? (pt['wisconsin cheese']??null) : null; });
+  const kw2 = DAYS.map(d => { const pt=tMap[d.date]; return pt ? (pt['cheese gift']??null) : null; });
   if (trendsChartInst) { trendsChartInst.destroy(); trendsChartInst=null; }
   trendsChartInst = new Chart(document.getElementById('trendsChart'),{
     type:'line',
     data:{labels:chartLabels,datasets:[
       {label:'Wisconsin Cheese',data:kw1,borderColor:'#5e9df7',backgroundColor:'rgba(94,157,247,.1)',fill:true,tension:.35,pointRadius:ptR-1,pointBackgroundColor:'#5e9df7',pointBorderColor:'#fff',pointBorderWidth:ptBW,borderWidth:2.5,spanGaps:true},
-      {label:'Cheese Gift',data:kw2,borderColor:'#a78bfa',backgroundColor:'rgba(167,139,250,.07)',fill:true,tension:.35,pointRadius:ptR-1,pointBackgroundColor:'#a78bfa',pointBorderColor:'#fff',pointBorderWidth:ptBW,borderWidth:2.5,spanGaps:true}
+      {label:'Cheese Gift',data:kw2,borderColor:'#e0a527',backgroundColor:'rgba(224,165,39,.08)',fill:true,tension:.35,pointRadius:ptR-1,pointBackgroundColor:'#e0a527',pointBorderColor:'#fff',pointBorderWidth:ptBW,borderWidth:2.5,spanGaps:true}
     ]},
     options:{responsive:true,maintainAspectRatio:false,layout:{padding:cPad},interaction:{mode:'index',intersect:false},
       plugins:{

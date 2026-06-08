@@ -22,16 +22,19 @@ const EIA_API_KEY = process.env.EIA_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const STATUSGATOR_API_KEY = process.env.STATUSGATOR_API_KEY;
 
-// Rolling 30-day window ending yesterday (today's data isn't finalized when the job runs)
-const now = new Date();
-const endD = new Date(now);
-endD.setDate(now.getDate() - 1);
-const startD = new Date(now);
-startD.setDate(now.getDate() - 30);
-
-const startDate = startD.toISOString().split('T')[0];
-const endDate = endD.toISOString().split('T')[0];
-const monthLabel = now.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+// Rolling 30-day window ending yesterday (today's data isn't finalized when the job runs).
+// Anchored to the store's business timezone (US Central / Wisconsin) so the window is
+// stable regardless of the CI runner's timezone — avoids local-vs-UTC ±1-day drift.
+const TZ = 'America/Chicago';
+const MS_DAY = 86400000;
+function dateStrInTZ(d) {
+  // en-CA formats as YYYY-MM-DD
+  return new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
+}
+const nowMs = Date.now();
+const endDate = dateStrInTZ(new Date(nowMs - 1 * MS_DAY));    // yesterday (Central)
+const startDate = dateStrInTZ(new Date(nowMs - 30 * MS_DAY)); // 30 days back (Central)
+const monthLabel = new Intl.DateTimeFormat('en-US', { timeZone: TZ, month: 'long', year: 'numeric' }).format(new Date(nowMs));
 
 console.log(`📊 Fetching data for ${startDate} to ${endDate}`);
 
@@ -141,7 +144,7 @@ async function fetchTripleWhale() {
   console.log(`  Shop domain: ${shopDomain}`);
   console.log(`  Date range: ${startDate} → ${endDate}`);
 
-  const todayHour = new Date().getUTCHours() + 1;
+  const todayHour = Math.min(24, Math.max(1, new Date().getUTCHours() + 1)); // base-1, clamped 1–24
 
   const res = await fetch('https://api.triplewhale.com/api/v2/summary-page/get-data', {
     method: 'POST',
@@ -169,11 +172,19 @@ async function fetchTripleWhale() {
     return null;
   }
 
-  // x = 1-indexed day-of-year; convert back to calendar date
-  const year = new Date(startDate).getFullYear();
+  // x = 1-indexed day-of-year; convert back to calendar date.
+  // The rolling window can span a year boundary, so try the start year first then the
+  // next year and keep whichever lands inside [startDate, endDate] (UTC, no TZ drift).
+  const startYear = parseInt(startDate.slice(0, 4), 10);
   function dayOfYearToDate(doy) {
-    const d = new Date(year, 0, 1);
-    d.setDate(d.getDate() + doy - 1);
+    for (const y of [startYear, startYear + 1]) {
+      const d = new Date(Date.UTC(y, 0, 1));
+      d.setUTCDate(d.getUTCDate() + doy - 1);
+      const s = d.toISOString().split('T')[0];
+      if (s >= startDate && s <= endDate) return s;
+    }
+    const d = new Date(Date.UTC(startYear, 0, 1));
+    d.setUTCDate(d.getUTCDate() + doy - 1);
     return d.toISOString().split('T')[0];
   }
 
@@ -328,6 +339,53 @@ async function scrapeMetaStatus() {
 // ============================================================
 // 5. GEMINI API — Macro events with feed-domination + mood classification
 // ============================================================
+
+// Parse Gemini's text into a clean, validated array of macro events.
+// Tolerates markdown fences / leading prose, never throws, and drops any row
+// that fails schema validation (missing ISO date or headline). Also bounds
+// string lengths so a runaway model response can't bloat data.json.
+function parseAndValidateEvents(text) {
+  if (!text || typeof text !== 'string') return null;
+  let t = text.replace(/```(?:json)?/gi, '').trim();
+  const start = t.indexOf('[');
+  const end = t.lastIndexOf(']');
+  if (start === -1 || end === -1 || end <= start) return null;
+
+  let arr;
+  try {
+    arr = JSON.parse(t.slice(start, end + 1));
+  } catch (e) {
+    console.warn(`  Gemini JSON.parse failed: ${e.message}`);
+    return null;
+  }
+  if (!Array.isArray(arr)) return null;
+
+  const CATS = new Set(['wallet', 'feed', 'platform', 'seasonal']);
+  const MOODS = new Set(['suppresses_spending', 'boosts_spending', 'neutral']);
+  const DOMS = new Set(['high', 'medium', 'low']);
+  const ICONS = { wallet: '💰', feed: '📱', platform: '🔴', seasonal: '🗓️' };
+
+  const valid = [];
+  for (const e of arr) {
+    if (!e || typeof e !== 'object') continue;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(e.date || '')) continue;          // require ISO date
+    if (!e.description || typeof e.description !== 'string') continue; // require headline
+    const category = CATS.has(e.category) ? e.category : 'feed';
+    valid.push({
+      date: e.date,
+      description: String(e.description).slice(0, 200),
+      details: typeof e.details === 'string' ? e.details.slice(0, 1200) : '',
+      intensity: [1, 2, 3].includes(e.intensity) ? e.intensity : 2,
+      category,
+      icon: (typeof e.icon === 'string' && e.icon) ? e.icon : ICONS[category],
+      mood_impact: MOODS.has(e.mood_impact) ? e.mood_impact : 'neutral',
+      feed_dominance: DOMS.has(e.feed_dominance) ? e.feed_dominance : 'low',
+      source: typeof e.source === 'string' ? e.source.slice(0, 80) : '',
+    });
+  }
+  return valid.length ? valid : null;
+}
+
 async function fetchMacroEvents(existingTW) {
   console.log('🌍 Generating macro events via Gemini API...');
   if (!GEMINI_API_KEY) {
@@ -411,18 +469,12 @@ Respond ONLY with a valid JSON array. No markdown fences, no preamble, no traili
 
         const data = await res.json();
         const text = data.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
-        const jsonMatch = text.match(/\[[\s\S]*\]/);
-        if (jsonMatch) {
-          const events = JSON.parse(jsonMatch[0]);
-          // Backfill missing fields for forward compat
-          events.forEach(e => {
-            if (!e.mood_impact) e.mood_impact = 'neutral';
-            if (!e.feed_dominance) e.feed_dominance = 'low';
-          });
-          console.log(`  ✅ Got ${events.length} macro events (${model})`);
+        const events = parseAndValidateEvents(text);
+        if (events && events.length) {
+          console.log(`  ✅ Got ${events.length} valid macro events (${model})`);
           return events;
         }
-        console.warn('  ⚠️  Could not parse macro events from Gemini response');
+        console.warn('  ⚠️  Could not parse/validate macro events from Gemini response');
         console.warn(`  Raw text: ${text.slice(0, 300)}`);
         return null;
       } catch (err) {
@@ -439,6 +491,15 @@ Respond ONLY with a valid JSON array. No markdown fences, no preamble, no traili
 // ============================================================
 // 6. GOOGLE TRENDS (unofficial 2-step API, no npm required)
 // ============================================================
+
+// Google prepends an anti-XSSI guard (e.g. )]}'\n) to JSON responses. Strip
+// anything before the first { or [ rather than matching one exact prefix, so a
+// minor format change doesn't break parsing.
+function stripXssiPrefix(text) {
+  const i = text.search(/[\[{]/);
+  return i === -1 ? text : text.slice(i);
+}
+
 async function fetchGoogleTrends() {
   console.log('📈 Fetching Google Trends...');
   const keywords = ['wisconsin cheese', 'cheese gift'];
@@ -462,8 +523,7 @@ async function fetchGoogleTrends() {
   if (!exploreRes.ok) throw new Error(`Google Trends explore ${exploreRes.status}`);
 
   const exploreText = await exploreRes.text();
-  // Response begins with )]}'\n — strip it
-  const exploreJson = JSON.parse(exploreText.replace(/^\)]\}'\n/, ''));
+  const exploreJson = JSON.parse(stripXssiPrefix(exploreText));
   const timelineWidget = exploreJson.widgets?.find(w => w.id === 'TIMESERIES');
   if (!timelineWidget?.token) throw new Error('No TIMESERIES widget token');
 
@@ -474,7 +534,7 @@ async function fetchGoogleTrends() {
   if (!dataRes.ok) throw new Error(`Google Trends widgetdata ${dataRes.status}`);
 
   const dataText = await dataRes.text();
-  const dataJson = JSON.parse(dataText.replace(/^\)]\}'\n/, ''));
+  const dataJson = JSON.parse(stripXssiPrefix(dataText));
   const timelineData = dataJson?.default?.timelineData || [];
 
   const result = timelineData.map(pt => ({
@@ -497,25 +557,19 @@ async function main() {
     try { existing = JSON.parse(await readFile(dataPath, 'utf-8')); } catch (e) { /* fresh start */ }
   }
 
-  // Age-based cache for Gemini (1 plain request/day is well within free tier)
-  const existingMacroAge = existing.meta?.updatedAt
+  // Cache for Gemini + Google Trends: skip the fetch only when cached data is < 25h old
+  // AND was built for the SAME window end-date. Same-day re-runs reuse the cache (saving
+  // Gemini's free-tier quota); when the day rolls over, the window end changes and both
+  // refetch. Fixes stale wrong-range data without burning quota on repeated same-day runs.
+  const existingEnd = existing.meta?.dateRange?.end;
+  const existingAgeH = existing.meta?.updatedAt
     ? (Date.now() - new Date(existing.meta.updatedAt).getTime()) / 3600000
     : 999;
-  const macroIsFresh = existingMacroAge < 25 && (existing.macroEvents?.length || 0) > 0;
-
-  if (macroIsFresh) {
-    console.log(`🌍 Skipping Gemini — cached macro events are ${existingMacroAge.toFixed(1)}h old`);
-  }
-
-  // Age-based cache for Google Trends
-  const existingTrendsAge = existing.meta?.updatedAt
-    ? (Date.now() - new Date(existing.meta.updatedAt).getTime()) / 3600000
-    : 999;
-  const trendsIsFresh = existingTrendsAge < 25 && (existing.googleTrends?.length || 0) > 0;
-
-  if (trendsIsFresh) {
-    console.log(`📈 Skipping Google Trends — cached data is ${existingTrendsAge.toFixed(1)}h old`);
-  }
+  const sameWindow = existingEnd === endDate;
+  const macroIsFresh = existingAgeH < 25 && sameWindow && (existing.macroEvents?.length || 0) > 0;
+  const trendsIsFresh = existingAgeH < 25 && sameWindow && (existing.googleTrends?.length || 0) > 0;
+  if (macroIsFresh) console.log(`🌍 Skipping Gemini — cached macro events ${existingAgeH.toFixed(1)}h old (same window)`);
+  if (trendsIsFresh) console.log(`📈 Skipping Google Trends — cached data ${existingAgeH.toFixed(1)}h old (same window)`);
 
   // Fetch all sources in parallel
   const [tripleWhale, breezeway, gasPrices, outages, macroEvents, googleTrends] = await Promise.allSettled([
@@ -523,23 +577,49 @@ async function main() {
     fetchBreezeway(),
     fetchGasPrices(),
     fetchOutages(),
-    macroIsFresh
-      ? Promise.resolve(null)
-      : fetchMacroEvents(existing.tripleWhale || []),
-    trendsIsFresh
-      ? Promise.resolve(null)
-      : fetchGoogleTrends().catch(err => { console.warn(`  ⚠️  Google Trends failed: ${err.message} — skipping`); return null; }),
+    macroIsFresh ? Promise.resolve(null) : fetchMacroEvents(existing.tripleWhale || []),
+    trendsIsFresh ? Promise.resolve(null) : fetchGoogleTrends().catch(err => { console.warn(`  ⚠️  Google Trends failed: ${err.message} — skipping`); return null; }),
   ]);
 
   // Holidays are always recomputed from code — no API, no cache needed
   const holidays = getHolidaysInRange(startDate, endDate);
   console.log(`🗓️  ${holidays.length} holidays in range: ${holidays.map(h => h.name).join(', ')}`);
 
+  // Per-source freshness so the dashboard can honestly flag stale data instead of showing
+  // it as freshly updated. A source that failed this run carries forward its last-good
+  // timestamp and is marked stale; cached (intentionally skipped) macro/trends stay "ok".
+  const nowIso = new Date().toISOString();
+  const prevSources = existing.meta?.sources || {};
+  function srcStatus(settled, existingArr, name) {
+    const ok = settled.status === 'fulfilled' && settled.value != null;
+    return {
+      ok,
+      updatedAt: ok ? nowIso : (prevSources[name]?.updatedAt || null),
+      stale: !ok && (existingArr?.length || 0) > 0,
+    };
+  }
+  const sources = {
+    tripleWhale: srcStatus(tripleWhale, existing.tripleWhale, 'tripleWhale'),
+    breezeway: srcStatus(breezeway, existing.breezeway, 'breezeway'),
+    gasPrices: srcStatus(gasPrices, existing.gasPrices, 'gasPrices'),
+    outages: srcStatus(outages, existing.outages, 'outages'),
+    macroEvents: macroIsFresh
+      ? { ok: true, updatedAt: prevSources.macroEvents?.updatedAt || existing.meta?.updatedAt || null, stale: false, cached: true }
+      : srcStatus(macroEvents, existing.macroEvents, 'macroEvents'),
+    googleTrends: trendsIsFresh
+      ? { ok: true, updatedAt: prevSources.googleTrends?.updatedAt || existing.meta?.updatedAt || null, stale: false, cached: true }
+      : srcStatus(googleTrends, existing.googleTrends, 'googleTrends'),
+  };
+  const staleList = Object.entries(sources).filter(([, s]) => s.stale).map(([k]) => k);
+  if (staleList.length) console.warn(`  ⚠️  Stale (kept previous) sources: ${staleList.join(', ')}`);
+
   const data = {
     meta: {
-      updatedAt: new Date().toISOString(),
+      updatedAt: nowIso,
       dateRange: { start: startDate, end: endDate },
       monthLabel,
+      timezone: TZ,
+      sources,
     },
     tripleWhale: tripleWhale.value || existing.tripleWhale || [],
     breezeway: breezeway.value || existing.breezeway || [],
