@@ -1,38 +1,37 @@
 {
   "meta": {
-    "updatedAt": "2026-06-08T15:43:42.641Z",
+    "updatedAt": "2026-06-09T14:47:14.873Z",
     "dateRange": {
-      "start": "2026-05-09",
-      "end": "2026-06-07"
+      "start": "2026-05-10",
+      "end": "2026-06-08"
     },
     "monthLabel": "June 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-06-08T15:43:42.641Z",
+        "updatedAt": "2026-06-09T14:47:14.873Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-06-08T15:43:42.641Z",
+        "updatedAt": "2026-06-09T14:47:14.873Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-06-08T15:43:42.641Z",
+        "updatedAt": "2026-06-09T14:47:14.873Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-06-08T15:43:42.641Z",
+        "updatedAt": "2026-06-09T14:47:14.873Z",
         "stale": false
       },
       "macroEvents": {
-        "ok": true,
+        "ok": false,
         "updatedAt": "2026-06-08T13:11:53.899Z",
-        "stale": false,
-        "cached": true
+        "stale": true
       },
       "googleTrends": {
         "ok": false,
@@ -42,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-05-09",
-      "revenue": 24395.440000000024,
-      "orders": 285,
-      "blendedRoas": 4.2367308237719445,
-      "metaSpend": 3640.649966415018,
-      "metaRoas": 2.9841045117240217,
-      "metaCpa": 27.169029600112072,
-      "metaCpm": 10.734472339829924
-    },
     {
       "date": "2026-05-10",
       "revenue": 26105.69999999999,
@@ -294,9 +283,9 @@
     },
     {
       "date": "2026-06-03",
-      "revenue": 18254.150000000005,
-      "orders": 230,
-      "blendedRoas": 3.288974549460986,
+      "revenue": 18973.890000000003,
+      "orders": 232,
+      "blendedRoas": 3.4186761631562463,
       "metaSpend": 3743.3899532798678,
       "metaRoas": 2.496456438182552,
       "metaCpa": 30.188628655482805,
@@ -314,9 +303,9 @@
     },
     {
       "date": "2026-06-05",
-      "revenue": 16861.659999999996,
-      "orders": 216,
-      "blendedRoas": 3.115383608245311,
+      "revenue": 17418.759999999995,
+      "orders": 218,
+      "blendedRoas": 3.2183456687475047,
       "metaSpend": 3659.739980617538,
       "metaRoas": 2.3975774587035765,
       "metaCpa": 32.6762498269423,
@@ -324,25 +313,26 @@
     },
     {
       "date": "2026-06-06",
-      "revenue": 19388.239999999998,
+      "revenue": 19388.239999999994,
       "orders": 233,
-      "blendedRoas": 3.570470950487587,
+      "blendedRoas": 3.570475134271581,
       "metaSpend": 3436.009981451556,
       "metaRoas": 2.4156216379798954,
       "metaCpa": 37.34793458099517,
       "metaCpm": 9.058818827976683
+    },
+    {
+      "date": "2026-06-07",
+      "revenue": 19955.059999999998,
+      "orders": 254,
+      "blendedRoas": 3.417271104182491,
+      "metaSpend": 4031.660033704713,
+      "metaRoas": 2.339415998728589,
+      "metaCpa": 34.16661045512468,
+      "metaCpm": 9.116968066901197
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-05-09",
-      "status": "normal",
-      "cpa_z": -0.8,
-      "n_biz": 45,
-      "dow": "Sat",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-05-10",
       "status": "normal",
@@ -603,9 +593,22 @@
       "dow": "Sun",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-06-08",
+      "status": "normal",
+      "cpa_z": -0.016,
+      "n_biz": 44,
+      "dow": "Mon",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
+    {
+      "date": "2026-06-08",
+      "price": 4.146
+    },
     {
       "date": "2026-06-01",
       "price": 4.305
@@ -649,10 +652,6 @@
     {
       "date": "2026-03-23",
       "price": 3.961
-    },
-    {
-      "date": "2026-03-16",
-      "price": 3.72
     }
   ],
   "outages": [],
