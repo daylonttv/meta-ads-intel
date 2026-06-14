@@ -1,31 +1,31 @@
 {
   "meta": {
-    "updatedAt": "2026-06-13T13:56:15.184Z",
+    "updatedAt": "2026-06-14T14:00:14.190Z",
     "dateRange": {
-      "start": "2026-05-14",
-      "end": "2026-06-12"
+      "start": "2026-05-15",
+      "end": "2026-06-13"
     },
     "monthLabel": "June 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-06-13T13:56:15.184Z",
+        "updatedAt": "2026-06-14T14:00:14.190Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-06-13T13:56:15.184Z",
+        "updatedAt": "2026-06-14T14:00:14.190Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-06-13T13:56:15.184Z",
+        "updatedAt": "2026-06-14T14:00:14.190Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-06-13T13:56:15.184Z",
+        "updatedAt": "2026-06-14T14:00:14.190Z",
         "stale": false
       },
       "macroEvents": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-05-14",
-      "revenue": 14038.89,
-      "orders": 188,
-      "blendedRoas": 2.7149261730194687,
-      "metaSpend": 3305.510014601052,
-      "metaRoas": 2.522875419593569,
-      "metaCpa": 28.743565344356973,
-      "metaCpm": 9.292762644081808
-    },
     {
       "date": "2026-05-15",
       "revenue": 12937.999999999998,
@@ -285,7 +275,7 @@
       "date": "2026-06-07",
       "revenue": 19955.059999999998,
       "orders": 254,
-      "blendedRoas": 3.417271104182491,
+      "blendedRoas": 3.4172834358312363,
       "metaSpend": 4031.660033704713,
       "metaRoas": 2.339415998728589,
       "metaCpa": 34.16661045512468,
@@ -295,7 +285,7 @@
       "date": "2026-06-08",
       "revenue": 17936.070000000014,
       "orders": 211,
-      "blendedRoas": 3.3058434045370197,
+      "blendedRoas": 3.305914638287766,
       "metaSpend": 3617.45004475303,
       "metaRoas": 1.9103456602601014,
       "metaCpa": 42.558235820623885,
@@ -305,7 +295,7 @@
       "date": "2026-06-09",
       "revenue": 14725.939999999995,
       "orders": 185,
-      "blendedRoas": 2.6687064120637616,
+      "blendedRoas": 2.668713780252199,
       "metaSpend": 3540.150040432811,
       "metaRoas": 1.650760539596465,
       "metaCpa": 44.81202582826343,
@@ -315,7 +305,7 @@
       "date": "2026-06-10",
       "revenue": 20632.480000000025,
       "orders": 258,
-      "blendedRoas": 3.9574913070828726,
+      "blendedRoas": 3.957532992093134,
       "metaSpend": 3302.280019849539,
       "metaRoas": 3.0728254267880466,
       "metaCpa": 26.20857158610745,
@@ -325,23 +315,24 @@
       "date": "2026-06-11",
       "revenue": 17757.529999999995,
       "orders": 228,
-      "blendedRoas": 3.321497007404269,
-      "metaSpend": 3392.019993202761,
-      "metaRoas": 2.2756675999150686,
-      "metaCpa": 31.701121431801504,
-      "metaCpm": 8.18662101912878
+      "blendedRoas": 3.321412162991066,
+      "metaSpend": 3392.230015175417,
+      "metaRoas": 2.2755267072880043,
+      "metaCpa": 31.70308425397586,
+      "metaCpm": 8.18695007355065
+    },
+    {
+      "date": "2026-06-12",
+      "revenue": 16384.739999999998,
+      "orders": 208,
+      "blendedRoas": 3.3281428383743417,
+      "metaSpend": 2971.4599682092667,
+      "metaRoas": 3.0118528301142864,
+      "metaCpa": 25.838782332254493,
+      "metaCpm": 9.514365294461859
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-05-14",
-      "status": "very_bad",
-      "cpa_z": 1.666,
-      "n_biz": 44,
-      "dow": "Thu",
-      "incident_source": "Breezeway",
-      "incident_description": "Meta has recently experienced an unusually long stretch of \"bad days.\"  At the same time, the company is reportedly preparing to lay off roughly 10% of its workforce next week despite record revenue performance.\r\n\r\nThat combination could have implications beyond internal operations. Large-scale layoffs often impact morale, focus, and organizational stability — and when morale inside Meta suffers, advertisers on the platform may feel the downstream effects through increased volatility, slower issue resolution, or reduced platform consistency."
-    },
     {
       "date": "2026-05-15",
       "status": "very_bad",
@@ -600,6 +591,15 @@
       "cpa_z": -0.791,
       "n_biz": 44,
       "dow": "Fri",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-06-13",
+      "status": "normal",
+      "cpa_z": -0.353,
+      "n_biz": 46,
+      "dow": "Sat",
       "incident_source": null,
       "incident_description": null
     }
