@@ -1,31 +1,31 @@
 {
   "meta": {
-    "updatedAt": "2026-06-14T14:00:14.190Z",
+    "updatedAt": "2026-06-15T17:14:20.707Z",
     "dateRange": {
-      "start": "2026-05-15",
-      "end": "2026-06-13"
+      "start": "2026-05-16",
+      "end": "2026-06-14"
     },
     "monthLabel": "June 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-06-14T14:00:14.190Z",
+        "updatedAt": "2026-06-15T17:14:20.707Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-06-14T14:00:14.190Z",
+        "updatedAt": "2026-06-15T17:14:20.707Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-06-14T14:00:14.190Z",
+        "updatedAt": "2026-06-15T17:14:20.707Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-06-14T14:00:14.190Z",
+        "updatedAt": "2026-06-15T17:14:20.707Z",
         "stale": false
       },
       "macroEvents": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-05-15",
-      "revenue": 12937.999999999998,
-      "orders": 166,
-      "blendedRoas": 2.6133430133679765,
-      "metaSpend": 3080.570025159046,
-      "metaRoas": 2.2475028726937136,
-      "metaCpa": 35.82058168789588,
-      "metaCpm": 8.740445524639087
-    },
     {
       "date": "2026-05-16",
       "revenue": 16720.209999999995,
@@ -255,7 +245,7 @@
       "date": "2026-06-05",
       "revenue": 17418.76,
       "orders": 218,
-      "blendedRoas": 3.218348787718512,
+      "blendedRoas": 3.218364700802692,
       "metaSpend": 3659.739980617538,
       "metaRoas": 2.3975774587035765,
       "metaCpa": 32.6762498269423,
@@ -265,7 +255,7 @@
       "date": "2026-06-06",
       "revenue": 19388.239999999998,
       "orders": 233,
-      "blendedRoas": 3.5725700486835534,
+      "blendedRoas": 3.5725861255284173,
       "metaSpend": 3436.009981451556,
       "metaRoas": 2.4156216379798954,
       "metaCpa": 37.34793458099517,
@@ -325,23 +315,24 @@
       "date": "2026-06-12",
       "revenue": 16384.739999999998,
       "orders": 208,
-      "blendedRoas": 3.3281428383743417,
-      "metaSpend": 2971.4599682092667,
-      "metaRoas": 3.0118528301142864,
-      "metaCpa": 25.838782332254493,
-      "metaCpm": 9.514365294461859
+      "blendedRoas": 3.328021120277278,
+      "metaSpend": 2971.640023827553,
+      "metaRoas": 3.0116703379486256,
+      "metaCpa": 25.840348033283068,
+      "metaCpm": 9.514454385688017
+    },
+    {
+      "date": "2026-06-13",
+      "revenue": 25304.539999999997,
+      "orders": 301,
+      "blendedRoas": 4.598527757791084,
+      "metaSpend": 3547.9399948231876,
+      "metaRoas": 3.075029464778096,
+      "metaCpa": 28.158253927168154,
+      "metaCpm": 10.83056050876163
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-05-15",
-      "status": "very_bad",
-      "cpa_z": 1.352,
-      "n_biz": 44,
-      "dow": "Fri",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-05-16",
       "status": "normal",
@@ -591,8 +582,8 @@
       "cpa_z": -0.791,
       "n_biz": 44,
       "dow": "Fri",
-      "incident_source": null,
-      "incident_description": null
+      "incident_source": "Meta",
+      "incident_description": "Meta experienced a widespread outage that disrupted Facebook, Instagram, Messenger, WhatsApp, Ads Manager, and several business APIs for several hours. The incident affected both users and advertisers, causing service interruptions, reporting delays, and temporary issues with ad delivery and campaign management."
     },
     {
       "date": "2026-06-13",
@@ -600,6 +591,15 @@
       "cpa_z": -0.353,
       "n_biz": 46,
       "dow": "Sat",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-06-14",
+      "status": "normal",
+      "cpa_z": -0.406,
+      "n_biz": 45,
+      "dow": "Sun",
       "incident_source": null,
       "incident_description": null
     }
