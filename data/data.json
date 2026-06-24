@@ -1,31 +1,31 @@
 {
   "meta": {
-    "updatedAt": "2026-06-23T14:45:23.065Z",
+    "updatedAt": "2026-06-24T14:27:20.394Z",
     "dateRange": {
-      "start": "2026-05-24",
-      "end": "2026-06-22"
+      "start": "2026-05-25",
+      "end": "2026-06-23"
     },
     "monthLabel": "June 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-06-23T14:45:23.065Z",
+        "updatedAt": "2026-06-24T14:27:20.394Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-06-23T14:45:23.065Z",
+        "updatedAt": "2026-06-24T14:27:20.394Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-06-23T14:45:23.065Z",
+        "updatedAt": "2026-06-24T14:27:20.394Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-06-23T14:45:23.065Z",
+        "updatedAt": "2026-06-24T14:27:20.394Z",
         "stale": false
       },
       "macroEvents": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-05-24",
-      "revenue": 18633.890000000003,
-      "orders": 261,
-      "blendedRoas": 3.5464097144607587,
-      "metaSpend": 4180.220018172637,
-      "metaRoas": 2.2368176732324048,
-      "metaCpa": 28.82910357360439,
-      "metaCpm": 11.534696135176866
-    },
     {
       "date": "2026-05-25",
       "revenue": 16679.39000000001,
@@ -330,18 +320,19 @@
       "metaRoas": 1.9377064550644816,
       "metaCpa": 36.32844028816721,
       "metaCpm": 9.98361190885769
+    },
+    {
+      "date": "2026-06-22",
+      "revenue": 14989.760000000011,
+      "orders": 193,
+      "blendedRoas": 2.5118065956792432,
+      "metaSpend": 3775.6399989854544,
+      "metaRoas": 2.0665238521947114,
+      "metaCpa": 34.32399999077686,
+      "metaCpm": 10.579459989759851
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-05-24",
-      "status": "normal",
-      "cpa_z": -0.192,
-      "n_biz": 45,
-      "dow": "Sun",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-05-25",
       "status": "normal",
@@ -600,6 +591,15 @@
       "cpa_z": 0.916,
       "n_biz": 48,
       "dow": "Mon",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-06-23",
+      "status": "normal",
+      "cpa_z": 0.329,
+      "n_biz": 48,
+      "dow": "Tue",
       "incident_source": null,
       "incident_description": null
     }
