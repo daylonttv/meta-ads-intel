@@ -444,7 +444,7 @@ ${anomalyContext ? 'IMPORTANT: Try to explain the anomalous performance days lis
 Respond ONLY with a valid JSON array. No markdown fences, no preamble, no trailing text.
 [{"date":"YYYY-MM-DD","description":"...","details":"...","intensity":2,"category":"feed","icon":"📱","mood_impact":"suppresses_spending","feed_dominance":"high","source":"AP News"}]`;
 
-  const models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+  const models = ['gemini-2.5-flash', 'gemini-2.5-flash-lite'];
   for (const model of models) {
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
@@ -587,8 +587,16 @@ async function main() {
     ? (Date.now() - new Date(existing.meta.updatedAt).getTime()) / 3600000
     : 999;
   const sameWindow = existingEnd === endDate;
-  const macroIsFresh = existingAgeH < 25 && sameWindow && (existing.macroEvents?.length || 0) > 0;
-  const trendsIsFresh = existingAgeH < 25 && sameWindow && (existing.googleTrends?.length || 0) > 0;
+  // Judge cache freshness by EACH source's OWN last-success timestamp, not the whole-file
+  // updatedAt (which other sources refresh daily). Otherwise a source that's been failing
+  // for days gets re-marked "fresh" just because the file was rewritten today, and we never
+  // re-attempt it. Per-source age forces a retry once that source's own data goes stale.
+  const sourceAgeH = (name) => {
+    const ts = existing.meta?.sources?.[name]?.updatedAt;
+    return ts ? (Date.now() - new Date(ts).getTime()) / 3600000 : 999;
+  };
+  const macroIsFresh = sourceAgeH('macroEvents') < 25 && sameWindow && (existing.macroEvents?.length || 0) > 0;
+  const trendsIsFresh = sourceAgeH('googleTrends') < 25 && sameWindow && (existing.googleTrends?.length || 0) > 0;
   if (macroIsFresh) console.log(`🌍 Skipping Gemini — cached macro events ${existingAgeH.toFixed(1)}h old (same window)`);
   if (trendsIsFresh) console.log(`📈 Skipping Google Trends — cached data ${existingAgeH.toFixed(1)}h old (same window)`);
 
