@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updatedAt": "2026-06-27T19:00:23.930Z",
+    "updatedAt": "2026-06-27T20:01:13.867Z",
     "dateRange": {
       "start": "2026-05-28",
       "end": "2026-06-26"
@@ -10,28 +10,29 @@
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-06-27T19:00:23.930Z",
+        "updatedAt": "2026-06-27T20:01:13.867Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-06-27T19:00:23.930Z",
+        "updatedAt": "2026-06-27T20:01:13.867Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-06-27T19:00:23.930Z",
+        "updatedAt": "2026-06-27T20:01:13.867Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-06-27T19:00:23.930Z",
+        "updatedAt": "2026-06-27T20:01:13.867Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
         "updatedAt": "2026-06-27T19:00:23.930Z",
-        "stale": false
+        "stale": false,
+        "cached": true
       },
       "googleTrends": {
         "ok": false,
