@@ -1,31 +1,31 @@
 {
   "meta": {
-    "updatedAt": "2026-07-01T14:29:08.373Z",
+    "updatedAt": "2026-07-02T13:53:04.310Z",
     "dateRange": {
-      "start": "2026-06-01",
-      "end": "2026-06-30"
+      "start": "2026-06-02",
+      "end": "2026-07-01"
     },
     "monthLabel": "July 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
-        "ok": true,
+        "ok": false,
         "updatedAt": "2026-07-01T14:29:08.373Z",
-        "stale": false
+        "stale": true
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-07-01T14:29:08.373Z",
+        "updatedAt": "2026-07-02T13:53:04.310Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-07-01T14:29:08.373Z",
+        "updatedAt": "2026-07-02T13:53:04.310Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-07-01T14:29:08.373Z",
+        "updatedAt": "2026-07-02T13:53:04.310Z",
         "stale": false
       },
       "macroEvents": {
@@ -334,15 +334,6 @@
   ],
   "breezeway": [
     {
-      "date": "2026-06-01",
-      "status": "normal",
-      "cpa_z": 0.614,
-      "n_biz": 44,
-      "dow": "Mon",
-      "incident_source": null,
-      "incident_description": null
-    },
-    {
       "date": "2026-06-02",
       "status": "normal",
       "cpa_z": -0.077,
@@ -600,6 +591,15 @@
       "cpa_z": 0.193,
       "n_biz": 48,
       "dow": "Tue",
+      "incident_source": null,
+      "incident_description": null
+    },
+    {
+      "date": "2026-07-01",
+      "status": "normal",
+      "cpa_z": -0.443,
+      "n_biz": 49,
+      "dow": "Wed",
       "incident_source": null,
       "incident_description": null
     }
