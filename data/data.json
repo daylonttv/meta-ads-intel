@@ -1,31 +1,31 @@
 {
   "meta": {
-    "updatedAt": "2026-07-04T13:18:07.510Z",
+    "updatedAt": "2026-07-05T13:24:26.347Z",
     "dateRange": {
-      "start": "2026-06-04",
-      "end": "2026-07-03"
+      "start": "2026-06-05",
+      "end": "2026-07-04"
     },
     "monthLabel": "July 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-07-04T13:18:07.510Z",
+        "updatedAt": "2026-07-05T13:24:26.347Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-07-04T13:18:07.510Z",
+        "updatedAt": "2026-07-05T13:24:26.347Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-07-04T13:18:07.510Z",
+        "updatedAt": "2026-07-05T13:24:26.347Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-07-04T13:18:07.510Z",
+        "updatedAt": "2026-07-05T13:24:26.347Z",
         "stale": false
       },
       "macroEvents": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-06-04",
-      "revenue": 15140.649999999998,
-      "orders": 191,
-      "blendedRoas": 2.858188600154017,
-      "metaSpend": 3582.5499332938343,
-      "metaRoas": 2.2173117404305205,
-      "metaCpa": 35.123038561704256,
-      "metaCpm": 10.801354132628934
-    },
     {
       "date": "2026-06-05",
       "revenue": 17418.76,
@@ -315,7 +305,7 @@
       "date": "2026-07-01",
       "revenue": 18251.060000000012,
       "orders": 261,
-      "blendedRoas": 2.537567251247613,
+      "blendedRoas": 2.5376567035942563,
       "metaSpend": 4842.420027567074,
       "metaRoas": 2.40924162230908,
       "metaCpa": 28.318245775246044,
@@ -325,23 +315,24 @@
       "date": "2026-07-02",
       "revenue": 14888.210000000014,
       "orders": 197,
-      "blendedRoas": 2.324467997129693,
+      "blendedRoas": 2.324938140243489,
       "metaSpend": 3837.5100008342415,
       "metaRoas": 3.5591125679355113,
       "metaCpa": 20.41228723848001,
       "metaCpm": 9.854272700934816
+    },
+    {
+      "date": "2026-07-03",
+      "revenue": 17128.999999999993,
+      "orders": 212,
+      "blendedRoas": 2.9704934445333566,
+      "metaSpend": 3432.9000323601067,
+      "metaRoas": 2.530988360293992,
+      "metaCpa": 31.208182112364607,
+      "metaCpm": 10.14690243662836
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-06-04",
-      "status": "normal",
-      "cpa_z": 0.176,
-      "n_biz": 45,
-      "dow": "Thu",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-06-05",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Fri",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-07-04",
+      "status": "normal",
+      "cpa_z": -0.097,
+      "n_biz": 50,
+      "dow": "Sat",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
@@ -796,6 +796,13 @@
       "icon": "👔",
       "mood_impact": "boosts_spending",
       "boost": true
+    },
+    {
+      "date": "2026-07-04",
+      "name": "Independence Day",
+      "icon": "🎆",
+      "mood_impact": "neutral",
+      "boost": false
     }
   ],
   "googleTrends": []
