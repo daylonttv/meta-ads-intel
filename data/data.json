@@ -1,37 +1,37 @@
 {
   "meta": {
-    "updatedAt": "2026-07-07T14:25:35.061Z",
+    "updatedAt": "2026-07-08T13:56:39.097Z",
     "dateRange": {
-      "start": "2026-06-07",
-      "end": "2026-07-06"
+      "start": "2026-06-08",
+      "end": "2026-07-07"
     },
     "monthLabel": "July 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-07-07T14:25:35.061Z",
+        "updatedAt": "2026-07-08T13:56:39.097Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-07-07T14:25:35.061Z",
+        "updatedAt": "2026-07-08T13:56:39.097Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-07-07T14:25:35.061Z",
+        "updatedAt": "2026-07-08T13:56:39.097Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-07-07T14:25:35.061Z",
+        "updatedAt": "2026-07-08T13:56:39.097Z",
         "stale": false
       },
       "macroEvents": {
-        "ok": false,
-        "updatedAt": "2026-06-27T19:00:23.930Z",
-        "stale": true
+        "ok": true,
+        "updatedAt": "2026-07-08T13:56:39.097Z",
+        "stale": false
       },
       "googleTrends": {
         "ok": false,
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-06-07",
-      "revenue": 19955.059999999998,
-      "orders": 254,
-      "blendedRoas": 3.417185944790523,
-      "metaSpend": 4031.8400416392833,
-      "metaRoas": 2.3393115517669827,
-      "metaCpa": 34.168135946095624,
-      "metaCpm": 9.116942179377716
-    },
     {
       "date": "2026-06-08",
       "revenue": 17936.070000000014,
@@ -283,9 +273,9 @@
     },
     {
       "date": "2026-07-01",
-      "revenue": 18367.48000000001,
+      "revenue": 18367.480000000007,
       "orders": 262,
-      "blendedRoas": 2.5538439274285123,
+      "blendedRoas": 2.553843927428512,
       "metaSpend": 4842.420027567074,
       "metaRoas": 2.40924162230908,
       "metaCpa": 28.318245775246044,
@@ -293,9 +283,9 @@
     },
     {
       "date": "2026-07-02",
-      "revenue": 15223.960000000015,
+      "revenue": 15223.960000000014,
       "orders": 198,
-      "blendedRoas": 2.377369837603644,
+      "blendedRoas": 2.3773698376036436,
       "metaSpend": 3837.5100008342415,
       "metaRoas": 3.5591125679355113,
       "metaCpa": 20.41228723848001,
@@ -313,9 +303,9 @@
     },
     {
       "date": "2026-07-04",
-      "revenue": 12871.45,
+      "revenue": 12871.450000000003,
       "orders": 176,
-      "blendedRoas": 2.3965034833701693,
+      "blendedRoas": 2.3965034833701697,
       "metaSpend": 3243.67998903431,
       "metaRoas": 1.5888157726882939,
       "metaCpa": 43.833513365328514,
@@ -323,25 +313,26 @@
     },
     {
       "date": "2026-07-05",
-      "revenue": 17616.780000000002,
+      "revenue": 17616.779999999995,
       "orders": 227,
-      "blendedRoas": 3.178745209229233,
+      "blendedRoas": 3.178745209229232,
       "metaSpend": 3544.5800328329206,
       "metaRoas": 2.454223054972485,
       "metaCpa": 33.12691619470019,
       "metaCpm": 8.171132389948479
+    },
+    {
+      "date": "2026-07-06",
+      "revenue": 13215.84,
+      "orders": 194,
+      "blendedRoas": 2.110569948524277,
+      "metaSpend": 3976.679968878627,
+      "metaRoas": 2.036817156167336,
+      "metaCpa": 34.579825816335884,
+      "metaCpm": 7.790369820375361
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-06-07",
-      "status": "normal",
-      "cpa_z": -0.268,
-      "n_biz": 44,
-      "dow": "Sun",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-06-08",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Mon",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-07-07",
+      "status": "normal",
+      "cpa_z": -0.003,
+      "n_biz": 51,
+      "dow": "Tue",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
@@ -657,136 +657,136 @@
   "outages": [],
   "macroEvents": [
     {
-      "date": "2026-05-28",
-      "description": "US Consumer Confidence Dips Amid Inflation Concerns",
-      "details": "The Conference Board's Consumer Confidence Index, a key measure of economic sentiment, fell to 98.5 in May from 101.2 in April. This index tracks how consumers feel about current business and labor market conditions, as well as their expectations for the next six months. A sustained decline suggests growing consumer anxiety about inflation and economic stability, which can lead to reduced discretionary spending on non-essential items like premium gifts.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "The Conference Board"
-    },
-    {
-      "date": "2026-06-01",
-      "description": "Federal Reserve Signals Continued Hawkish Stance on Interest Rates",
-      "details": "Minutes from the Federal Reserve's latest meeting indicated a strong likelihood of continued interest rate hikes to combat persistent inflation. This signals a prolonged period of tighter monetary policy, which typically increases borrowing costs for consumers and businesses. Higher interest rates can dampen consumer spending by making credit more expensive and encouraging saving over spending, potentially impacting impulse purchases and gifting.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "Reuters"
-    },
-    {
-      "date": "2026-06-03",
-      "description": "Major Tech Company Announces Significant Layoffs",
-      "details": "Tech Giant 'Innovate Solutions' announced it would be laying off 5,000 employees, citing economic headwinds and a need to restructure. This news, widely reported across major outlets, adds to a growing trend of job cuts in the technology sector. Large-scale layoffs can create broader economic anxiety, even among those not directly affected, leading consumers to become more cautious with their spending, particularly on discretionary items and gifts.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-06-07",
-      "description": "Gasoline Prices Hit New Summer Highs",
-      "details": "The national average price for a gallon of regular gasoline surged to $3.85, a significant increase from the previous month and a typical summer peak. Rising energy costs directly impact household budgets, leaving consumers with less disposable income for non-essential purchases. This can disproportionately affect gifting, as consumers prioritize essential spending and reduce budgets for items like specialty foods.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "AAA"
-    },
-    {
       "date": "2026-06-08",
-      "description": "US Inflation Rate Remains Stubbornly High",
-      "details": "The Consumer Price Index (CPI) for May showed a 4.0% year-over-year increase, slightly above economists' expectations and indicating persistent inflationary pressures. This report suggests that the cost of goods and services continues to rise significantly, eroding purchasing power. For a premium DTC brand, this means consumers may be more price-sensitive and less inclined to spend on higher-priced, non-essential items like artisan cheese, impacting ROAS and increasing CPA.",
+      "description": "US-Iran Conflict Escalates, Threatening Ceasefire",
+      "details": "On June 8, 2026, President Trump urged Israel and Iran to halt strikes after an exchange of attacks threatened to reignite war in the Middle East. This followed Iranian salvos in response to Israeli attacks on Hezbollah, an Iran-backed group. The conflict, dubbed Operation Epic Fury, had been ongoing for 100 days. Such geopolitical instability typically diverts consumer attention and creates economic uncertainty, leading to suppressed discretionary spending.",
       "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
+      "category": "feed",
+      "icon": "📱",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "high",
-      "source": "Bureau of Labor Statistics"
+      "source": "The American Legion / PBS NewsHour"
     },
     {
       "date": "2026-06-09",
-      "description": "Social Media Outage Affects Major Platforms",
-      "details": "Users across Facebook, Instagram, and other Meta-owned platforms reported widespread outages and login issues for several hours. This disruption likely impacted ad delivery and user engagement, potentially leading to missed impressions and conversions for advertisers. Such technical glitches can cause a temporary drop in ad performance metrics like ROAS and an increase in CPA as campaigns struggle to reach their target audience effectively.",
+      "description": "US Launches 'Self-Defense' Strikes Against Iran",
+      "details": "The US military launched 'self-defense' strikes against Iran on June 9, 2026, after accusing Iran of shooting down a US Army helicopter near the Strait of Hormuz. This marked a significant escalation in the ongoing conflict. Major international conflicts and military actions dominate news cycles and social media feeds, causing widespread anxiety and diverting consumer focus from non-essential purchases.",
+      "intensity": 3,
+      "category": "feed",
+      "icon": "📱",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "high",
+      "source": "PBS NewsHour / Bloomberg"
+    },
+    {
+      "date": "2026-06-10",
+      "description": "Father's Day Spending Projected to Hit Record $27.9 Billion",
+      "details": "The National Retail Federation (NRF) released its annual Father's Day survey on June 10, 2026, projecting record spending of $27.9 billion, up from $24 billion in 2025. Consumers planned to spend an average of $226.58, despite economic pressures. This positive retail outlook indicates a strong gifting intent leading up to Father's Day, which would typically boost ROAS and lower CPA for gift-centric brands.",
       "intensity": 2,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "National Retail Federation"
+    },
+    {
+      "date": "2026-06-12",
+      "description": "Meta Ad Delivery Outage Affects Facebook & Instagram",
+      "details": "On the morning of June 12, 2026, Meta experienced a major outage affecting its authentication systems, leading to high disruptions across Ads Creation, Editing, Reporting, and Delivery on Facebook and Instagram. This meant advertisers could not manage campaigns, impacting ad performance significantly. Such platform issues directly reduce ad effectiveness and conversion rates, leading to lower ROAS and higher CPA.",
+      "intensity": 3,
       "category": "platform",
       "icon": "🔴",
       "mood_impact": "neutral",
       "feed_dominance": "medium",
-      "source": "Downdetector"
+      "source": "Inc.com"
     },
     {
-      "date": "2026-06-10",
-      "description": "Viral TikTok Challenge Dominates Social Feeds",
-      "details": "A new, highly engaging dance challenge on TikTok, dubbed the '#GrooveNationChallenge,' went viral, capturing widespread attention and dominating social media feeds for over 24 hours. Content related to this challenge saturated platforms, drawing significant user engagement away from other online activities, including product discovery and shopping. This 'feed dominance' can lead to reduced conversion intent and a temporary dip in ad performance for brands.",
-      "intensity": 2,
-      "category": "feed",
-      "icon": "📱",
-      "mood_impact": "neutral",
-      "feed_dominance": "high",
-      "source": "TikTok Trends"
-    },
-    {
-      "date": "2026-06-13",
-      "description": "US Retail Sales Show Unexpected Slowdown",
-      "details": "The US Census Bureau reported that retail sales in May increased by only 0.1%, a significant slowdown from previous months and below market expectations. This indicates consumers are becoming more cautious with their spending, likely due to inflation and economic uncertainty. A slowdown in retail sales, especially in discretionary categories, can directly impact DTC brands, leading to lower conversion rates and potentially higher CPAs as marketing efforts struggle to drive purchases.",
+      "date": "2026-06-16",
+      "description": "US Gas Prices Soar to $4.04/gallon, up 28.8% YoY",
+      "details": "The average U.S. gas price reached $4.04 per gallon on June 16, 2026, marking a 28.8% increase from a year prior. Monthly average prices had surged to $4.48 in May. High gas prices reduce consumers' discretionary income, leading to a decrease in non-essential purchases and potentially suppressing ROAS and increasing CPA for DTC brands.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "US Census Bureau"
+      "feed_dominance": "low",
+      "source": "LendingTree"
     },
     {
       "date": "2026-06-17",
-      "description": "Major Political Scandal Erupts, Dominating News Cycles",
-      "details": "A significant political scandal involving high-profile officials broke, dominating national news and social media feeds for an extended period. The intense coverage and public discourse surrounding this event likely diverted consumer attention away from commercial content and product-related browsing. Such 'feed dominance' by major news events can suppress ad performance by reducing consumer intent to engage with or purchase from brands.",
-      "intensity": 3,
-      "category": "feed",
-      "icon": "📱",
+      "description": "May 2026 CPI Rose 4.2% YoY, Core CPI at 2.9%",
+      "details": "Inflation accelerated in May 2026, with the Consumer Price Index (CPI) rising 4.2% year-over-year, up from 3.8% in April. Core CPI, excluding food and energy, increased 2.9%. Elevated inflation erodes purchasing power, making consumers more cautious with discretionary spending. While the report is for May, its release on June 17 could influence consumer behavior.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
       "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "Associated Press"
+      "feed_dominance": "low",
+      "source": "Economic Snapshot"
     },
     {
       "date": "2026-06-21",
-      "description": "Father's Day Gifting Season Peaks",
-      "details": "Father's Day, a significant gifting occasion, occurred on June 21st. This holiday typically sees an increase in consumer spending on gifts for fathers and father figures. For a DTC brand specializing in gifts, this period should ideally see a boost in sales and ROAS as consumers actively seek out presentable and unique items. However, increased competition and potential last-minute shopping behaviors can also influence CPA.",
+      "description": "Father's Day Celebrated: Record Spending Expected",
+      "details": "Father's Day 2026 was celebrated on June 21, with projections for record spending of $27.9 billion nationally. Consumers planned to spend an average of $226.58 on gifts and celebrations. This holiday is a prime gifting occasion, driving increased purchase intent and likely boosting ROAS and lowering CPA for relevant brands like specialty food.",
       "intensity": 3,
       "category": "seasonal",
       "icon": "🗓️",
       "mood_impact": "boosts_spending",
       "feed_dominance": "medium",
-      "source": "National Retail Federation"
+      "source": "fox61.com / NRF"
     },
     {
-      "date": "2026-06-22",
-      "description": "Post-Father's Day Sales Analysis Begins",
-      "details": "Following Father's Day, retailers and brands begin analyzing sales performance and consumer purchasing patterns. This period often involves post-holiday promotions and clearance events. For DTC brands, understanding the effectiveness of Father's Day campaigns is crucial for optimizing future strategies, and any lingering promotional activity might continue to influence ad performance metrics.",
-      "intensity": 1,
-      "category": "seasonal",
-      "icon": "🗓️",
+      "date": "2026-06-23",
+      "description": "Second Meta Outage in 11 Days Disrupts Ads Manager",
+      "details": "Just eleven days after a previous incident, Meta experienced another major outage on the evening of June 23, 2026, affecting Facebook, Instagram, and Ads Manager. This second disruption within a short period highlights ongoing platform instability. Repeated platform issues can severely impact ad campaign performance, leading to wasted spend, lower ROAS, and higher CPA.",
+      "intensity": 3,
+      "category": "platform",
+      "icon": "🔴",
       "mood_impact": "neutral",
-      "feed_dominance": "low",
-      "source": "Industry Analysis"
+      "feed_dominance": "medium",
+      "source": "IsDown.app / Inc.com"
     },
     {
-      "date": "2026-06-24",
-      "description": "Consumer Sentiment Shows Slight Improvement",
-      "details": "The University of Michigan Consumer Sentiment Index for June showed a modest uptick to 65.5, an increase from 63.0 in May. While still below historical averages, this slight improvement suggests a marginal easing of consumer pessimism. Such a shift, if sustained, could indicate a slightly more favorable environment for discretionary spending, potentially benefiting premium DTC brands.",
-      "intensity": 1,
+      "date": "2026-06-30",
+      "description": "Conference Board Consumer Confidence Inches Up to 91.2 in June",
+      "details": "The Conference Board Consumer Confidence Index inched up by 0.6 points to 91.2 in June 2026, from a revised 90.6 in May. While a slight improvement, the Present Situation Index fell, and the Expectations Index remained below the recession signal threshold of 80 since February 2025. Modestly improving confidence, especially with falling gas prices, could slightly ease consumer spending anxieties.",
+      "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "neutral",
       "feed_dominance": "low",
-      "source": "University of Michigan"
+      "source": "The Conference Board / PR Newswire"
+    },
+    {
+      "date": "2026-07-02",
+      "description": "June 2026 Jobs Report: Only 57K Jobs Added, Below Expectations",
+      "details": "The U.S. Bureau of Labor Statistics reported on July 2, 2026, that employers added only 57,000 jobs in June, significantly below expectations of 100,000-115,000. Additionally, job growth for April and May was revised down by 74,000. This weak jobs report, coupled with a decline in labor force participation, signals a softening labor market and potential economic headwinds, which can suppress consumer spending.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "Robert Half / Indeed Hiring Lab"
+    },
+    {
+      "date": "2026-07-02",
+      "description": "Independence Day Spending to Hit Record High for 250th Anniversary",
+      "details": "Ahead of the 250th anniversary of Independence Day on July 4, 2026, consumer spending was expected to reach unprecedented levels. The National Retail Federation projected food spending alone to hit $9.4 billion, a 5.6% increase from 2025. This strong pre-holiday spending surge, particularly for food-related celebrations, would significantly boost ROAS and lower CPA for a specialty food brand.",
+      "intensity": 3,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
+      "source": "GuruFocus / DailyDime"
+    },
+    {
+      "date": "2026-07-04",
+      "description": "Independence Day Holiday",
+      "details": "Independence Day is a major federal holiday in the United States, celebrated on July 4th. While there is significant pre-holiday spending, the actual holiday itself is typically a day for celebrations, family gatherings, and leisure activities, leading to a sharp drop in online ad engagement and conversion rates. This results in significantly lower ROAS and higher CPA.",
+      "intensity": 3,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "neutral",
+      "feed_dominance": "high",
+      "source": "National Retail Federation / DailyDime"
     }
   ],
   "holidays": [
