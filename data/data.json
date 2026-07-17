@@ -1,31 +1,31 @@
 {
   "meta": {
-    "updatedAt": "2026-07-16T13:43:21.192Z",
+    "updatedAt": "2026-07-17T13:20:52.004Z",
     "dateRange": {
-      "start": "2026-06-16",
-      "end": "2026-07-15"
+      "start": "2026-06-17",
+      "end": "2026-07-16"
     },
     "monthLabel": "July 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-07-16T13:43:21.192Z",
+        "updatedAt": "2026-07-17T13:20:52.004Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-07-16T13:43:21.192Z",
+        "updatedAt": "2026-07-17T13:20:52.004Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-07-16T13:43:21.192Z",
+        "updatedAt": "2026-07-17T13:20:52.004Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-07-16T13:43:21.192Z",
+        "updatedAt": "2026-07-17T13:20:52.004Z",
         "stale": false
       },
       "macroEvents": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-06-16",
-      "revenue": 22793.72000000001,
-      "orders": 297,
-      "blendedRoas": 3.4213718895934995,
-      "metaSpend": 4122.179961621761,
-      "metaRoas": 2.497474667158418,
-      "metaCpa": 29.44414258301258,
-      "metaCpm": 9.942594903066974
-    },
     {
       "date": "2026-06-17",
       "revenue": 25753.30000000002,
@@ -323,25 +313,26 @@
     },
     {
       "date": "2026-07-14",
-      "revenue": 18425.940000000013,
+      "revenue": 18425.940000000002,
       "orders": 241,
-      "blendedRoas": 2.778830951884417,
+      "blendedRoas": 2.778830951884416,
       "metaSpend": 4405.649983488023,
       "metaRoas": 2.4012642779910203,
       "metaCpa": 31.025704109070585,
       "metaCpm": 12.24478730701122
+    },
+    {
+      "date": "2026-07-15",
+      "revenue": 19710.540000000005,
+      "orders": 254,
+      "blendedRoas": 2.923221229666255,
+      "metaSpend": 4641.160020174459,
+      "metaRoas": 2.4972873010219505,
+      "metaCpa": 31.3591893255031,
+      "metaCpm": 11.194739836015039
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-06-16",
-      "status": "normal",
-      "cpa_z": -0.186,
-      "n_biz": 45,
-      "dow": "Tue",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-06-17",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Wed",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-07-16",
+      "status": "normal",
+      "cpa_z": 0.135,
+      "n_biz": 52,
+      "dow": "Thu",
+      "incident_source": "Meta",
+      "incident_description": "Meta reported an ads delivery error at 5:40 AM EDT. Reported that this was resolved at 7:47 AM EDT."
     }
   ],
   "gasPrices": [
