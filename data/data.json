@@ -1,31 +1,31 @@
 {
   "meta": {
-    "updatedAt": "2026-07-20T13:59:01.804Z",
+    "updatedAt": "2026-07-21T13:41:39.170Z",
     "dateRange": {
-      "start": "2026-06-20",
-      "end": "2026-07-19"
+      "start": "2026-06-21",
+      "end": "2026-07-20"
     },
     "monthLabel": "July 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-07-20T13:59:01.804Z",
+        "updatedAt": "2026-07-21T13:41:39.170Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-07-20T13:59:01.804Z",
+        "updatedAt": "2026-07-21T13:41:39.170Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-07-20T13:59:01.804Z",
+        "updatedAt": "2026-07-21T13:41:39.170Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-07-20T13:59:01.804Z",
+        "updatedAt": "2026-07-21T13:41:39.170Z",
         "stale": false
       },
       "macroEvents": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-06-20",
-      "revenue": 15504.240000000005,
-      "orders": 202,
-      "blendedRoas": 2.6891316130944185,
-      "metaSpend": 3164.329926803708,
-      "metaRoas": 2.134480317663841,
-      "metaCpa": 34.77285633850229,
-      "metaCpm": 11.391291562912713
-    },
     {
       "date": "2026-06-21",
       "revenue": 20372.990000000027,
@@ -195,7 +185,7 @@
       "date": "2026-07-05",
       "revenue": 17616.780000000002,
       "orders": 227,
-      "blendedRoas": 3.1787511332184475,
+      "blendedRoas": 3.178758915393697,
       "metaSpend": 3544.5800328329206,
       "metaRoas": 2.454223054972485,
       "metaCpa": 33.12691619470019,
@@ -215,7 +205,7 @@
       "date": "2026-07-07",
       "revenue": 14040.340000000002,
       "orders": 172,
-      "blendedRoas": 2.451997460080792,
+      "blendedRoas": 2.4521993396521493,
       "metaSpend": 3470.060032473877,
       "metaRoas": 2.2664766593190198,
       "metaCpa": 30.70849586260068,
@@ -255,7 +245,7 @@
       "date": "2026-07-11",
       "revenue": 21643.769999999997,
       "orders": 291,
-      "blendedRoas": 3.3038116765530225,
+      "blendedRoas": 3.3038231813401517,
       "metaSpend": 4253.159984156489,
       "metaRoas": 2.9297275704548715,
       "metaCpa": 24.44344818480741,
@@ -293,9 +283,9 @@
     },
     {
       "date": "2026-07-15",
-      "revenue": 19710.54000000001,
+      "revenue": 19710.540000000005,
       "orders": 254,
-      "blendedRoas": 2.92310278485388,
+      "blendedRoas": 2.9231027848538793,
       "metaSpend": 4641.820000948384,
       "metaRoas": 2.496932233051778,
       "metaCpa": 31.36364865505665,
@@ -323,25 +313,26 @@
     },
     {
       "date": "2026-07-18",
-      "revenue": 19092.17,
-      "orders": 239,
-      "blendedRoas": 2.9456975291202,
+      "revenue": 19440.750000000004,
+      "orders": 240,
+      "blendedRoas": 2.99947932787334,
       "metaSpend": 4388.609977601096,
       "metaRoas": 2.3361269344975453,
       "metaCpa": 32.99706750076012,
       "metaCpm": 11.298300026519758
+    },
+    {
+      "date": "2026-07-19",
+      "revenue": 16135.67,
+      "orders": 204,
+      "blendedRoas": 2.3133265573729487,
+      "metaSpend": 4860.900047613308,
+      "metaRoas": 2.209469433916081,
+      "metaCpa": 36.006667019357835,
+      "metaCpm": 10.498772233110166
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-06-20",
-      "status": "normal",
-      "cpa_z": 0.237,
-      "n_biz": 48,
-      "dow": "Sat",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-06-21",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Sun",
       "incident_source": "Meta",
       "incident_description": "Meta reported an ads delivery error across Meta's platform and services at 6:34 AM EDT. Reported that this was resolved at 9:06 AM EDT."
+    },
+    {
+      "date": "2026-07-20",
+      "status": "normal",
+      "cpa_z": -0.113,
+      "n_biz": 51,
+      "dow": "Mon",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
