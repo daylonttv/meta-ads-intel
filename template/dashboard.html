@@ -467,6 +467,7 @@ async function checkPw(){
 
   <div class="c" style="padding:12px">
     <div style="font-size:.6rem;color:var(--t3);font-family:var(--mono);padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:8px;line-height:1.9">💰 WALLET · 📱 FEED · 🔴 PLATFORM · 🗓️ SEASONAL &nbsp;·&nbsp; <span style="color:var(--r)">↓ spending</span> = mood suppressor &nbsp;·&nbsp; <span style="color:var(--g)">↑ spending</span> = gift/positive intent &nbsp;·&nbsp; <span style="color:var(--b)">📱 HIGH</span> = feed saturated 2+ days</div>
+    <div id="macroStaleBanner" style="display:none;margin-bottom:10px;padding:10px 12px;border-radius:8px;background:rgba(224,165,39,.12);border:1px solid rgba(224,165,39,.35);color:var(--a);font-size:.66rem;line-height:1.5"></div>
     <div id="macroTimeline" style="display:flex;flex-direction:column;gap:6px"><!-- populated by JS --></div>
     <div style="font-size:.58rem;color:var(--t3);font-style:italic;margin-top:10px;line-height:1.5">⚠️ Events are auto-curated by AI (Gemini) from public news, not a verified feed — treat as context to sanity-check, not fact. Holidays are from a fixed calendar.</div>
   </div>
@@ -574,7 +575,10 @@ const spine = (meta.dateRange?.start && meta.dateRange?.end)
   : tw.map(t=>t.date);
 const D = spine.map(date => {
   const day = twMap[date];
-  const bwStatus = bwMap[date] || 'normal';
+  // A date with NO Breezeway row is 'unknown', never 'normal'. Treating absent platform
+  // data as "platform was fine" would both mislead the headline read ("must have been us")
+  // and silently pad the Normal-day baseline that every stat is measured against.
+  const bwStatus = bwMap[date] || 'unknown';
   const s = bwStatus === 'very_bad' ? 'v' : bwStatus === 'bad' ? 'b' : bwStatus === 'unknown' ? 'u' : 'n';
   const dd = String(new Date(date+'T00:00:00Z').getUTCDate());
   if (!day) {
@@ -607,6 +611,23 @@ document.getElementById('footer').innerHTML = `Last updated: ${updatedAt}<br>
   Benchmarks: Polar, Varos, MHI, Ryze AI · Charts: Chart.js 4.4 · Design: Open Props 2.0`;
 
 const macroEl = document.getElementById('macroTimeline');
+// If the macro fetch failed, data.json carries forward the LAST GOOD events — which were
+// curated for an older window. Rendering those unlabelled next to current ad numbers invites
+// attributing this month's performance to last month's news. Warn loudly and say how old.
+const macroSrc = meta.sources?.macroEvents;
+const macroStale = !!(macroSrc && (macroSrc.stale || macroSrc.ok === false));
+const macroBanner = document.getElementById('macroStaleBanner');
+if (macroBanner) {
+  if (macroStale) {
+    const ageDays = macroSrc.updatedAt
+      ? Math.floor((Date.now() - new Date(macroSrc.updatedAt).getTime()) / 86400000) : null;
+    macroBanner.innerHTML = `⚠️ <strong>Macro events are stale.</strong> The news/events feed last refreshed successfully${ageDays!=null?` ${ageDays} day${ageDays!==1?'s':''} ago`:''}, so the events below were curated for an <strong>earlier date range</strong> and may not correspond to the ad performance shown above. Treat them as historical context, not an explanation of this period.`;
+    macroBanner.style.display = 'block';
+  } else {
+    macroBanner.style.display = 'none';
+  }
+}
+
 // Merge Gemini macro events + hardcoded holidays, sorted by date
 const allTimelineItems = [
   ...macroRaw.map(e => ({...e, _type:'event'})),
@@ -714,7 +735,20 @@ const holidayLinePlugin = {
     ctx.restore();
   }
 };
-Chart.register(holidayLinePlugin);
+// Chart.js comes from a CDN. If it's unreachable/blocked, every `new Chart(...)` below
+// throws and the whole dashboard renders blank — including the tables and stats, which
+// need no charting at all. Stub it so the numeric content still renders, and tell the
+// reader why the charts are missing rather than showing empty boxes.
+const CHARTS_OK = typeof Chart !== 'undefined';
+if (CHARTS_OK) {
+  Chart.register(holidayLinePlugin);
+} else {
+  console.error('Chart.js failed to load — rendering dashboard without charts.');
+  window.Chart = function(){ return { destroy(){}, update(){}, data:{datasets:[]}, options:{scales:{}} }; };
+  document.querySelectorAll('.chart-wrap').forEach(el=>{
+    el.innerHTML = '<div style="padding:24px;text-align:center;color:var(--a);font-size:.7rem">⚠️ Charts unavailable — the Chart.js CDN could not be reached. All figures below are still accurate.</div>';
+  });
+}
 
 // ===== GAS INTERPOLATION =====
 function interpolateGas(weeklyPrices, days) {
@@ -739,6 +773,26 @@ function render(days) {
   const nums = (arr,key) => arr.map(d=>d[key]).filter(x=>x!=null && !isNaN(x));
   const avg = (arr,key) => { const v=nums(arr,key); return v.length ? v.reduce((s,x)=>s+x,0)/v.length : 0; };
 
+  // PERIOD metrics must be spend-weighted, not a plain mean of daily ratios. The period's
+  // true ROAS is total-revenue / total-spend, which equals Σ(spend×roas)/Σ(spend) — a mean
+  // of daily ratios gives a $500 day the same vote as a $10k day. Same for CPA: the real
+  // figure is total-spend / total-conversions, and daily conversions ≈ spend/cpa. On this
+  // account daily spend is tightly clustered so the gap is currently small (ROAS ~0.1%,
+  // CPA ~4%), but it grows the moment spend gets lumpy — a sale day, a budget test.
+  const wAvg = (arr,key) => {
+    const rows = arr.filter(d=>d[key]!=null && !isNaN(d[key]) && d.sp!=null && d.sp>0);
+    if (!rows.length) return avg(arr,key);            // no spend data — fall back to plain mean
+    const spend = rows.reduce((s,d)=>s+d.sp,0);
+    return spend>0 ? rows.reduce((s,d)=>s+d.sp*d[key],0)/spend : avg(arr,key);
+  };
+  // CPA weights by conversions (spend/cpa), not by spend, so it equals Σspend / Σconversions.
+  const wCpa = (arr) => {
+    const rows = arr.filter(d=>d.cpa!=null && d.cpa>0 && d.sp!=null && d.sp>0);
+    if (!rows.length) return avg(arr,'cpa');
+    const conv = rows.reduce((s,d)=>s+d.sp/d.cpa,0);
+    return conv>0 ? rows.reduce((s,d)=>s+d.sp,0)/conv : avg(arr,'cpa');
+  };
+
   // Destroy existing charts
   [revChartInst,cpaChartInst,macroChartInst,trendsChartInst].forEach(c=>{if(c)c.destroy();});
   if (fuelChartInst) { fuelChartInst.destroy(); fuelChartInst=null; }
@@ -755,22 +809,31 @@ function render(days) {
   const mrBadN = badDays.filter(d=>d.mr!=null).length;
   const cpaNormalN = normalDays.filter(d=>d.cpa!=null).length;
   const cpaBadN = badDays.filter(d=>d.cpa!=null).length;
-  const monthName = new Date(days[0]?.date||Date.now()).toLocaleString('en-US',{month:'short',timeZone:'UTC'}).toUpperCase();
 
   // Header range (handles cross-month windows; TW tag reflects real freshness)
   const fmtMD = ds => ds ? new Date(ds+'T00:00:00Z').toLocaleString('en-US',{month:'short',day:'numeric',timeZone:'UTC'}) : '?';
   const twSrc = meta.sources?.tripleWhale;
-  const twTag = !twSrc ? 'TRIPLE WHALE' : twSrc.stale ? 'TW DATA STALE' : twSrc.ok ? 'TRIPLE WHALE LIVE' : 'TW UNAVAILABLE';
+  // "LIVE" must mean the window is actually covered. A successful fetch that simply hasn't
+  // got yesterday's row yet would otherwise print "… – Jul 27 · TRIPLE WHALE LIVE" over a
+  // Jul 27 column with no data in it.
+  const twCovered = days.filter(d=>d.hasTW).length;
+  const twGap = days.length - twCovered;
+  let twTag;
+  if (!twSrc) twTag = 'TRIPLE WHALE';
+  else if (twSrc.stale) twTag = 'TW DATA STALE';
+  else if (!twSrc.ok) twTag = 'TW UNAVAILABLE';
+  else if (twGap > 0) twTag = `TRIPLE WHALE · ${twGap} DAY${twGap!==1?'S':''} PENDING`;
+  else twTag = 'TRIPLE WHALE LIVE';
   document.getElementById('hdrRange').textContent = `${fmtMD(days[0]?.date)} – ${fmtMD(days[days.length-1]?.date)} · ${twTag}`;
   document.getElementById('rangeDisplay').textContent = `${days.length} day${days.length!==1?'s':''}`;
 
   // Stats
-  const avgMrNormal=avg(normalDays,'mr'), avgMrBad=avg(badDays,'mr');
-  const avgCpaNormal=avg(normalDays,'cpa'), avgCpaBad=avg(badDays,'cpa');
+  const avgMrNormal=wAvg(normalDays,'mr'), avgMrBad=wAvg(badDays,'mr');
+  const avgCpaNormal=wCpa(normalDays), avgCpaBad=wCpa(badDays);
   const roasDrop = avgMrNormal ? ((avgMrBad-avgMrNormal)/avgMrNormal*100).toFixed(0) : 0;
   const cpaInflation = avgCpaNormal ? ((avgCpaBad-avgCpaNormal)/avgCpaNormal*100).toFixed(0) : 0;
   const avgRevenue=avg(days,'rev'), avgOrders=avg(days,'ord'), avgAdSpend=avg(days,'sp');
-  const avgBlendedRoas=avg(days,'roas'), avgMetaRoas=avg(days,'mr'), avgMetaCpa=avg(days,'cpa'), avgMetaCpm=avg(days,'cpm');
+  const avgBlendedRoas=wAvg(days,'roas'), avgMetaRoas=wAvg(days,'mr'), avgMetaCpa=wCpa(days), avgMetaCpm=wAvg(days,'cpm');
 
   const hasBoth = mrNormalN>0 && mrBadN>0;        // metric-valid ROAS on both sides
   const hasBothCpa = cpaNormalN>0 && cpaBadN>0;
@@ -781,8 +844,8 @@ function render(days) {
   const dropVal = hasBoth ? `${Math.abs(+roasDrop)}%` : '—';
   const inflVal = hasBothCpa ? `+${Math.abs(+cpaInflation)}%` : '—';
   document.getElementById('statsGrid').innerHTML = `
-    <div class="st tip-wrap" data-tip="Average Meta Return on Ad Spend on days Breezeway rated the platform Normal — your baseline on days the platform looked healthy."><div class="v" style="color:var(--g)">${nrVal}</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${normalDays.length} days</div></div>
-    <div class="st tip-wrap" data-tip="Average Meta ROAS on Breezeway-flagged Bad/Very Bad days. Lower than Normal days suggests platform instability may be weighing on efficiency (correlation, not proof)."><div class="v" style="color:var(--r)">${brVal}</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${badDays.length} days</div></div>
+    <div class="st tip-wrap" data-tip="Average Meta Return on Ad Spend on days Breezeway rated the platform Normal — your baseline on days the platform looked healthy."><div class="v" style="color:var(--g)">${nrVal}</div><div class="l">Avg Meta ROAS<br>Normal Days</div><div class="n">${mrNormalN} days</div></div>
+    <div class="st tip-wrap" data-tip="Average Meta ROAS on Breezeway-flagged Bad/Very Bad days. Lower than Normal days suggests platform instability may be weighing on efficiency (correlation, not proof)."><div class="v" style="color:var(--r)">${brVal}</div><div class="l">Avg Meta ROAS<br>Bad+VBad</div><div class="n">${mrBadN} days</div></div>
     <div class="st tip-wrap" data-tip="Cost Per Acquisition on Normal-rated platform days — your baseline CPA when Meta's delivery looked healthy."><div class="v" style="color:var(--g)">${ncVal}</div><div class="l">Avg Meta CPA<br>Normal Days</div></div>
     <div class="st tip-wrap" data-tip="Cost Per Acquisition on platform-flagged days. Higher than Normal days coincides with platform issues — worth investigating before blaming targeting or creative."><div class="v" style="color:var(--r)">${bcVal}</div><div class="l">Avg Meta CPA<br>Bad+VBad</div></div>
     <div class="st tip-wrap" data-tip="Difference in Meta ROAS on flagged vs Normal days. A larger gap is consistent with platform instability affecting efficiency — same budget, fewer results."><div class="v" style="color:var(--a)">${dropVal}</div><div class="l">Meta ROAS Drop</div><div class="n">bad vs normal</div></div>
@@ -791,11 +854,16 @@ function render(days) {
   const avgSpNormal=avg(normalDays,'sp'), avgSpBad=avg(badDays,'sp');
   const spendDeltaPct = avgSpNormal>0 ? Math.abs((avgSpBad-avgSpNormal)/avgSpNormal*100) : 999;
   const spendPhrase = spendDeltaPct<=15 ? ', while Meta spend stayed relatively flat' : '';
+  // Never claim "all days were Normal" when some days simply have no Breezeway rating —
+  // say how many are unrated instead.
+  const unknownNote = unknownDays.length
+    ? ` <span style="color:var(--a)">${unknownDays.length} day${unknownDays.length!==1?'s':''} had no Breezeway rating and ${unknownDays.length!==1?'are':'is'} excluded from both baselines.</span>`
+    : '';
   document.getElementById('statsAnalysis').innerHTML = !badDays.length
-    ? `<strong>All days were rated Normal by Breezeway this period.</strong> Average Meta ROAS: ${avgMetaRoas.toFixed(2)}×, CPA: $${avgMetaCpa.toFixed(2)}.`
+    ? `<strong>${unknownDays.length ? `No days were flagged Bad or Very Bad by Breezeway this period.` : `All days were rated Normal by Breezeway this period.`}</strong> Average Meta ROAS: ${avgMetaRoas.toFixed(2)}×, CPA: $${avgMetaCpa.toFixed(2)}.${unknownNote}`
     : enoughSample
-      ? `On Breezeway-flagged days, Meta ROAS averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days (a <strong>${Math.abs(roasDrop)}% difference</strong>)${spendPhrase}. This is a <strong>correlation</strong>, not proof of cause — but it's the pattern you'd expect if platform instability were dragging efficiency. <span style="color:var(--t3)">(${mrNormalN} normal / ${mrBadN} flagged days with ROAS data)</span>`
-      : `Meta ROAS on flagged days averaged <strong>${mrBadN?avgMrBad.toFixed(2)+'×':'—'}</strong> vs <strong>${mrNormalN?avgMrNormal.toFixed(2)+'×':'—'}</strong> on Normal days. <span style="color:var(--a)">Small sample (${mrNormalN} normal / ${mrBadN} flagged with ROAS data) — directional only, not a reliable correlation.</span>`;
+      ? `On Breezeway-flagged days, Meta ROAS averaged <strong>${avgMrBad.toFixed(2)}×</strong> vs <strong>${avgMrNormal.toFixed(2)}×</strong> on Normal days (a <strong>${Math.abs(roasDrop)}% difference</strong>)${spendPhrase}. This is a <strong>correlation</strong>, not proof of cause — but it's the pattern you'd expect if platform instability were dragging efficiency. <span style="color:var(--t3)">(${mrNormalN} normal / ${mrBadN} flagged days with ROAS data)</span>${unknownNote}`
+      : `Meta ROAS on flagged days averaged <strong>${mrBadN?avgMrBad.toFixed(2)+'×':'—'}</strong> vs <strong>${mrNormalN?avgMrNormal.toFixed(2)+'×':'—'}</strong> on Normal days. <span style="color:var(--a)">Small sample (${mrNormalN} normal / ${mrBadN} flagged with ROAS data) — directional only, not a reliable correlation.</span>${unknownNote}`;
 
   // Day strip
   const strip = document.getElementById('strip');
@@ -823,7 +891,11 @@ function render(days) {
   if (outagesInRange.length) {
     outageEl.innerHTML = outagesInRange.map(o=>{
       const cls = o.status==='resolved'?'ok':'';
-      return `<div class="oi ${cls}"><span class="od">${esc(o.date)}</span><span>${esc(o.title)}</span><span class="os">${esc(o.service||'')}</span></div>`;
+      // Dateless entries are live status readings (metastatus.com reports "now", not a
+      // dated incident) — label them as such rather than showing a blank date cell.
+      const dateCell = o.date ? esc(o.date) : 'NOW';
+      const liveNote = o.date ? '' : ' <span style="color:var(--t3);font-size:.9em">(live reading, not a dated incident)</span>';
+      return `<div class="oi ${cls}"><span class="od">${dateCell}</span><span>${esc(o.title)}${liveNote}</span><span class="os">${esc(o.service||'')}</span></div>`;
     }).join('');
   } else {
     const badBw = days.filter(d=>d.s==='b'||d.s==='v');
@@ -838,7 +910,10 @@ function render(days) {
       const zScore=Number.isFinite(bwDay?.cpa_z)?` · CPA z-score: ${bwDay.cpa_z.toFixed(2)}`:'';
       const nBiz=Number.isFinite(bwDay?.n_biz)?` · ${bwDay.n_biz} brands`:'';
       const incident=bwDay?.incident_description?`<div style="font-size:.6rem;color:var(--t3);margin-top:4px;line-height:1.4">${esc(bwDay.incident_description.replace(/\r?\n/g,' ').substring(0,200))}${bwDay.incident_description.length>200?'…':''}</div>`:'';
-      return `<div class="oi ${d.s==='v'?'':'w'}"><span class="od">${monthName} ${d.d}</span><span>Breezeway: ${d.s==='v'?'Very Bad':'Bad'}${zScore}${nBiz}${incident}</span><span class="os">${esc(bwDay?.incident_source||'Breezeway')}</span></div>`;
+      // Month must come from THIS row's own date — a 30-day window spans two months, and
+      // using the window's first month labelled July days as "JUN".
+      const rowMonth = new Date(d.date+'T00:00:00Z').toLocaleString('en-US',{month:'short',timeZone:'UTC'}).toUpperCase();
+      return `<div class="oi ${d.s==='v'?'':'w'}"><span class="od">${rowMonth} ${d.d}</span><span>Breezeway: ${d.s==='v'?'Very Bad':'Bad'}${zScore}${nBiz}${incident}</span><span class="os">${esc(bwDay?.incident_source||'Breezeway')}</span></div>`;
     }).join('');
     outageEl.innerHTML = (platformHtml+breezeHtml) || '<div class="oi ok"><span>No incidents detected this period</span></div>';
   }
@@ -856,7 +931,7 @@ function render(days) {
       <tr><td class="m">Meta CPM</td><td class="o">$${avgMetaCpm.toFixed(2)}</td><td class="o">$8.14</td><td class="o">$7.19</td></tr>
       <tr class="h"><td class="m">Daily Revenue</td><td class="o">$${Math.round(avgRevenue).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
       <tr><td class="m">Daily Orders</td><td class="o">${Math.round(avgOrders)}</td><td class="o">—</td><td class="o">—</td></tr>
-      <tr><td class="m">Daily Ad Spend</td><td class="o">$${Math.round(avgAdSpend).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
+      <tr><td class="m">Daily Meta Spend</td><td class="o">$${Math.round(avgAdSpend).toLocaleString()}</td><td class="o">—</td><td class="o">—</td></tr>
     </tbody></table>`;
 
   // Benchmark interpretation — computed from THIS period's live averages (no hardcoded claims).
@@ -901,21 +976,30 @@ function render(days) {
   // Reliability
   document.getElementById('reliMonth').textContent = meta.monthLabel
     ? meta.monthLabel.split(' ')[0].substring(0,3)+" '"+(meta.monthLabel.split(' ')[1]||'').substring(2) : 'Loading';
-  const stability = days.length ? (normalDays.length/days.length*100).toFixed(0) : 0;
+  // Rate stability over days Breezeway actually RATED. Dividing by all days would let a
+  // gap in Breezeway's feed masquerade as platform instability (and vice versa).
+  const ratedDays = days.filter(d=>d.s!=='u');
+  const stability = ratedDays.length ? (normalDays.length/ratedDays.length*100).toFixed(0) : 0;
   const vbadDays = days.filter(d=>d.s==='v').length;
-  const vbadRate = days.length ? (vbadDays/days.length*365/2).toFixed(0) : 0;
-  const badPlusRate = days.length ? (badDays.length/days.length*365/24).toFixed(1) : 0;
+  // Rates are multiples of Breezeway's own expected baselines (Very Bad ≈ 2/yr, Bad+ ≈ 24/yr),
+  // so 1× means "exactly as often as normal" and 0× means "never". Keep them numeric — the
+  // old code compared the .toFixed() STRINGS against numbers.
+  const vbadRate = ratedDays.length ? vbadDays/ratedDays.length*365/2 : 0;
+  const badPlusRate = ratedDays.length ? badDays.length/ratedDays.length*365/24 : 0;
+  // 0× is the best possible outcome and must read green. The old thresholds coloured a
+  // flawless period amber, which made a clean month look like a warning.
+  const rateColor = (r,amberMax) => r<=1 ? 'var(--g)' : r<=amberMax ? 'var(--a)' : 'var(--r)';
   document.getElementById('reliStats').innerHTML = `
-    <div class="st"><div class="v" style="color:${stability>=80?'var(--g)':stability>=60?'var(--a)':'var(--r)'}">${stability}%</div><div class="l">Stability</div></div>
-    <div class="st"><div class="v" style="color:${vbadRate<=5?'var(--a)':'var(--r)'}">~${vbadRate}×</div><div class="l">VBad Rate</div></div>
-    <div class="st"><div class="v" style="color:${badPlusRate<=3?'var(--a)':'var(--r)'}">${badPlusRate}×</div><div class="l">Bad+ Rate</div></div>`;
+    <div class="st"><div class="v" style="color:${stability>=80?'var(--g)':stability>=60?'var(--a)':'var(--r)'}">${stability}%</div><div class="l">Stability</div>${unknownDays.length?`<div class="n">of ${ratedDays.length} rated</div>`:''}</div>
+    <div class="st"><div class="v" style="color:${rateColor(vbadRate,5)}">~${vbadRate.toFixed(0)}×</div><div class="l">VBad Rate</div><div class="n">vs expected</div></div>
+    <div class="st"><div class="v" style="color:${rateColor(badPlusRate,3)}">${badPlusRate.toFixed(1)}×</div><div class="l">Bad+ Rate</div><div class="n">vs expected</div></div>`;
   // Sum ACTUAL spend on flagged days (not avg×count); only estimate excess when CPA was
   // genuinely higher on flagged days, and label it as a rough proxy (not a precise figure).
   const badSpend = badDays.reduce((s,d)=>s+(d.sp||0),0);
   const cpaInfl = +cpaInflation; // signed
   const excessCpa = (hasBothCpa && cpaInfl>0) ? badSpend*cpaInfl/100 : 0;
   document.getElementById('reliAnalysis').innerHTML = !badDays.length
-    ? '<strong>No flagged days this period.</strong> All Breezeway ratings were Normal.'
+    ? `<strong>No flagged days this period.</strong> ${unknownDays.length ? `${normalDays.length} of ${days.length} days were rated Normal; ${unknownDays.length} had no Breezeway rating.` : 'All Breezeway ratings were Normal.'}`
     : `<strong>$${Math.round(badSpend).toLocaleString()} of Meta spend</strong> ran during ${badDays.length} platform-flagged day${badDays.length!==1?'s':''}.${(hasBothCpa && cpaInfl>0)
         ? ` At +${Math.round(cpaInfl)}% CPA vs Normal days, that's a rough <strong>~$${Math.round(excessCpa).toLocaleString()} spend-at-risk</strong> estimate (scales spend by the CPA gap — a proxy, not lost-conversion accounting).`
         : (hasBothCpa ? ' CPA on flagged days was not higher than Normal, so no excess-cost estimate is shown.' : ' Not enough CPA data on both sides to estimate excess cost.')}`;
@@ -968,7 +1052,7 @@ function render(days) {
   });
 
   // CPA chart
-  const avgCpa=avg(days,'cpa');
+  const avgCpa=wCpa(days);   // match the headline CPA figure, not a separate daily mean
   cpaChartInst = new Chart(document.getElementById('cpaChart'),{
     type:'bar',
     data:{labels:chartLabels,datasets:[
@@ -1012,6 +1096,10 @@ function render(days) {
     }
   });
 
+  // render() always rebuilds the macro chart on Meta ROAS. If the user had switched to
+  // Blended, re-apply it — otherwise changing the date range silently swaps the series
+  // back to Meta while the Blended button stays highlighted.
+  if (currentRoasView !== 'meta') setRoasView(currentRoasView);
   if (fuelVisible) buildFuelChart();
   if (trendsVisible) buildTrendsChart();
 }
@@ -1038,6 +1126,7 @@ function setRoasView(view){
   document.querySelectorAll('#roasMetaBtn,#roasMetaBtn2').forEach(b=>{if(b)b.classList.toggle('active',isMeta)});
   document.querySelectorAll('#roasBlendBtn,#roasBlendBtn2').forEach(b=>{if(b)b.classList.toggle('active',!isMeta)});
 
+  if(!macroChartInst) return;   // chart not built (or build failed) — button state is still updated above
   macroChartInst.data.datasets[1].data=data;
   macroChartInst.data.datasets[1].label=label;
   macroChartInst.data.datasets[1].borderColor=color;
@@ -1112,7 +1201,7 @@ function buildFuelChart(){
 
   const datasets=[
     {label:roasLabel,data:roasData,borderColor:roasColor,pointBackgroundColor:roasPts,pointBorderColor:'#fff',pointBorderWidth:ptBW,pointRadius:ptR,pointHoverRadius:ptHR,borderWidth:2.5,tension:.3,yAxisID:'y1',fill:false,order:1},
-    {label:'Breezeway Status',data:DAYS.map(d=>d.s==='v'?3:d.s==='b'?2:1),backgroundColor:statusBg,borderColor:DAYS.map(d=>d.s==='v'?'rgba(224,101,93,.3)':d.s==='b'?'rgba(224,165,39,.25)':d.s==='u'?'rgba(133,149,171,.2)':'rgba(63,185,138,.15)'),borderWidth:1,type:'bar',yAxisID:'y2',order:3,borderRadius:4,barPercentage:.5}
+    {label:'Breezeway Status',data:DAYS.map(d=>d.s==='v'?3:d.s==='b'?2:d.s==='u'?null:1),backgroundColor:statusBg,borderColor:DAYS.map(d=>d.s==='v'?'rgba(224,101,93,.3)':d.s==='b'?'rgba(224,165,39,.25)':d.s==='u'?'rgba(133,149,171,.2)':'rgba(63,185,138,.15)'),borderWidth:1,type:'bar',yAxisID:'y2',order:3,borderRadius:4,barPercentage:.5}
   ];
   if(hasGas) datasets.unshift({label:'Gas $/gal',data:gas,borderColor:'#e0a527',backgroundColor:'rgba(224,165,39,.08)',pointRadius:isDesktop?ptR-1:3,pointBackgroundColor:'#e0a527',pointBorderColor:'#fff',pointBorderWidth:ptBW,borderWidth:2.5,tension:.4,yAxisID:'y',fill:true,order:2});
   const scales={
@@ -1130,9 +1219,11 @@ function buildFuelChart(){
         legend:{display:true,position:'bottom',labels:{color:cTickColor,font:{family:'IBM Plex Mono',size:cLegend},boxWidth:12,padding:14}},
         tooltip:{backgroundColor:'rgba(10,16,24,.95)',borderColor:'#243049',borderWidth:1,cornerRadius:8,titleFont:{family:'Sora',size:cTipTitle},bodyFont:{family:'IBM Plex Mono',size:cTipBody},padding:12,
           callbacks:{label:ctx=>{
+            // Status is read from the day's own rating, not the bar height, so an unrated
+            // day reports "Unknown" instead of falling through to the null placeholder.
+            if(ctx.dataset.label==='Breezeway Status'){const s=DAYS[ctx.dataIndex]?.s;return s==='v'?'  🔴 Very Bad':s==='b'?'  🟡 Bad':s==='u'?'  ⚪ Unknown':'  🟢 Normal';}
             if(ctx.parsed.y==null)return '  —';
             if(ctx.dataset.label==='Gas $/gal')return '  $'+ctx.parsed.y.toFixed(2)+'/gal';
-            if(ctx.dataset.label==='Breezeway Status'){const v=ctx.parsed.y;return v===3?'  🔴 Very Bad':v===2?'  🟡 Bad':'  🟢 Normal';}
             return '  ROAS: '+ctx.parsed.y.toFixed(2)+'×';
           }}
         }

@@ -31,6 +31,22 @@ function dateStrInTZ(d) {
   // en-CA formats as YYYY-MM-DD
   return new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
 }
+// Every upstream call goes through this. Without a timeout a single hung endpoint
+// stalls the whole Action until GitHub's job limit kills it — no data, no alert email,
+// just a job that silently runs for hours. AbortSignal.timeout gives each request a
+// hard ceiling so one bad source degrades to "stale" instead of hanging the run.
+const FETCH_TIMEOUT_MS = 30000;
+async function fetchWithTimeout(url, opts = {}, timeoutMs = FETCH_TIMEOUT_MS) {
+  try {
+    return await fetch(url, { ...opts, signal: AbortSignal.timeout(timeoutMs) });
+  } catch (err) {
+    if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+      throw new Error(`request timed out after ${timeoutMs / 1000}s: ${typeof url === 'string' ? url.split('?')[0] : url}`);
+    }
+    throw err;
+  }
+}
+
 const nowMs = Date.now();
 const endDate = dateStrInTZ(new Date(nowMs - 1 * MS_DAY));    // yesterday (Central)
 const startDate = dateStrInTZ(new Date(nowMs - 30 * MS_DAY)); // 30 days back (Central)
@@ -146,7 +162,7 @@ async function fetchTripleWhale() {
 
   const todayHour = Math.min(24, Math.max(1, new Date().getUTCHours() + 1)); // base-1, clamped 1–24
 
-  const res = await fetch('https://api.triplewhale.com/api/v2/summary-page/get-data', {
+  const res = await fetchWithTimeout('https://api.triplewhale.com/api/v2/summary-page/get-data', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -247,7 +263,7 @@ async function fetchGasPrices() {
 
   try {
     const url = `https://api.eia.gov/v2/petroleum/pri/gnd/data/?api_key=${EIA_API_KEY}&frequency=weekly&data[0]=value&facets[series][]=${encodeURIComponent('EMM_EPMR_PTE_NUS_DPG')}&sort[0][column]=period&sort[0][direction]=desc&length=12`;
-    const res = await fetch(url);
+    const res = await fetchWithTimeout(url);
     if (!res.ok) { console.error(`EIA API error ${res.status}`); return null; }
     const data = await res.json();
     const prices = (data?.response?.data || []).map(d => ({ date: d.period, price: parseFloat(d.value) }));
@@ -267,7 +283,7 @@ async function fetchOutages() {
 
   if (STATUSGATOR_API_KEY) {
     try {
-      const res = await fetch('https://api.statusgator.com/v2/services/meta/incidents', {
+      const res = await fetchWithTimeout('https://api.statusgator.com/v2/services/meta/incidents', {
         headers: { 'Authorization': `Bearer ${STATUSGATOR_API_KEY}` },
       });
       if (res.ok) {
@@ -299,7 +315,7 @@ async function fetchOutages() {
 
 async function scrapeMetaStatus() {
   try {
-    const devRes = await fetch('https://developers.facebook.com/status/summary/');
+    const devRes = await fetchWithTimeout('https://developers.facebook.com/status/summary/');
     if (devRes.ok) {
       const devData = await devRes.json();
       const devIncidents = (devData?.incidents || devData?.data || [])
@@ -323,16 +339,28 @@ async function scrapeMetaStatus() {
   }
 
   try {
-    const graphRes = await fetch('https://www.metastatus.com/api/v2/summary.json');
+    const graphRes = await fetchWithTimeout('https://www.metastatus.com/api/v2/summary.json');
     if (graphRes.ok) {
       const graphData = await graphRes.json();
       const status = graphData?.status?.indicator;
       if (status && status !== 'none') {
-        console.log(`  ✅ Got Meta status: ${status}`);
-        return [{ date: endDate, title: `Meta platform status: ${status}`, status: graphData?.status?.description || status, service: 'Meta' }];
+        // This endpoint reports Meta's status RIGHT NOW, with no incident date. Stamping it
+        // with endDate would assert an outage occurred on a specific past day we have no
+        // evidence for. Emit it WITHOUT a date — the dashboard renders dateless entries as
+        // a live reading (and shows them regardless of the selected window).
+        console.log(`  ✅ Got Meta current status: ${status}`);
+        return [{
+          date: null,
+          title: `Meta platform status right now: ${status}`,
+          status: graphData?.status?.description || status,
+          service: 'Meta',
+          liveStatusOnly: true,
+        }];
       }
     }
-  } catch (e) { /* silent */ }
+  } catch (e) {
+    console.warn(`  metastatus.com failed: ${e.message}`);
+  }
 
   console.warn('  ⚠️  No outage data available from any public source');
   return [];
@@ -386,7 +414,20 @@ function salvageTruncatedArray(t, start) {
 // and responses truncated by the token cap. Never throws, and drops any row that
 // fails schema validation (missing ISO date or headline). Also bounds string
 // lengths so a runaway model response can't bloat data.json.
-export function parseAndValidateEvents(text) {
+// A YYYY-MM-DD string is only valid if it round-trips. Date.parse does NOT reject
+// impossible calendar dates: Date.parse('2026-06-31T00:00:00Z') silently normalizes to
+// July 1 and returns a real timestamp, so a hallucinated "June 31" would pass validation
+// and render as "6/31" on the timeline.
+function isRealCalendarDate(s) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s || '')) return false;
+  const d = new Date(s + 'T00:00:00Z');
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === s;
+}
+
+// `window` is explicit so callers that operate on a SAVED data.json (gen-macro.mjs) validate
+// against that file's dateRange rather than whatever rolling window this module computed at
+// import time — otherwise re-running the manual tool after midnight drops valid events.
+export function parseAndValidateEvents(text, window = { start: startDate, end: endDate }) {
   if (!text || typeof text !== 'string') return null;
   let t = escapeControlCharsInStrings(text.replace(/```(?:json)?/gi, '').trim());
   const start = t.indexOf('[');
@@ -423,14 +464,13 @@ export function parseAndValidateEvents(text) {
 
   // Accept events within the window, allowing ~3 weeks past the end for upcoming
   // "seasonal" items the prompt asks for. Reject impossible dates (e.g. 2026-99-99).
-  const minEventDate = startDate;
-  const maxEventDate = (() => { const d = new Date(endDate + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + 21); return d.toISOString().split('T')[0]; })();
+  const minEventDate = window.start;
+  const maxEventDate = (() => { const d = new Date(window.end + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + 21); return d.toISOString().split('T')[0]; })();
 
   const valid = [];
   for (const e of arr) {
     if (!e || typeof e !== 'object') continue;
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(e.date || '')) continue;          // require ISO date shape
-    if (Number.isNaN(Date.parse(e.date + 'T00:00:00Z'))) continue;    // reject impossible dates
+    if (!isRealCalendarDate(e.date)) continue;                        // shape AND real calendar date
     if (e.date < minEventDate || e.date > maxEventDate) continue;     // keep within window (+21d)
     if (!e.description || typeof e.description !== 'string') continue; // require headline
     const category = CATS.has(e.category) ? e.category : 'feed';
@@ -508,7 +548,7 @@ Respond ONLY with a valid JSON array. No markdown fences, no preamble, no traili
           await new Promise(r => setTimeout(r, wait));
         }
 
-        const res = await fetch(
+        const res = await fetchWithTimeout(
           `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`,
           {
             method: 'POST',
@@ -611,7 +651,7 @@ async function fetchGoogleTrends() {
 
   // Step 1: get widget tokens
   const exploreUrl = `https://trends.google.com/trends/api/explore?hl=en-US&tz=${tzMin}&req=${encodeURIComponent(req)}`;
-  const exploreRes = await fetch(exploreUrl, { headers });
+  const exploreRes = await fetchWithTimeout(exploreUrl, { headers });
   if (!exploreRes.ok) throw new Error(`Google Trends explore ${exploreRes.status}`);
 
   const exploreText = await exploreRes.text();
@@ -622,7 +662,7 @@ async function fetchGoogleTrends() {
   // Step 2: get actual time-series data
   const dataReq = JSON.stringify(timelineWidget.request);
   const dataUrl = `https://trends.google.com/trends/api/widgetdata/multiline?hl=en-US&tz=${tzMin}&req=${encodeURIComponent(dataReq)}&token=${encodeURIComponent(timelineWidget.token)}`;
-  const dataRes = await fetch(dataUrl, { headers });
+  const dataRes = await fetchWithTimeout(dataUrl, { headers });
   if (!dataRes.ok) throw new Error(`Google Trends widgetdata ${dataRes.status}`);
 
   const dataText = await dataRes.text();

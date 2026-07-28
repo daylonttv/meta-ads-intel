@@ -73,7 +73,9 @@ Output ONLY a valid JSON array, no markdown fences, no preamble, no trailing tex
   console.log(`Now run:  gemini -p "$(cat ${PROMPT_FILE})" > ${RAW_FILE}`);
 } else if (MODE === 'inject') {
   const raw = readFileSync(RAW_FILE, 'utf8');
-  const events = parseAndValidateEvents(raw);
+  // Validate against THIS data.json's window, not fetch-data's import-time rolling window —
+  // otherwise re-running injection after the window rolls silently drops every event.
+  const events = parseAndValidateEvents(raw, { start, end });
   console.log(`Validated events: ${events?.length || 0}`);
   if (!events?.length) { console.log('Raw (first 800):\n', raw.slice(0, 800)); process.exit(1); }
   events.forEach(e => console.log(`  ${e.date} [${e.category}/${e.mood_impact}/${e.feed_dominance}] ${e.description.slice(0, 64)} — ${e.source}`));
