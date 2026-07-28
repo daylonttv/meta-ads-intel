@@ -342,23 +342,77 @@ async function scrapeMetaStatus() {
 // 5. GEMINI API — Macro events with feed-domination + mood classification
 // ============================================================
 
+// Escape raw control characters (literal newlines/tabs) that appear INSIDE JSON
+// string literals. Gemini regularly emits multi-line `details` values with real
+// newlines, which is invalid JSON ("Bad control character in string literal").
+// Walks the text tracking whether we're inside a string so we only touch those.
+function escapeControlCharsInStrings(s) {
+  let out = '';
+  let inStr = false;
+  let esc = false;
+  for (const ch of s) {
+    if (esc) { out += ch; esc = false; continue; }
+    if (ch === '\\') { out += ch; esc = true; continue; }
+    if (ch === '"') { inStr = !inStr; out += ch; continue; }
+    if (inStr && ch === '\n') { out += '\\n'; continue; }
+    if (inStr && ch === '\r') { out += '\\r'; continue; }
+    if (inStr && ch === '\t') { out += '\\t'; continue; }
+    out += ch;
+  }
+  return out;
+}
+
+// Recover a usable array from output that was cut off mid-response (hit the token
+// cap). Walks the text tracking brace depth and returns the slice ending at the
+// last COMPLETE top-level object, re-closed with `]`. Returns null if not even one
+// object completed.
+function salvageTruncatedArray(t, start) {
+  let depth = 0, inStr = false, esc = false, lastComplete = -1;
+  for (let i = start; i < t.length; i++) {
+    const ch = t[i];
+    if (esc) { esc = false; continue; }
+    if (ch === '\\') { esc = true; continue; }
+    if (ch === '"') { inStr = !inStr; continue; }
+    if (inStr) continue;
+    if (ch === '{') depth++;
+    else if (ch === '}') { depth--; if (depth === 0) lastComplete = i; }
+  }
+  if (lastComplete === -1) return null;
+  return t.slice(start, lastComplete + 1) + ']';
+}
+
 // Parse Gemini's text into a clean, validated array of macro events.
-// Tolerates markdown fences / leading prose, never throws, and drops any row
-// that fails schema validation (missing ISO date or headline). Also bounds
-// string lengths so a runaway model response can't bloat data.json.
+// Tolerates markdown fences / leading prose, unescaped newlines inside strings,
+// and responses truncated by the token cap. Never throws, and drops any row that
+// fails schema validation (missing ISO date or headline). Also bounds string
+// lengths so a runaway model response can't bloat data.json.
 export function parseAndValidateEvents(text) {
   if (!text || typeof text !== 'string') return null;
-  let t = text.replace(/```(?:json)?/gi, '').trim();
+  let t = escapeControlCharsInStrings(text.replace(/```(?:json)?/gi, '').trim());
   const start = t.indexOf('[');
   const end = t.lastIndexOf(']');
-  if (start === -1 || end === -1 || end <= start) return null;
+  if (start === -1) { console.warn('  Gemini response contained no JSON array'); return null; }
 
-  let arr;
-  try {
-    arr = JSON.parse(t.slice(start, end + 1));
-  } catch (e) {
-    console.warn(`  Gemini JSON.parse failed: ${e.message}`);
-    return null;
+  // Candidate slices, best first: the well-formed array, then a salvaged prefix
+  // of a truncated one.
+  const candidates = [];
+  if (end > start) candidates.push({ json: t.slice(start, end + 1), salvaged: false });
+  const salvaged = salvageTruncatedArray(t, start);
+  if (salvaged && salvaged !== candidates[0]?.json) candidates.push({ json: salvaged, salvaged: true });
+  if (!candidates.length) { console.warn('  Gemini response array was truncated with no complete events'); return null; }
+
+  let arr = null;
+  for (const [i, c] of candidates.entries()) {
+    try {
+      const parsed = JSON.parse(c.json);
+      if (Array.isArray(parsed)) {
+        if (c.salvaged) console.warn(`  ⚠️  Gemini response was truncated — salvaged ${parsed.length} complete event(s)`);
+        arr = parsed;
+        break;
+      }
+    } catch (e) {
+      console.warn(`  Gemini JSON.parse failed (candidate ${i + 1}/${candidates.length}): ${e.message}`);
+    }
   }
   if (!Array.isArray(arr)) return null;
 
@@ -465,7 +519,16 @@ Respond ONLY with a valid JSON array. No markdown fences, no preamble, no traili
               // past the model's training cutoff — without live search it would hallucinate
               // events. The window-aware cache keeps this to ~1 grounded call/day (free tier).
               tools: [{ google_search: {} }],
-              generationConfig: { temperature: 0.3, maxOutputTokens: 4000 },
+              generationConfig: {
+                temperature: 0.3,
+                // 8–14 events × a 3–4 sentence `details` field is ~4–6k tokens of
+                // prose on its own, and maxOutputTokens also has to cover the
+                // model's thinking tokens. The old 4000 cap silently truncated the
+                // JSON mid-string (→ unparseable, macro events went stale for
+                // weeks). Cap thinking explicitly so the budget goes to output.
+                maxOutputTokens: 16000,
+                thinkingConfig: { thinkingBudget: 1024 },
+              },
             }),
           }
         );
@@ -481,15 +544,23 @@ Respond ONLY with a valid JSON array. No markdown fences, no preamble, no traili
         }
 
         const data = await res.json();
-        const text = data.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '';
+        const cand = data.candidates?.[0];
+        const text = cand?.content?.parts?.map(p => p.text).join('') || '';
         const events = parseAndValidateEvents(text);
         if (events && events.length) {
           console.log(`  ✅ Got ${events.length} valid macro events (${model})`);
           return events;
         }
+        // Log the finish reason + token usage: without these, a token-cap
+        // truncation looks identical to a malformed response.
         console.warn('  ⚠️  Could not parse/validate macro events from Gemini response');
-        console.warn(`  Raw text: ${text.slice(0, 300)}`);
-        return null;
+        console.warn(`  finishReason=${cand?.finishReason || '?'} usage=${JSON.stringify(data.usageMetadata || {})} textLen=${text.length}`);
+        console.warn(`  Raw head: ${text.slice(0, 200)}`);
+        console.warn(`  Raw tail: ${text.slice(-200)}`);
+        // Don't give up on the first bad response — retry, then fall through to
+        // the next model. (Previously this returned null immediately, so a single
+        // malformed reply stranded the dashboard on stale events.)
+        continue;
       } catch (err) {
         console.error(`Gemini ${model} attempt ${attempt} threw: ${err.message}`);
       }

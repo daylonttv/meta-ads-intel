@@ -807,7 +807,7 @@ function render(days) {
     const r = document.createElement('div');
     r.className = `dr ${d.s}`;
     const wpct = (maxR>0 && d.rev!=null) ? (d.rev/maxR*100).toFixed(0) : 0;
-    const mrTxt = d.mr!=null ? d.mr+'×' : '—';
+    const mrTxt = d.mr!=null ? d.mr.toFixed(2)+'×' : '—';
     const cpaTxt = d.cpa!=null ? '$'+d.cpa.toFixed(0) : '—';
     const stTxt = d.s==='v'?'V.BAD':d.s==='b'?'BAD':d.s==='u'?'UNK':'OK';
     r.innerHTML = `<span class="dd">${d.d}<small>${dow}</small></span><span class="ds2">${stTxt}</span><div class="db"><div class="dbf" style="width:${wpct}%"></div></div><span class="dro">${mrTxt}</span><span class="dcp">${cpaTxt}</span>`;
