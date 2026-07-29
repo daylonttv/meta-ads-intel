@@ -1,38 +1,37 @@
 {
   "meta": {
-    "updatedAt": "2026-07-28T14:41:19.378Z",
+    "updatedAt": "2026-07-29T14:03:09.438Z",
     "dateRange": {
-      "start": "2026-06-28",
-      "end": "2026-07-27"
+      "start": "2026-06-29",
+      "end": "2026-07-28"
     },
     "monthLabel": "July 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-07-28T14:41:19.378Z",
+        "updatedAt": "2026-07-29T14:03:09.438Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-07-28T14:41:19.378Z",
+        "updatedAt": "2026-07-29T14:03:09.438Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-07-28T14:41:19.378Z",
+        "updatedAt": "2026-07-29T14:03:09.438Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-07-28T14:41:19.378Z",
+        "updatedAt": "2026-07-29T14:03:09.438Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
-        "updatedAt": "2026-07-28T14:08:05.274Z",
-        "stale": false,
-        "cached": true
+        "updatedAt": "2026-07-29T14:03:09.438Z",
+        "stale": false
       },
       "googleTrends": {
         "ok": false,
@@ -42,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-06-28",
-      "revenue": 24176.59999999998,
-      "orders": 302,
-      "blendedRoas": 3.237967245043077,
-      "metaSpend": 4851.679955592379,
-      "metaRoas": 2.6280731850986165,
-      "metaCpa": 29.583414363368163,
-      "metaCpm": 10.289708670038216
-    },
     {
       "date": "2026-06-29",
       "revenue": 17258.849999999995,
@@ -294,9 +283,9 @@
     },
     {
       "date": "2026-07-23",
-      "revenue": 19255.470000000005,
+      "revenue": 19255.47000000001,
       "orders": 227,
-      "blendedRoas": 2.887131400891048,
+      "blendedRoas": 2.8871314008910485,
       "metaSpend": 4543.709942193702,
       "metaRoas": 2.168888446800626,
       "metaCpa": 36.94073123734717,
@@ -304,9 +293,9 @@
     },
     {
       "date": "2026-07-24",
-      "revenue": 14983.839999999998,
+      "revenue": 14983.839999999995,
       "orders": 198,
-      "blendedRoas": 2.2033677759005514,
+      "blendedRoas": 2.203367775900551,
       "metaSpend": 4708.039948677644,
       "metaRoas": 1.8083640107147918,
       "metaCpa": 40.239657681005504,
@@ -331,18 +320,19 @@
       "metaRoas": 2.0810146823700912,
       "metaCpa": 38.7668023613744,
       "metaCpm": 10.527548556980754
+    },
+    {
+      "date": "2026-07-27",
+      "revenue": 13150.610000000004,
+      "orders": 182,
+      "blendedRoas": 1.7709546593299639,
+      "metaSpend": 5276.959964377806,
+      "metaRoas": 1.4282408930101669,
+      "metaCpa": 51.734901611547116,
+      "metaCpm": 10.533085485664966
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-06-28",
-      "status": "normal",
-      "cpa_z": 0.002,
-      "n_biz": 48,
-      "dow": "Sun",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-06-29",
       "status": "normal",
@@ -603,6 +593,15 @@
       "dow": "Mon",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-07-28",
+      "status": "normal",
+      "cpa_z": -0.564,
+      "n_biz": 53,
+      "dow": "Tue",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
@@ -658,136 +657,125 @@
   "outages": [],
   "macroEvents": [
     {
-      "date": "2026-07-01",
-      "description": "Meta introduces location-based ad fees in Europe, impacting global ad costs.",
-      "details": "Effective July 1, 2026, Meta began charging new location fees for ads delivered in certain European countries: 2% in the UK, 3% in France, Italy, and Spain, and 5% in Austria and Türkiye. These fees are charged on impressions delivered in these countries, not based on the advertiser's location, and appear as a separate line item on invoices. This change increases the cost of advertising for brands targeting these regions. For a DTC food gifting brand primarily targeting the US, the direct impact on ROAS and CPA would be neutral, assuming no significant European audience. However, it could signal broader cost increases or platform instability.",
+      "date": "2026-07-02",
+      "description": "Gas prices drop ahead of Independence Day travel, offering consumer relief.",
+      "details": "The national average for a gallon of regular gasoline decreased by nearly 50 cents from the previous month, reaching $3.83. This reduction in fuel costs provided consumers with some financial relief just before the busy Independence Day travel weekend. Lower gas prices typically free up discretionary income, potentially leading to increased consumer spending on non-essential items. This could explain the positive ROAS and lower CPA for Gardner's Wisconsin Cheese.",
       "intensity": 2,
-      "category": "platform",
-      "icon": "🔴",
-      "mood_impact": "neutral",
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "boosts_spending",
       "feed_dominance": "low",
-      "source": "Ads Uploader, AdManage.ai Blog"
+      "source": "AAA Newsroom"
     },
     {
       "date": "2026-07-04",
-      "description": "Independence Day celebrations lead to reduced consumer online activity.",
-      "details": "Independence Day is a major federal holiday in the United States, observed on July 4th. Many consumers are engaged in outdoor activities, travel, and family gatherings, leading to a significant drop in online browsing and shopping. This holiday is known for suppressing online ad performance as people are offline. For a DTC food gifting brand, this would typically result in lower ROAS and higher CPA due to decreased conversion intent despite ad impressions.",
+      "description": "Independence Day celebrations shift consumer focus offline.",
+      "details": "Independence Day is a major federal holiday in the United States, characterized by family gatherings, outdoor activities, fireworks, and travel. Consumer attention typically shifts away from online shopping and digital media during such widespread national celebrations. This holiday effect often results in a significant drop in online conversion intent, even if ad impressions are served. For a DTC food gifting brand, this would likely suppress ROAS and increase CPA.",
       "intensity": 3,
       "category": "seasonal",
       "icon": "🗓️",
       "mood_impact": "neutral",
       "feed_dominance": "high",
-      "source": "Printful"
+      "source": "US Federal Holiday"
     },
     {
-      "date": "2026-07-07",
-      "description": "US-Iran conflict escalates, driving up global oil prices.",
-      "details": "The fragile truce between the US and Iran crumbled, with the US intensifying airstrikes against Iran and Iran responding with attacks on American allies. This renewed military conflict led to increased volatility along the Strait of Hormuz, a critical oil shipping route, causing crude oil prices to surge. The national average for gasoline in the US was reported at $3.79 per gallon on July 7, up 20.5% from a year prior. Rising gas prices directly impact consumer discretionary spending. For a DTC food gifting brand, this would likely suppress spending, leading to lower ROAS and higher CPA.",
-      "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "LendingTree, AgriNews, Neil's Newsletter, University of Michigan, Global Nationa"
-    },
-    {
-      "date": "2026-07-08",
-      "description": "FIFA World Cup 2026 enters final stages, dominating social feeds.",
-      "details": "The FIFA World Cup 2026, hosted across the US, Canada, and Mexico, ran from June 11 to July 19. By July 8, the tournament would be in its critical final stages (quarter-finals, semi-finals), drawing immense global attention and dominating social media feeds. Major sporting events like this lead to increased 'doomscrolling' or 'sportscrolling,' displacing product discovery. For a DTC food gifting brand, this would likely result in lower conversion intent, leading to lower ROAS and higher CPA as ad impressions compete with high-interest content.",
-      "intensity": 2,
+      "date": "2026-07-04",
+      "description": "Tour de France 2026 kicks off, capturing global sports attention.",
+      "details": "The 113th edition of the Tour de France, a major international cycling event, commenced on July 4th in Barcelona, Spain, running until July 26th. While not a primary US event, major global sporting events can still capture significant attention from sports enthusiasts in the US, potentially diverting social media feed engagement. For a niche brand, this might have a minor impact on feed domination, but likely neutral for spending mood.",
+      "intensity": 1,
       "category": "feed",
       "icon": "📱",
       "mood_impact": "neutral",
-      "feed_dominance": "high",
-      "source": "ConvertFlow, RTB House, Roadtrips, Los Angeles Tourism, Genius Sports"
+      "feed_dominance": "low",
+      "source": "Tour de France Official"
     },
     {
-      "date": "2026-07-13",
-      "description": "Meta's AI ad tools cause issues for advertisers, impacting creative quality.",
-      "details": "Reports from advertisers and agency executives indicated that Meta's AI tools, which are increasingly integrated into ad products, were generating chaotic results such as strangely twisted limbs, gibberish writing, or entirely changed products in ad creatives. While designed to improve ad performance, these clunky tools were causing misrepresentations and absurdities. This could lead to wasted ad spend on ineffective or off-brand creatives. For a DTC food gifting brand, reliance on these AI tools could result in lower ad quality, potentially decreasing ROAS and increasing CPA.",
+      "date": "2026-07-09",
+      "description": "Gas prices reverse course, begin rising again across the US.",
+      "details": "After a brief dip, the national average for a gallon of regular gasoline increased by 5 cents overnight to $3.84, with prices continuing to climb due to uncertainty in global crude oil markets. Rising gas prices typically lead to increased financial anxiety among consumers, as a larger portion of their budget is allocated to fuel. This can suppress discretionary spending, including on premium food items.",
       "intensity": 2,
-      "category": "platform",
-      "icon": "🔴",
-      "mood_impact": "neutral",
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
       "feed_dominance": "low",
-      "source": "Business Insider"
+      "source": "AAA Newsroom, LendingTree"
+    },
+    {
+      "date": "2026-07-10",
+      "description": "MLB All-Star Week begins in Philadelphia, generating national buzz.",
+      "details": "The Major League Baseball All-Star Week festivities began on July 10, 2026, in Philadelphia, leading up to the All-Star Game on July 14. This multi-day event includes various fan activities, the Home Run Derby, and the game itself, drawing significant national media coverage and social media engagement. Such a large-scale sporting event can create a 'feel-good' atmosphere, potentially boosting consumer mood and willingness to spend, especially on celebratory or gifting items. This could contribute to the good performance on July 10th and 12th.",
+      "intensity": 2,
+      "category": "feed",
+      "icon": "📱",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
+      "source": "MLB.com, Visit Philadelphia"
     },
     {
       "date": "2026-07-14",
-      "description": "June CPI shows a decrease, offering a glimmer of inflation relief.",
-      "details": "The US Bureau of Labor Statistics released the Consumer Price Index (CPI) for June 2026, showing a 0.4% decrease month-over-month on a seasonally adjusted basis, the largest decline since April 2020. The all-items index increased 3.5% year-over-year, down from 4.2% in May. Energy prices, particularly gasoline, saw a significant fall of 5.7% and 9.7% respectively. While overall inflation remained elevated, this monthly decrease, especially in energy, could temporarily alleviate consumer financial anxiety. For a DTC food gifting brand, this could lead to a slight boost in consumer confidence and discretionary spending, potentially improving ROAS and lowering CPA.",
+      "description": "June 2026 CPI report released, showing mixed inflation signals.",
+      "details": "The U.S. Bureau of Labor Statistics released the Consumer Price Index (CPI) for June 2026, reporting a headline CPI decrease of 0.1% month-on-month, with the annual rate falling to ~3.9%. However, core CPI (excluding food and energy) was expected to remain sticky at ~2.9% year-on-year. While a soft headline might suggest cooling inflation, the persistent core inflation and rising energy prices post-June data could signal continued economic pressure. This mixed signal could lead to consumer uncertainty, potentially suppressing discretionary spending in the short term.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
-      "mood_impact": "boosts_spending",
+      "mood_impact": "suppresses_spending",
       "feed_dominance": "medium",
-      "source": "Bureau of Labor Statistics, Stephens Inc."
+      "source": "Bureau of Labor Statistics, IG"
+    },
+    {
+      "date": "2026-07-15",
+      "description": "National Hot Dog Day offers widespread food deals.",
+      "details": "National Hot Dog Day, celebrated annually on the third Wednesday in July, fell on July 15, 2026. Many restaurants and food chains offered free or discounted hot dogs, creating a surge in promotions for a popular, affordable food item. While a food holiday, it focuses on budget-friendly options rather than premium gifting. This could divert consumer spending from specialty food brands and increase competition for food-related attention on social feeds, contributing to lower ROAS and higher CPA.",
+      "intensity": 2,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "neutral",
+      "feed_dominance": "medium",
+      "source": "National Day Calendar, Quartz"
     },
     {
       "date": "2026-07-16",
-      "description": "Meta's Project Andromeda, creative-based targeting, fully implemented.",
-      "details": "Meta's major algorithm change, 'Project Andromeda,' which shifted from audience-based to creative-based targeting, was fully launched across most objectives and placements by the end of 2025 and continued to be a significant factor in 2026. This update means the algorithm now reads ad creative to predict audience response, prioritizing creative diversity and simplified campaign structures. Advertisers not adapting to this shift, by using old campaign structures or lacking diverse creatives, could see reduced effectiveness. For a DTC food gifting brand, a failure to adapt creative strategy could lead to lower ROAS and higher CPA.",
-      "intensity": 3,
-      "category": "platform",
-      "icon": "🔴",
-      "mood_impact": "neutral",
+      "description": "National average gas prices continue to climb towards $4 per gallon.",
+      "details": "The national average for a gallon of regular gasoline rose by 10 cents from the previous week, reaching $3.94, inching closer to the $4 per gallon mark. This continued increase in fuel costs, driven by global crude oil price instability, further tightens household budgets. Sustained higher gas prices typically lead to reduced consumer confidence and a pullback in discretionary spending, negatively impacting sales for premium goods. This aligns with the observed drop in ROAS and increase in CPA.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
       "feed_dominance": "low",
-      "source": "Nice Digitals, jetfuel.agency"
+      "source": "AAA Newsroom"
     },
     {
-      "date": "2026-07-17",
-      "description": "Consumer sentiment rises in July, but future outlook remains uncertain.",
-      "details": "The preliminary University of Michigan Consumer Sentiment Index for July 2026 rose to 54.4, up from 49.5 in June, marking its highest level since February. This improvement was largely attributed to easing gas prices in the weeks leading up to July 7th. However, more than 70% of interviews were completed before the renewed US strikes against Iran and the subsequent reacceleration of gas prices. Sentiment remained 12% lower than a year ago, indicating underlying pessimism. For a DTC food gifting brand, this mixed signal suggests a temporary boost in confidence that may not be sustained, leading to fluctuating ROAS and CPA.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "boosts_spending",
-      "feed_dominance": "medium",
-      "source": "Briefing.com, Neil's Newsletter, University of Michigan, KITCO, Trading Economic"
-    },
-    {
-      "date": "2026-07-20",
-      "description": "US gas prices cross $4/gallon nationally amid Middle East conflict.",
-      "details": "The national average for a gallon of regular gasoline officially crossed the $4.00 mark on July 20, representing a substantial 16-cent jump from a week prior. This surge was directly linked to the escalating US-Iran conflict and increased crude oil prices due to supply disruptions in the Middle East. Higher fuel costs disproportionately affect lower and middle-income households, reducing their disposable income. For a DTC food gifting brand, this significant increase in a core household expense would likely suppress discretionary spending, leading to lower ROAS and higher CPA.",
-      "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "CarBuzz, AgriNews, The Guardian"
-    },
-    {
-      "date": "2026-07-27",
-      "description": "President Trump visits GM plant, focusing on economy and manufacturing.",
-      "details": "President Donald J. Trump visited General Motors' Milford Proving Ground in Michigan, delivering remarks to thousands of employees and community members on the economy, bringing manufacturing back to America, and rebuilding the auto industry. Such high-profile political events, especially those focused on economic themes, can capture national attention and influence public mood. For a DTC food gifting brand, this event could have a neutral to slightly positive mood impact if consumers perceive it as a sign of economic stability or improvement, potentially boosting spending slightly, but its feed dominance would likely be medium.",
-      "intensity": 2,
-      "category": "feed",
-      "icon": "📱",
-      "mood_impact": "neutral",
-      "feed_dominance": "medium",
-      "source": "General Motors"
-    },
-    {
-      "date": "2026-07-28",
-      "description": "Consumer Confidence Index declines, signaling cautious consumer outlook.",
-      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from an upwardly revised 92.2 in June. This marked the third consecutive monthly softening in consumer assessments of the present situation. The survey period (July 1–22) encompassed the ongoing Middle East conflict. A declining confidence index indicates increased consumer caution regarding economic conditions and future spending. For a DTC food gifting brand, this would likely translate to suppressed discretionary spending, leading to lower ROAS and higher CPA.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "PR Newswire, Binance, Investing.com"
-    },
-    {
-      "date": "2026-08-01",
-      "description": "Back-to-School shopping season begins, boosting retail activity.",
-      "details": "August marks the beginning of the Back-to-School shopping season in the US, with promotions on school supplies, clothing, and electronics. This period is a significant retail event as families prepare for the upcoming academic year. While not directly related to specialty food gifting, increased overall retail activity can create a more active shopping environment. For a DTC food gifting brand, this could lead to a slight boost in general online shopping intent, potentially offering a neutral to slightly positive impact on ROAS and CPA, especially if targeting parents or educators for appreciation gifts.",
+      "date": "2026-07-19",
+      "description": "National Ice Cream Day boosts spending on frozen treats.",
+      "details": "National Ice Cream Day, observed on the third Sunday in July, fell on July 19, 2026. This popular food holiday saw numerous brands offering deals and freebies on ice cream, driving consumer interest and spending in the frozen dessert category. Similar to National Hot Dog Day, this event focuses on a different, often more affordable, food category. While it boosts spending on treats, it might divert attention and budget from premium specialty food gifting, potentially contributing to lower ROAS and higher CPA for Gardner's Wisconsin Cheese.",
       "intensity": 2,
       "category": "seasonal",
       "icon": "🗓️",
       "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
+      "source": "National Day Calendar, The Kitchn"
+    },
+    {
+      "date": "2026-07-23",
+      "description": "National average gas price jumps to $4.09, exceeding $4 mark.",
+      "details": "The national average for a gallon of regular gasoline surged by 15 cents from the prior week, reaching $4.09, with most states now averaging $4 per gallon or higher. This significant increase, attributed to rising crude oil prices and geopolitical volatility, marks a critical psychological threshold for consumers. Crossing the $4/gallon mark often intensifies financial anxiety and leads to a more pronounced reduction in discretionary spending, directly impacting demand for premium products. This severe wallet impact likely contributed to the poor performance on July 21st.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "AAA Newsroom"
+    },
+    {
+      "date": "2026-07-28",
+      "description": "National Avocado Day approaches, driving food-related promotions.",
+      "details": "National Avocado Day is celebrated annually on July 31st. Leading up to this date, many restaurants and food retailers begin offering deals and promotions on avocados and guacamole. While not directly competing with cheese, these food-centric promotions can capture consumer attention and spending in the broader food category. For a premium specialty food brand, this could mean increased competition for consumer mindshare and budget, potentially impacting ad performance as consumers seek out deals on other food items.",
+      "intensity": 1,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "neutral",
       "feed_dominance": "low",
-      "source": "Martech Zone"
+      "source": "National Day Calendar, Money Saving Mom"
     }
   ],
   "holidays": [
