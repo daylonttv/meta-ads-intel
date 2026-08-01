@@ -1,36 +1,36 @@
 {
   "meta": {
-    "updatedAt": "2026-07-31T13:56:59.309Z",
+    "updatedAt": "2026-08-01T13:12:40.965Z",
     "dateRange": {
-      "start": "2026-07-01",
-      "end": "2026-07-30"
+      "start": "2026-07-02",
+      "end": "2026-07-31"
     },
-    "monthLabel": "July 2026",
+    "monthLabel": "August 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-07-31T13:56:59.309Z",
+        "updatedAt": "2026-08-01T13:12:40.965Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-07-31T13:56:59.309Z",
+        "updatedAt": "2026-08-01T13:12:40.965Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-07-31T13:56:59.309Z",
+        "updatedAt": "2026-08-01T13:12:40.965Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-07-31T13:56:59.309Z",
+        "updatedAt": "2026-08-01T13:12:40.965Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
-        "updatedAt": "2026-07-31T13:56:59.309Z",
+        "updatedAt": "2026-08-01T13:12:40.965Z",
         "stale": false
       },
       "googleTrends": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-07-01",
-      "revenue": 18367.48000000001,
-      "orders": 262,
-      "blendedRoas": 2.553845728321288,
-      "metaSpend": 4842.420027567074,
-      "metaRoas": 2.40924162230908,
-      "metaCpa": 28.318245775246044,
-      "metaCpm": 9.875234577794016
-    },
     {
       "date": "2026-07-02",
       "revenue": 15313.940000000015,
@@ -323,25 +313,26 @@
     },
     {
       "date": "2026-07-29",
-      "revenue": 17577.089999999997,
+      "revenue": 17577.09,
       "orders": 194,
-      "blendedRoas": 3.5030151362547586,
+      "blendedRoas": 3.503317979614386,
       "metaSpend": 2949.7700124215335,
       "metaRoas": 2.709119664150803,
       "metaCpa": 29.795656691126602,
       "metaCpm": 12.52205332018005
+    },
+    {
+      "date": "2026-07-30",
+      "revenue": 16274.280000000002,
+      "orders": 187,
+      "blendedRoas": 3.2960941102429873,
+      "metaSpend": 2896.4700140804052,
+      "metaRoas": 2.4371044464791685,
+      "metaCpa": 31.829340814070388,
+      "metaCpm": 12.540242685672004
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-07-01",
-      "status": "normal",
-      "cpa_z": -0.443,
-      "n_biz": 49,
-      "dow": "Wed",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-07-02",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Thu",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-07-31",
+      "status": "normal",
+      "cpa_z": -1.01,
+      "n_biz": 52,
+      "dow": "Fri",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
@@ -657,114 +657,125 @@
   "outages": [],
   "macroEvents": [
     {
-      "date": "2026-07-03",
-      "description": "Independence Day (America's 250th Anniversary) observed, impacting consumer activity.",
-      "details": "Independence Day, a federal holiday, celebrates the signing of the Declaration of Independence. In 2026, July 4th fell on a Saturday, so the federal holiday was observed on Friday, July 3rd. This typically leads to widespread closures, travel, and participation in celebrations like parades and fireworks. The 250th anniversary likely amplified these offline activities. Consumers are generally less engaged in online shopping for non-essential items during such major national holidays.",
-      "intensity": 3,
-      "category": "seasonal",
-      "icon": "🗓️",
-      "mood_impact": "neutral",
-      "feed_dominance": "high",
-      "source": "US Federal Holidays, TravelPulse"
+      "date": "2026-07-02",
+      "description": "Gas Prices Drop Ahead of Independence Day Travel",
+      "details": "Gas prices are a significant factor in discretionary spending, as they directly impact household budgets and travel costs. Ahead of the July 4th weekend, the national average for a gallon of regular gasoline dropped to $3.83, nearly 50 cents lower than a month prior. This relief at the pump likely boosted consumer confidence and willingness to spend on non-essential items like specialty food gifts, contributing to higher ROAS and lower CPA.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "AAA Fuel Prices"
     },
     {
       "date": "2026-07-04",
-      "description": "FIFA World Cup Final held in the US, dominating social feeds.",
-      "details": "The 2026 FIFA World Cup, co-hosted by the US, Canada, and Mexico, concluded on July 19th, with the final match likely around July 4th weekend or shortly after. Major sporting events, especially a World Cup final hosted in the US, generate immense public interest and social media engagement. This event would have dominated social feeds, diverting attention from advertising and product discovery.",
+      "description": "Independence Day Celebrations & US Semiquincentennial",
+      "details": "Independence Day is a major federal holiday in the U.S., typically involving extensive celebrations, travel, and outdoor activities. In 2026, it marked America's 250th birthday (Semiquincentennial), leading to amplified national events and festivities. This widespread engagement in offline activities and patriotic content dominating social feeds would significantly divert consumer attention from online shopping, leading to decreased ad effectiveness, lower ROAS, and higher CPA.",
       "intensity": 3,
       "category": "feed",
       "icon": "📱",
       "mood_impact": "neutral",
       "feed_dominance": "high",
-      "source": "Roadtrips, Wikipedia, TravelPulse"
+      "source": "Capital One Shopping, WalletHub, TravelPulse"
     },
     {
       "date": "2026-07-07",
-      "description": "US military strikes resume in Iran, causing gas price reacceleration.",
-      "details": "After a brief ceasefire, US military strikes against Iran resumed on July 7th. This geopolitical event led to a reacceleration of gas prices, with oil rising over $100 USD per barrel. Such developments typically increase consumer anxiety about the economy and personal finances, particularly concerning discretionary spending.",
+      "description": "Meta Muse Image Model Powers Advantage+ Ads",
+      "details": "Meta's Advantage+ creative tools leverage AI to optimize ad performance. Starting around July 7th, Meta's new in-house Muse Image model began powering Advantage+ image variations. This update could have led to more engaging and higher-performing ad creatives for some advertisers, potentially contributing to improved ROAS and lower CPA for brands like Gardner's Wisconsin Cheese by enhancing visual appeal and relevance.",
       "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "Ipsos, University of Michigan, Wikipedia"
+      "category": "platform",
+      "icon": "🔴",
+      "mood_impact": "neutral",
+      "feed_dominance": "low",
+      "source": "AdMake AI Blog"
     },
     {
-      "date": "2026-07-10",
-      "description": "June 2026 Jobs Report shows significant slowdown in job growth.",
-      "details": "The Bureau of Labor Statistics released the June 2026 Employment Situation report around July 2nd-10th, indicating that the US economy added only 57,000 nonfarm payroll jobs in June. This figure represents a significant slowdown compared to previous years, signaling increased caution among employers. While initial jobless claims remained low, indicating a 'low-hire, low-fire' market, the overall sluggish job growth can heighten economic uncertainty for consumers.",
+      "date": "2026-07-09",
+      "description": "US Gas Prices Begin to Surge Again",
+      "details": "Gas prices are a key indicator of consumer discretionary spending capacity. After a brief dip, the national average gas price started rising again, reaching $3.84 per gallon on July 9th, up 5 cents overnight. This reversal in gas price trends, driven by uncertainty in the Middle East, could signal renewed financial pressure on consumers, potentially suppressing spending on non-essential items and leading to a future decline in ROAS.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "ResumeHog, Staffing Industry Analysts"
+      "feed_dominance": "low",
+      "source": "AAA Fuel Prices, LendingTree"
     },
     {
       "date": "2026-07-14",
-      "description": "June 2026 CPI report shows 0.4% decrease, largest drop since April 2020.",
-      "details": "The Consumer Price Index (CPI) for June 2026 was released, showing a 0.4% decrease on a seasonally adjusted basis, the largest one-month decline since April 2020. The all-items index increased 3.5% over the last 12 months, down from 4.2% in May. This decline was primarily driven by a 5.7% fall in energy prices. This news could temporarily alleviate inflation concerns and boost consumer confidence.",
+      "description": "June 2026 CPI Shows 0.4% Decrease, Annual Inflation at 3.53%",
+      "details": "The Consumer Price Index (CPI) measures the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services, indicating inflation. The CPI-U decreased 0.4% in June 2026, with the annual inflation rate at 3.53%. A decrease in monthly CPI can be perceived positively by consumers, suggesting easing inflationary pressures, which might encourage discretionary spending and contribute to better ad performance.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "boosts_spending",
-      "feed_dominance": "medium",
+      "feed_dominance": "low",
       "source": "Bureau of Labor Statistics, U.S. Congress Joint Economic Committee"
     },
     {
       "date": "2026-07-16",
-      "description": "Meta rolls out 'Project Andromeda' algorithm updates, prioritizing creative diversity.",
-      "details": "Meta's 'Project Andromeda' algorithm updates, fully launched by the end of 2025, continued to impact ad delivery in July 2026. These updates fundamentally changed how Meta's algorithm works, moving away from granular targeting towards prioritizing creative diversity, simplified campaign structures, and clean conversion signals. Advertisers who did not adapt to these changes, focusing on old targeting methods, likely experienced rising costs and unstable results.",
+      "description": "Meta Retires 'Activity Off Meta' Control, Consolidates Privacy",
+      "details": "Meta announced changes to how user data from external websites flows into its advertising system, retiring the 'Your activity off Meta technologies' control and consolidating privacy settings under 'Activity from other businesses' starting July 2026. This change means users can no longer prevent off-platform activity from being connected to their Meta accounts. For DTC brands, this could improve retargeting reach and audience quality, potentially boosting ROAS and lowering CPA by making ad delivery more precise.",
       "intensity": 2,
       "category": "platform",
       "icon": "🔴",
       "mood_impact": "neutral",
       "feed_dominance": "low",
-      "source": "Nice Digitals, Ads Uploader"
+      "source": "Ads Uploader, AdManage.ai Blog"
     },
     {
-      "date": "2026-07-16",
-      "description": "Meta introduces 'Push Delivery to This Ad' feature for manual ad optimization.",
-      "details": "Around July 10th-16th, Meta began rolling out a new 'Push Delivery to This Ad' option, allowing advertisers to manually direct more delivery towards a specific ad within an ad set or campaign. This feature gives advertisers more control over ad distribution, potentially improving performance for strong creative, but also risking under-optimization if used incorrectly. This change requires advertisers to be more hands-on with creative performance.",
-      "intensity": 2,
-      "category": "platform",
-      "icon": "🔴",
-      "mood_impact": "neutral",
-      "feed_dominance": "low",
-      "source": "Ads Uploader, YouTube"
+      "date": "2026-07-23",
+      "description": "National Average Gas Price Jumps to $4.09",
+      "details": "Gas prices continued their upward trend, with the national average for regular gasoline jumping 15 cents from the previous week to $4.09 per gallon. This increase, driven by rising crude oil prices and regional instability, puts further strain on consumer budgets. Higher gas prices typically lead to reduced discretionary spending, negatively impacting ROAS and increasing CPA for non-essential goods like specialty food gifts.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "AAA Fuel Prices"
     },
     {
-      "date": "2026-07-17",
-      "description": "University of Michigan Consumer Sentiment (preliminary) rises to 54.4 in July.",
-      "details": "The preliminary University of Michigan Consumer Sentiment Index for July 2026 rose to 54.4, up from 49.5 in June, marking the highest reading since February. This improvement was largely attributed to easing gasoline prices in the weeks prior to the survey. However, over 70% of interviews were completed before the resumption of US strikes against Iran on July 7th, which subsequently caused gas prices to rise again.",
+      "date": "2026-07-24",
+      "description": "US Imposes New Section 301 Tariffs on Global Imports",
+      "details": "The U.S. government imposed new Section 301 tariffs, effective July 24, 2026, on nearly all imports from 60 trading partners, with additional duties ranging from 10% to 12.5%. These tariffs replace a temporary 10% duty and are justified by findings of forced labor. Increased import costs can lead to higher retail prices for many goods, including specialty food ingredients or packaging, potentially reducing consumer purchasing power and increasing price sensitivity, thus negatively impacting ROAS and CPA.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "USTR, Morgan Lewis, Maersk"
+    },
+    {
+      "date": "2026-07-28",
+      "description": "Conference Board Consumer Confidence Index Declines to 90.8",
+      "details": "The Conference Board Consumer Confidence Index measures consumer attitudes and buying intentions. In July, the index decreased by 1.4 points to 90.8, down from an upwardly revised 92.2 in June, marking a third consecutive monthly decline in present situation assessments. This softening confidence, especially with the Expectations Index remaining below the recessionary threshold of 80, indicates growing consumer pessimism about the economy and labor market. Such financial anxiety typically leads to reduced discretionary spending, negatively impacting ROAS and increasing CPA.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "The Conference Board, dshort, Neil's Newsletter"
+    },
+    {
+      "date": "2026-07-31",
+      "description": "U of Michigan Consumer Sentiment Rises to 55.2 in July",
+      "details": "The University of Michigan Consumer Sentiment Index measures consumer attitudes toward the economy. The final July reading was revised higher to 55.2, up from 49.5 in June, reaching its highest level since February. While still historically low (below 70 indicates pessimism), this improvement, driven by easing gas prices earlier in the month and broad-based gains across demographics, suggests a slight uplift in consumer mood. This could provide a modest boost to discretionary spending, potentially improving ROAS.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "boosts_spending",
       "feed_dominance": "low",
-      "source": "University of Michigan, Briefing.com, Neil's Newsletter"
+      "source": "University of Michigan, dshort, ABA Banking Journal"
     },
     {
-      "date": "2026-07-28",
-      "description": "Conference Board Consumer Confidence falls to 90.8 in July, below expectations.",
-      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from an upwardly revised 92.2 in June, and below the estimated 92.3. This marks the third consecutive monthly decline in the Present Situation Index, reflecting softening views on current business and labor market conditions. The Expectations Index remained below 80, a level historically associated with recession risk. Concerns about rising grocery prices and the labor market contributed to the decline.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "The Conference Board, PR Newswire, National Jeweler"
-    },
-    {
-      "date": "2026-08-01",
-      "description": "National Mustard Day kicks off August, a minor food-related seasonal moment.",
-      "details": "August 1st marks National Mustard Day, a minor but relevant seasonal observance for a specialty food brand. While not a major gifting holiday, it represents a moment where food-related content and promotions, particularly around condiments or complementary items, could resonate with a niche audience. This could offer a small opportunity for themed campaigns.",
+      "date": "2026-08-02",
+      "description": "American Family Day",
+      "details": "American Family Day is a recognized observance in early August, focusing on family togetherness. While not a major gifting holiday, it can inspire smaller, thoughtful gestures. For a gifting-heavy brand like Gardner's Wisconsin Cheese, this could represent a minor opportunity for family-focused promotions or content, potentially leading to a small, positive bump in sales for relevant products.",
       "intensity": 1,
       "category": "seasonal",
       "icon": "🗓️",
       "mood_impact": "boosts_spending",
       "feed_dominance": "low",
-      "source": "WinCalendar, Calendarr"
+      "source": "ConvertFlow, Printful"
     }
   ],
   "holidays": [
