@@ -1,36 +1,36 @@
 {
   "meta": {
-    "updatedAt": "2026-08-03T14:31:44.816Z",
+    "updatedAt": "2026-08-04T14:05:02.754Z",
     "dateRange": {
-      "start": "2026-07-04",
-      "end": "2026-08-02"
+      "start": "2026-07-05",
+      "end": "2026-08-03"
     },
     "monthLabel": "August 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
-        "ok": true,
+        "ok": false,
         "updatedAt": "2026-08-03T14:31:44.816Z",
-        "stale": false
+        "stale": true
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-08-03T14:31:44.816Z",
+        "updatedAt": "2026-08-04T14:05:02.754Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-08-03T14:31:44.816Z",
+        "updatedAt": "2026-08-04T14:05:02.754Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-08-03T14:31:44.816Z",
+        "updatedAt": "2026-08-04T14:05:02.754Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
-        "updatedAt": "2026-08-03T14:31:44.816Z",
+        "updatedAt": "2026-08-04T14:05:02.754Z",
         "stale": false
       },
       "googleTrends": {
@@ -334,15 +334,6 @@
   ],
   "breezeway": [
     {
-      "date": "2026-07-04",
-      "status": "normal",
-      "cpa_z": -0.097,
-      "n_biz": 50,
-      "dow": "Sat",
-      "incident_source": null,
-      "incident_description": null
-    },
-    {
       "date": "2026-07-05",
       "status": "normal",
       "cpa_z": -0.161,
@@ -602,9 +593,22 @@
       "dow": "Sun",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-08-03",
+      "status": "normal",
+      "cpa_z": -0.573,
+      "n_biz": 52,
+      "dow": "Mon",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
+    {
+      "date": "2026-08-03",
+      "price": 4.079
+    },
     {
       "date": "2026-07-27",
       "price": 4.096
@@ -648,144 +652,110 @@
     {
       "date": "2026-05-18",
       "price": 4.49
-    },
-    {
-      "date": "2026-05-11",
-      "price": 4.5
     }
   ],
   "outages": [],
   "macroEvents": [
     {
-      "date": "2026-07-04",
-      "description": "Independence Day celebrations drive record food spending, but overall consumer confidence remains low.",
-      "details": "Independence Day is a major US holiday with significant consumer spending, particularly on food, alcohol, and fireworks. In 2026, 87% of consumers planned to celebrate, with an average per-person spend of $94.41 on food, a 5.6% increase year-over-year, reaching $9.4 billion nationally. However, this increased spending occurred amidst persistent high food prices and generally depressed consumer confidence. For a DTC food gifting brand, this holiday typically sees a surge in direct food purchases for celebrations rather than gifting, leading to lower ROAS and higher CPA as ad spend competes with direct retail and grocery. The observed dip on July 4th aligns with this seasonal trend.",
-      "intensity": 3,
-      "category": "seasonal",
-      "icon": "🗓️",
-      "mood_impact": "neutral",
-      "feed_dominance": "high",
-      "source": "NRF, Plus500"
-    },
-    {
-      "date": "2026-07-07",
-      "description": "US gas prices surge to $3.79/gallon, up 20.5% year-over-year.",
-      "details": "The average U.S. gas price reached $3.79 per gallon on July 7, 2026, marking a 20.5% increase from $3.14 per gallon a year earlier. This surge followed a period of relief leading up to Independence Day and indicated renewed upward pressure on household budgets. Rising gas prices typically reduce discretionary spending as consumers allocate more funds to essential transportation costs. This could suppress gifting purchases and contribute to a decline in ROAS and an increase in CPA for a premium DTC food brand, as consumers become more cautious with their spending.",
+      "date": "2026-07-08",
+      "description": "University of Michigan Consumer Sentiment Index shows improvement.",
+      "details": "The University of Michigan's Consumer Sentiment Index rose to 55.2 in July, up from 49.5 in June. This improvement, observed across various demographic groups, indicated a slightly more optimistic outlook among consumers, potentially boosting discretionary spending. The survey period covered this date, suggesting a positive consumer mood influenced ad performance.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "LendingTree, AAA"
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "University of Michigan"
     },
     {
       "date": "2026-07-10",
-      "description": "June 2026 jobs report shows significant slowdown in hiring, adding only 57,000 jobs.",
-      "details": "The Bureau of Labor Statistics reported on July 2, 2026, that the U.S. economy added only 57,000 nonfarm payroll jobs in June, with the unemployment rate holding steady at 4.2%. This figure was significantly lower than previous months and roughly half of the median forecast, signaling a cooling job market. A slowdown in hiring can lead to increased consumer anxiety about job security and future income, potentially reducing discretionary spending on non-essential items like specialty food gifts. This could explain the strong ROAS and low CPA observed around July 8-12, as consumers might have been less distracted by positive economic news and more focused on value, or perhaps a delayed positive reaction to the earlier gas price dip.",
+      "description": "Conference Board Consumer Confidence Index expectations remain stable.",
+      "details": "While the Present Situation Index declined, the Expectations Index of the Conference Board Consumer Confidence Index remained stable at 74.7 in July. This suggests that despite current economic concerns, consumers held steady expectations for the near future, which could support continued engagement with brands and purchasing intent.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "BLS, ResumeHog"
+      "mood_impact": "neutral",
+      "feed_dominance": "low",
+      "source": "The Conference Board"
+    },
+    {
+      "date": "2026-07-13",
+      "description": "June US Jobs Report shows slower but stable job growth.",
+      "details": "The US economy added 57,000 jobs in June, significantly lower than previous months but indicating a stable, albeit slower, hiring market. This report, released early July, suggested employers were cautious but not in a crisis, which could foster a sense of economic stability conducive to consumer spending.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "neutral",
+      "feed_dominance": "low",
+      "source": "Staffing Industry Analysts, Bureau of Labor Statistics"
     },
     {
       "date": "2026-07-14",
-      "description": "June CPI decreases 0.4% month-over-month, annual inflation at 3.5%.",
-      "details": "The June Consumer Price Index (CPI) report, released on July 14, 2026, showed a 0.4% decrease from May to June, with the year-over-year inflation rate at 3.5%. This monthly decline was the largest since April 2020, primarily driven by a 5.7% fall in energy prices, including a 9.7% drop in gasoline. While overall inflation remained above the Fed's 2% target, the monthly decrease and easing energy prices could provide some relief to consumer budgets. This positive financial signal could lead to a slight boost in discretionary spending, potentially contributing to the higher ROAS and lower CPA seen in the days following this announcement (July 8-12).",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
+      "description": "Back-to-school shopping begins early, with record spending projected.",
+      "details": "Consumers started back-to-school shopping earlier than usual, with projected spending reaching an all-time high of $146.8 billion. While driven by price increases rather than confidence, this indicates a strong seasonal demand for goods, including specialty food items often purchased as gifts or for family gatherings.",
+      "intensity": 3,
+      "category": "seasonal",
+      "icon": "🗓️",
       "mood_impact": "boosts_spending",
       "feed_dominance": "medium",
-      "source": "BLS, Stephens Inc."
-    },
-    {
-      "date": "2026-07-16",
-      "description": "Meta's Project Andromeda algorithm update fully implemented, prioritizing creative-based targeting.",
-      "details": "Meta's Project Andromeda, an AI-driven ad delivery system, was fully rolled out across most objectives and placements by October 2025, but its impact and implications for advertisers became a major discussion point in July 2026. This update fundamentally shifted from audience-based targeting to creative-based targeting, meaning the algorithm now reads ad creative to predict audience match. Advertisers who hadn't adapted to this new system, focusing on creative diversity and simplified campaign structures, were likely to see rising costs and unstable results. This significant platform change could explain volatility in ROAS and CPA throughout July, as advertisers adjusted their strategies.",
-      "intensity": 3,
-      "category": "platform",
-      "icon": "🔴",
-      "mood_impact": "neutral",
-      "feed_dominance": "medium",
-      "source": "Nice Digitals, jetfuel.agency"
+      "source": "National Retail Federation (NRF)"
     },
     {
       "date": "2026-07-21",
-      "description": "Meta removes 'Your activity off Meta technologies' opt-out, expanding retargeting audiences.",
-      "details": "Starting in July 2026, Meta removed the 'Your activity off Meta technologies' opt-out setting, which previously allowed users to disconnect their off-platform activity from their Meta accounts. This change means that behavioral data from brand websites, even from previously opted-out users, can now be linked to individual profiles, leading to an expansion of retargeting audiences. While this theoretically increases audience size, it can also dilute audience quality in the short term, as the retargeting pool becomes 'colder' and less qualified. This could lead to a dip in ROAS and an increase in CPA, as observed on July 21st, as ads are shown to a broader, less engaged segment of the audience.",
-      "intensity": 2,
-      "category": "platform",
-      "icon": "🔴",
-      "mood_impact": "neutral",
-      "feed_dominance": "low",
-      "source": "AdBeacon, Meta Business Blog"
+      "description": "US-Iran conflict escalates, impacting consumer sentiment.",
+      "details": "Renewed hostilities in the US-Iran conflict led to increased global energy prices and renewed concerns about geopolitical stability. This event likely contributed to a dip in consumer confidence, as reflected in later reports, potentially suppressing discretionary spending and ad performance.",
+      "intensity": 3,
+      "category": "feed",
+      "icon": "📱",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "high",
+      "source": "University of Michigan, Ipsos"
     },
     {
-      "date": "2026-07-23",
-      "description": "National average gas price jumps 15 cents to $4.09, most states above $4/gallon.",
-      "details": "The national average for a gallon of regular gasoline surged by 15 cents from the previous week to $4.09 on July 23, 2026, with most states now averaging $4 per gallon or higher. This spike was attributed to rising crude oil prices, pushed into the $90 per barrel range due to volatility along the Strait of Hormuz. Such a significant and rapid increase in gas prices directly impacts consumer discretionary income, leading to reduced spending on non-essential goods. This event likely contributed to the poor ROAS and high CPA observed on July 21st, 27th, and 28th, as consumers faced renewed financial pressure.",
+      "date": "2026-07-28",
+      "description": "Conference Board Consumer Confidence Index declines amid economic anxiety.",
+      "details": "The Conference Board Consumer Confidence Index fell to 90.8 in July, down from 92.2 in June, with consumers expressing increased pessimism about current business and labor market conditions. This decline, influenced by ongoing geopolitical conflict and persistent high prices, suggests a more cautious consumer sentiment that could negatively impact discretionary purchases.",
       "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "AAA Newsroom"
+      "feed_dominance": "medium",
+      "source": "The Conference Board"
     },
     {
       "date": "2026-07-28",
-      "description": "Conference Board Consumer Confidence Index declines to 90.8 in July.",
-      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July 2026, down from an upwardly revised 92.2 in June. This decline was primarily driven by a drop in the Present Situation Index, which fell to 114.9, its third consecutive monthly decrease, reflecting softer views on current business and labor market conditions. While the Expectations Index remained unchanged, the overall sentiment indicated continued consumer apprehension. Declining consumer confidence typically correlates with reduced discretionary spending, which would negatively impact a premium gifting brand's ROAS and CPA, aligning with the poor performance on July 27th and 28th.",
+      "description": "University of Michigan Sentiment Index shows improvement despite concerns.",
+      "details": "The University of Michigan's Consumer Sentiment Index rose to 55.2 in July, an improvement from June. Despite this gain, concerns about high prices and economic uncertainty persisted, indicating a mixed consumer outlook where positive sentiment might not fully translate to increased discretionary spending.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "The Conference Board, Morningstar"
-    },
-    {
-      "date": "2026-07-28",
-      "description": "ADP reports private employers added only 15,000 jobs weekly for four weeks ending July 11.",
-      "details": "The ADP National Employment Report's preliminary estimate for the four weeks ending July 11, 2026, indicated that U.S. private employers added an average of only 15,000 jobs per week, marking the fifth straight week of slowed hiring. This data, released on July 28, reinforced concerns about a cooling labor market. A sustained slowdown in job creation can heighten consumer financial anxiety, leading to a tightening of discretionary spending. This negative employment news, combined with other wallet-impact events, likely contributed to the suppressed ROAS and elevated CPA seen on July 27th and 28th.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "ADP, PR Newswire"
+      "mood_impact": "neutral",
+      "feed_dominance": "low",
+      "source": "University of Michigan"
     },
     {
       "date": "2026-07-31",
-      "description": "University of Michigan Consumer Sentiment Index rises to 55.2 in July.",
-      "details": "The University of Michigan Consumer Sentiment Index was revised higher to 55.2 in July 2026, up from 49.5 in June, reaching its highest level since February. This improvement was broad-based across demographic groups and was partly attributed to easing gas prices, though overall sentiment remained 11% lower than a year prior due to persistent high prices. Despite lingering concerns, the upward revision in consumer sentiment indicates a slight improvement in consumer outlook. This positive signal could encourage more discretionary spending, contributing to the strong ROAS and low CPA observed on July 31st.",
+      "description": "July inflation rate moderates, easing some consumer price concerns.",
+      "details": "The US inflation rate decreased to 3.5% in June from 4.2% in May, according to BLS data released in July. This moderation in price increases, particularly in energy, offered some relief to consumers, potentially contributing to improved sentiment and a willingness to spend on non-essential items.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "boosts_spending",
-      "feed_dominance": "medium",
-      "source": "University of Michigan, Trading Economics"
+      "feed_dominance": "low",
+      "source": "Bureau of Labor Statistics"
     },
     {
-      "date": "2026-08-03",
-      "description": "Friendship Day (August 3rd) and Back-to-School season begin in August.",
-      "details": "August marks the beginning of the back-to-school shopping season and includes Friendship Day on August 3rd. While not a major gifting holiday for specialty food, Friendship Day can inspire small 'just because' gifts. The broader back-to-school period, however, typically shifts consumer spending towards educational supplies and clothing, potentially reducing discretionary income for other purchases. For a gifting-heavy brand, this period might see a slight increase in 'thinking of you' gifts around Friendship Day, but overall, the focus on back-to-school could create headwinds for general gifting.",
-      "intensity": 1,
-      "category": "seasonal",
-      "icon": "🗓️",
+      "date": "2026-08-01",
+      "description": "Summer travel spending remains resilient but shows a 'K-shaped' pattern.",
+      "details": "Despite higher gas prices, summer travel spending remained resilient, with lower-income households cutting back while middle- and higher-income households increased spending. This suggests that while overall travel is strong, the discretionary spending power is concentrated among more affluent consumers, potentially benefiting premium brands.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
       "mood_impact": "neutral",
       "feed_dominance": "low",
-      "source": "Hallmark, 4AllPromos"
+      "source": "Bank of America Institute"
     }
   ],
-  "holidays": [
-    {
-      "date": "2026-07-04",
-      "name": "Independence Day",
-      "icon": "🎆",
-      "mood_impact": "neutral",
-      "boost": false
-    }
-  ],
+  "holidays": [],
   "googleTrends": []
 }
