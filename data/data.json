@@ -1,36 +1,36 @@
 {
   "meta": {
-    "updatedAt": "2026-08-06T13:59:04.125Z",
+    "updatedAt": "2026-08-07T12:55:41.961Z",
     "dateRange": {
-      "start": "2026-07-07",
-      "end": "2026-08-05"
+      "start": "2026-07-08",
+      "end": "2026-08-06"
     },
     "monthLabel": "August 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-08-06T13:59:04.125Z",
+        "updatedAt": "2026-08-07T12:55:41.961Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-08-06T13:59:04.125Z",
+        "updatedAt": "2026-08-07T12:55:41.961Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-08-06T13:59:04.125Z",
+        "updatedAt": "2026-08-07T12:55:41.961Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-08-06T13:59:04.125Z",
+        "updatedAt": "2026-08-07T12:55:41.961Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
-        "updatedAt": "2026-08-06T13:59:04.125Z",
+        "updatedAt": "2026-08-07T12:55:41.961Z",
         "stale": false
       },
       "googleTrends": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-07-07",
-      "revenue": 14040.340000000002,
-      "orders": 172,
-      "blendedRoas": 2.452240943380604,
-      "metaSpend": 3470.060032473877,
-      "metaRoas": 2.2664766593190198,
-      "metaCpa": 30.70849586260068,
-      "metaCpm": 8.750491815718025
-    },
     {
       "date": "2026-07-08",
       "revenue": 24665.63000000001,
@@ -263,9 +253,9 @@
     },
     {
       "date": "2026-07-29",
-      "revenue": 17577.090000000007,
+      "revenue": 17577.09,
       "orders": 194,
-      "blendedRoas": 3.5031992847514966,
+      "blendedRoas": 3.503199284751495,
       "metaSpend": 2949.9400067757815,
       "metaRoas": 2.7089635474003506,
       "metaCpa": 29.797373805815976,
@@ -273,9 +263,9 @@
     },
     {
       "date": "2026-07-30",
-      "revenue": 17377.360000000004,
+      "revenue": 17377.36,
       "orders": 190,
-      "blendedRoas": 3.519398343069862,
+      "blendedRoas": 3.519398343069861,
       "metaSpend": 2896.620000347495,
       "metaRoas": 2.436978253813789,
       "metaCpa": 31.83098901480764,
@@ -293,9 +283,9 @@
     },
     {
       "date": "2026-08-01",
-      "revenue": 18435.99,
+      "revenue": 18435.989999999998,
       "orders": 223,
-      "blendedRoas": 3.4413775576140373,
+      "blendedRoas": 3.441430881756364,
       "metaSpend": 3306.020033083856,
       "metaRoas": 2.7549409598430366,
       "metaCpa": 27.55016694236547,
@@ -313,9 +303,9 @@
     },
     {
       "date": "2026-08-03",
-      "revenue": 15215.440000000006,
+      "revenue": 15215.440000000002,
       "orders": 206,
-      "blendedRoas": 2.3291143144287556,
+      "blendedRoas": 2.330165494698632,
       "metaSpend": 4338.180004201829,
       "metaRoas": 1.9786269828423984,
       "metaCpa": 38.05421056317394,
@@ -323,25 +313,26 @@
     },
     {
       "date": "2026-08-04",
-      "revenue": 12404.029999999997,
-      "orders": 157,
-      "blendedRoas": 1.8961858969828034,
+      "revenue": 13130.820000000003,
+      "orders": 158,
+      "blendedRoas": 2.0073822729797524,
       "metaSpend": 4197.109997449443,
       "metaRoas": 1.5115591338985106,
       "metaCpa": 49.377764675875795,
       "metaCpm": 12.055256831562412
+    },
+    {
+      "date": "2026-08-05",
+      "revenue": 15987.870000000004,
+      "orders": 203,
+      "blendedRoas": 2.72751084493266,
+      "metaSpend": 3428.3799661919475,
+      "metaRoas": 2.3750430341942756,
+      "metaCpa": 31.744258946221734,
+      "metaCpm": 14.231134695928086
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-07-07",
-      "status": "normal",
-      "cpa_z": -0.003,
-      "n_biz": 51,
-      "dow": "Tue",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-07-08",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Wed",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-08-06",
+      "status": "normal",
+      "cpa_z": -0.024,
+      "n_biz": 52,
+      "dow": "Thu",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
@@ -657,92 +657,158 @@
   "outages": [],
   "macroEvents": [
     {
-      "date": "2026-07-07",
-      "description": "US Average Gas Price Rises to $3.79/gallon",
-      "details": "The average U.S. gas price reached $3.79 per gallon on July 7, 2026, marking a 20.5% increase from a year prior. While this was a slight decrease from the June 2026 monthly average of $4.05, and a more significant drop from May's $4.48, prices remained elevated compared to historical baselines. High gas prices reduce discretionary income, leading to increased financial anxiety among consumers. For a premium DTC food gifting brand, this generally suppresses spending on non-essential items, though the slight dip from previous months might have offered some temporary relief, contributing to the improved performance in early July.",
+      "date": "2026-07-09",
+      "description": "US Gas Prices Begin Sharp Ascent, National Average Jumps to $3.84/gallon",
+      "details": "The national average for a gallon of regular gasoline rose 5 cents overnight to $3.84, reversing a recent downward trend. Gas prices are a significant discretionary expense for consumers, and rising costs can lead to reduced spending on non-essential items like specialty food. This increase, following a period of decline, likely contributed to a cautious consumer mood, potentially suppressing ROAS and increasing CPA for a DTC food gifting brand as consumers prioritize essential spending.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "low",
-      "source": "LendingTree, EIA, AAA"
+      "source": "AAA Newsroom"
     },
     {
-      "date": "2026-07-13",
-      "description": "Meta AI Ad Tools Cause 'Chaotic' Results for Advertisers",
-      "details": "Reports emerged on July 13, 2026, detailing widespread issues with Meta's AI-powered advertising tools. Advertisers reported 'chaotic' results, including strangely twisted limbs, gibberish text, or entirely changed products in AI-generated ad creatives. These AI automation features are often enabled by default, and despite Meta's push for their use, many brands found them clunky and prone to misrepresentation. Such issues can lead to wasted ad spend, negative brand perception, and reduced conversion rates, potentially contributing to inconsistent ROAS and CPA if not carefully managed.",
+      "date": "2026-07-14",
+      "description": "June CPI Shows Overall Decrease, Food Prices Continue to Rise 0.2%",
+      "details": "The U.S. Bureau of Labor Statistics released the Consumer Price Index for June 2026, showing an overall decrease of 0.4% seasonally adjusted, after a 0.5% rise in May. However, the food index continued to increase by 0.2% over the month. While the overall CPI decrease might offer some relief, persistent food inflation directly impacts grocery budgets, potentially making discretionary food purchases less appealing. This mixed signal could lead to neutral to slightly suppressed spending on premium food items.",
       "intensity": 2,
-      "category": "platform",
-      "icon": "🔴",
+      "category": "wallet",
+      "icon": "💰",
       "mood_impact": "neutral",
       "feed_dominance": "low",
-      "source": "Business Insider"
+      "source": "Bureau of Labor Statistics"
     },
     {
-      "date": "2026-07-19",
-      "description": "FIFA World Cup Final Concludes in US, Canada, Mexico",
-      "details": "The FIFA World Cup, co-hosted by the United States, Canada, and Mexico, concluded on July 19, 2026, with the final match held at MetLife Stadium in New Jersey. This major international sporting event generated significant public interest and media coverage throughout its duration (June 11 - July 19). While the event itself boosts national pride, the final match day would have created a massive 'feed domination' effect, with many consumers focused on watching the game and related content. This intense focus on a major event can divert attention from ads, leading to lower conversion intent and potentially suppressed ROAS on or around the final day.",
+      "date": "2026-07-16",
+      "description": "June US Retail Sales Up Modestly by 0.2%, Non-Store Retailers See Strong Growth",
+      "details": "Advance estimates for U.S. retail and food services sales in June 2026 increased by a modest 0.2% from the previous month. Sales at non-store retailers (e-commerce) continued to rise at a brisk pace (+1.9% month-over-month), up 14.2% from a year ago. This indicates a continued shift towards online shopping, which is favorable for DTC brands. However, the overall modest increase suggests consumers are still somewhat cautious, leading to a potentially neutral to slightly positive impact on ROAS and CPA for online specialty food.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "neutral",
+      "feed_dominance": "low",
+      "source": "U.S. Census Bureau"
+    },
+    {
+      "date": "2026-07-20",
+      "description": "National Gas Price Average Crosses $4.00 Mark, Reaching $4.019/gallon",
+      "details": "The national average gas price officially crossed the $4.00 per gallon threshold, reaching $4.019. This marks a significant 16-cent jump in just one week. Elevated gas prices directly reduce disposable income, making consumers more hesitant to spend on non-essential, premium products. This surge likely contributed to the observed decline in ROAS and increase in CPA for Gardner's Wisconsin Cheese around this date.",
       "intensity": 3,
-      "category": "feed",
-      "icon": "📱",
-      "mood_impact": "neutral",
-      "feed_dominance": "high",
-      "source": "FIFA, Wikipedia, Roadtrips"
-    },
-    {
-      "date": "2026-07-27",
-      "description": "US Gas Prices Continue Upward Trend to $4.09/gallon",
-      "details": "Following a brief dip in early July, the average U.S. regular gasoline price resumed an upward trend, reaching $4.096 per gallon by July 27, 2026. This price was significantly higher than the previous year and reflected ongoing instability in crude oil markets, particularly along the Strait of Hormuz. Sustained high gas prices directly impact consumer discretionary spending, as more household budget is allocated to fuel. This financial pressure tends to make consumers more cautious about non-essential purchases, leading to suppressed spending on premium food gifting and contributing to lower ROAS and higher CPA.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "low",
-      "source": "EIA, AAA, Rigzone"
-    },
-    {
-      "date": "2026-07-28",
-      "description": "Conference Board Consumer Confidence Falls to 90.8 in July",
-      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July 2026, down from an upwardly revised 92.2 in June. The Present Situation Index, reflecting current business and labor market conditions, fell for the third consecutive month to 114.9, its lowest since February 2021. While inflation expectations eased slightly, the overall decline signals a worsening consumer outlook on current economic conditions. This increased pessimism directly correlates with reduced discretionary spending, negatively impacting a premium gifting brand's ROAS and CPA.",
-      "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "medium",
-      "source": "The Conference Board, PR Newswire"
+      "source": "CarBuzz"
+    },
+    {
+      "date": "2026-07-23",
+      "description": "Gas Prices Continue Climb to $4.09/gallon, Crude Oil Nears $90/barrel",
+      "details": "The national average for a gallon of regular gasoline jumped another 15 cents from the previous week, reaching $4.09. Rising crude oil prices, now in the $90 per barrel range due to instability in the Strait of Hormuz, are driving this increase. Sustained high gas prices significantly erode consumer purchasing power, leading to a strong suppression of discretionary spending. This event likely exacerbated the negative ad performance seen on July 21st and contributed to further declines.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "AAA Newsroom"
     },
     {
       "date": "2026-07-28",
-      "description": "Iran Missile Attack on US Forces Escalates Middle East Tensions",
-      "details": "On July 28, 2026, Iran launched a surprise missile attack on US forces, shattering a brief diplomatic pause and leading to US and Saudi retaliatory strikes. This event significantly escalated tensions in the Middle East, impacting global oil prices and creating geopolitical uncertainty. Major international conflicts and crises often dominate news cycles and social media feeds, leading to 'doomscrolling' behavior. This shift in consumer attention away from commercial content, coupled with heightened anxiety, typically suppresses conversion intent and ad performance for discretionary goods, contributing to lower ROAS and higher CPA.",
+      "description": "Conference Board Consumer Confidence Declines to 90.8 in July",
+      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from an upwardly revised 92.2 in June. The Present Situation Index fell for the third consecutive month, while the Expectations Index remained unchanged at 74.7, below the recession signal threshold of 80. Declining consumer confidence, especially in the present situation, signals increased financial anxiety and a reluctance to spend on non-essential goods. This likely suppressed ROAS and increased CPA for DTC food gifting.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "low",
+      "source": "The Conference Board"
+    },
+    {
+      "date": "2026-07-28",
+      "description": "Mass Shooting in Seattle Leaves Three Dead, Multiple Injured",
+      "details": "A mass shooting occurred at the Seattle Center, resulting in three fatalities and several injuries. Tragic events like mass shootings dominate news cycles and social media feeds, leading to widespread grief, fear, and a somber mood among the public. This 'doomscrolling' behavior diverts attention from advertising and significantly reduces conversion intent for discretionary purchases, negatively impacting Meta ROAS and CPA.",
       "intensity": 3,
       "category": "feed",
       "icon": "📱",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "high",
-      "source": "GEF, Reuters, Axios"
+      "source": "YouTube (News Headlines)"
+    },
+    {
+      "date": "2026-07-28",
+      "description": "US, Saudi Forces Strike Iran-Backed Terrorist Sites in Iraq",
+      "details": "U.S. and Saudi forces conducted strikes against Iran-backed terrorist sites in Iraq. This military action, part of ongoing regional instability, is a significant geopolitical event that captures public attention and fuels news consumption. Such events contribute to a serious and anxious mood, diverting focus from online shopping and reducing the effectiveness of ad campaigns, leading to lower ROAS and higher CPA.",
+      "intensity": 2,
+      "category": "feed",
+      "icon": "📱",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "U.S. Central Command (CENTCOM)"
     },
     {
       "date": "2026-07-31",
-      "description": "U of Michigan Consumer Sentiment Rises to 55.2 in July",
-      "details": "The University of Michigan Consumer Sentiment Index rose to a final reading of 55.2 in July 2026, an 11.5% increase from June's 49.5. This marked the highest level since March, driven by easing gas prices earlier in the month and improved inflation expectations (down to 4.2% from 4.6%). Despite remaining historically low, this improvement signals a modest boost in consumer confidence. For a DTC brand, this positive shift in sentiment can encourage discretionary spending, potentially explaining the strong ROAS and low CPA observed on July 31st.",
+      "description": "University of Michigan Consumer Sentiment Rises to 55.2 in July",
+      "details": "The University of Michigan Consumer Sentiment Index rose to 55.2 in the July 2026 survey, up from 49.5 in June. This 11.5% increase indicates an improvement in consumer outlook, driven partly by easing gas prices earlier in the month. Improved consumer sentiment often correlates with a greater willingness to spend on discretionary items. This positive financial signal likely contributed to the strong ROAS observed on July 31st.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "boosts_spending",
       "feed_dominance": "low",
-      "source": "University of Michigan, dshort, Trading Economics"
+      "source": "University of Michigan"
+    },
+    {
+      "date": "2026-08-04",
+      "description": "President Trump Warns Iran, Threatens 'Decapitation' Amid Nuclear Talks Denial",
+      "details": "President Donald Trump stated he hopes Iran 'will come to their senses,' warning of 'decapitation' if they don't agree to a 'good document' on denuclearization, despite Iran denying direct talks. This high-stakes political rhetoric and ongoing international tension create significant news and social media buzz. Such events can cause widespread anxiety and distraction, leading to reduced engagement with ads and lower conversion rates for discretionary purchases, negatively impacting ROAS and CPA.",
+      "intensity": 3,
+      "category": "feed",
+      "icon": "📱",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "high",
+      "source": "YouTube (Today News Headlines)"
     },
     {
       "date": "2026-08-05",
-      "description": "ADP Report: US Private Sector Adds Only 44K Jobs in July",
-      "details": "The ADP National Employment Report released on August 5, 2026, showed that private sector employment increased by only 44,000 jobs in July, the slowest pace in six months and below forecasts of 70,000. While pay for job-changers accelerated, overall job growth slowed significantly. A weaker-than-expected jobs report can signal economic uncertainty, increasing consumer caution and financial anxiety. This could lead to a more conservative approach to discretionary spending, potentially impacting ad performance negatively for a premium food gifting brand in early August.",
+      "description": "Private Sector Adds Only 44,000 Jobs in July, Pay Up 4.4% YoY",
+      "details": "The ADP National Employment Report indicated that private sector employment increased by a modest 44,000 jobs in July, with annual pay up 4.4% year-over-year. This lower-than-expected job growth, combined with ongoing inflation concerns, can signal a cooling labor market and increased economic uncertainty for consumers. Such signals typically lead to more cautious spending behavior, potentially suppressing ROAS and increasing CPA for discretionary goods.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
+      "feed_dominance": "low",
+      "source": "ADP Media Center"
+    },
+    {
+      "date": "2026-08-07",
+      "description": "July US Employment Report: Economy Sheds 23,000 Jobs, Unemployment at 4.1%",
+      "details": "The U.S. Bureau of Labor Statistics reported that nonfarm payroll employment unexpectedly declined by 23,000 jobs in July, the first job decline since February, while the unemployment rate remained at 4.1%. This indicates potential cracks in the labor market. A weakening job market can significantly heighten consumer financial anxiety, leading to a strong suppression of discretionary spending. This negative economic news would likely depress ROAS and increase CPA for premium food products.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
       "feed_dominance": "medium",
-      "source": "ADP, Trading Economics"
+      "source": "Bureau of Labor Statistics"
+    },
+    {
+      "date": "2026-08-14",
+      "description": "July US Retail Sales Report Expected",
+      "details": "The U.S. Census Bureau is scheduled to release the Advance Monthly Retail Trade Report for July 2026. This report provides key insights into consumer spending trends. The anticipation of this report, especially following mixed economic signals, can influence consumer and advertiser behavior. A strong report could boost confidence, while a weak one could further dampen it, impacting ad performance for DTC brands.",
+      "intensity": 1,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "neutral",
+      "feed_dominance": "low",
+      "source": "U.S. Census Bureau"
+    },
+    {
+      "date": "2026-08-12",
+      "description": "July CPI Data Release Expected",
+      "details": "The Bureau of Labor Statistics is scheduled to publish the Consumer Price Index for July 2026. This is a critical inflation report, closely watched by consumers and markets. The expectation of this data can create uncertainty, and the actual release will significantly influence consumer purchasing power and sentiment. A higher-than-expected inflation figure could suppress spending, while a lower one might boost it, impacting ROAS and CPA for discretionary items.",
+      "intensity": 2,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "neutral",
+      "feed_dominance": "low",
+      "source": "Bureau of Labor Statistics"
     }
   ],
   "holidays": [],
