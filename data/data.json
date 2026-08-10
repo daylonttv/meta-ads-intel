@@ -1,36 +1,36 @@
 {
   "meta": {
-    "updatedAt": "2026-08-09T12:42:01.663Z",
+    "updatedAt": "2026-08-10T12:59:47.873Z",
     "dateRange": {
-      "start": "2026-07-10",
-      "end": "2026-08-08"
+      "start": "2026-07-11",
+      "end": "2026-08-09"
     },
     "monthLabel": "August 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-08-09T12:42:01.663Z",
+        "updatedAt": "2026-08-10T12:59:47.873Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-08-09T12:42:01.663Z",
+        "updatedAt": "2026-08-10T12:59:47.873Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-08-09T12:42:01.663Z",
+        "updatedAt": "2026-08-10T12:59:47.873Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-08-09T12:42:01.663Z",
+        "updatedAt": "2026-08-10T12:59:47.873Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
-        "updatedAt": "2026-08-09T12:42:01.663Z",
+        "updatedAt": "2026-08-10T12:59:47.873Z",
         "stale": false
       },
       "googleTrends": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-07-10",
-      "revenue": 20797.02000000001,
-      "orders": 264,
-      "blendedRoas": 3.0143043585802096,
-      "metaSpend": 4588.3800021111965,
-      "metaRoas": 3.2007244628578944,
-      "metaCpa": 25.073114765634955,
-      "metaCpm": 10.761927328085404
-    },
     {
       "date": "2026-07-11",
       "revenue": 21643.769999999997,
@@ -285,63 +275,64 @@
       "date": "2026-08-03",
       "revenue": 15215.440000000002,
       "orders": 206,
-      "blendedRoas": 2.330165494698632,
-      "metaSpend": 4338.180004201829,
-      "metaRoas": 1.9786269828423984,
-      "metaCpa": 38.05421056317394,
-      "metaCpm": 10.740967251564975
+      "blendedRoas": 2.3300227534706472,
+      "metaSpend": 4338.580029092729,
+      "metaRoas": 1.978444549871787,
+      "metaCpa": 38.05771955344499,
+      "metaCpm": 10.74147896950236
     },
     {
       "date": "2026-08-04",
       "revenue": 13130.820000000003,
       "orders": 158,
-      "blendedRoas": 2.0073822729797524,
-      "metaSpend": 4197.109997449443,
-      "metaRoas": 1.5115591338985106,
-      "metaCpa": 49.377764675875795,
-      "metaCpm": 12.055256831562412
+      "blendedRoas": 2.0073270392313844,
+      "metaSpend": 4197.289987353608,
+      "metaRoas": 1.5114943146021385,
+      "metaCpa": 49.3798822041601,
+      "metaCpm": 12.055046678423928
     },
     {
       "date": "2026-08-05",
       "revenue": 15987.870000000004,
       "orders": 203,
-      "blendedRoas": 2.7276534124063128,
-      "metaSpend": 3428.3799661919475,
-      "metaRoas": 2.3750430341942756,
-      "metaCpa": 31.744258946221734,
-      "metaCpm": 14.231134695928086
+      "blendedRoas": 2.7275743090249276,
+      "metaSpend": 3428.5499548241496,
+      "metaRoas": 2.374925278781018,
+      "metaCpa": 31.745832915038424,
+      "metaCpm": 14.230658891797722
     },
     {
       "date": "2026-08-06",
       "revenue": 14053.460000000003,
       "orders": 182,
-      "blendedRoas": 2.830496525326302,
-      "metaSpend": 2827.689994974062,
-      "metaRoas": 2.582316286534391,
-      "metaCpa": 27.996930643307543,
-      "metaCpm": 12.208420740072283
+      "blendedRoas": 2.83032076447137,
+      "metaSpend": 2828.0000230502337,
+      "metaRoas": 2.582033192282674,
+      "metaCpa": 28.000000228220134,
+      "metaCpm": 12.208230726278492
     },
     {
       "date": "2026-08-07",
       "revenue": 14419.45000000001,
       "orders": 193,
-      "blendedRoas": 2.8813325652226522,
-      "metaSpend": 2912.869990117848,
-      "metaRoas": 4.76206284059434,
-      "metaCpa": 15.092590622372269,
-      "metaCpm": 13.238934066519628
+      "blendedRoas": 2.8813954959260135,
+      "metaSpend": 2913.0500133112073,
+      "metaRoas": 4.761768550501269,
+      "metaCpa": 15.093523385032162,
+      "metaCpm": 13.238909880207453
+    },
+    {
+      "date": "2026-08-08",
+      "revenue": 16914.58,
+      "orders": 227,
+      "blendedRoas": 3.0619820230784205,
+      "metaSpend": 3341.2899369485676,
+      "metaRoas": 3.4201611303481982,
+      "metaCpa": 20.753353645643276,
+      "metaCpm": 13.926973873866025
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-07-10",
-      "status": "normal",
-      "cpa_z": -0.158,
-      "n_biz": 51,
-      "dow": "Fri",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-07-11",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Sat",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-08-09",
+      "status": "normal",
+      "cpa_z": 0.178,
+      "n_biz": 50,
+      "dow": "Sun",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
@@ -657,103 +657,92 @@
   "outages": [],
   "macroEvents": [
     {
-      "date": "2026-07-10",
-      "description": "Meta Rolls Out 'Push Delivery to This Ad' Feature",
-      "details": "Meta completed the rollout of its 'Push Delivery to This Ad' feature to nearly all ad accounts. This new manual delivery override allows advertisers to force 20-30% of an ad set's budget to a chosen ad for up to seven days, without resetting the learning phase. This feature aims to address the common issue of new creative not spending due to incumbent ads dominating the budget, potentially boosting ROAS for new, high-performing creative.",
+      "date": "2026-07-14",
+      "description": "June 2026 CPI shows 0.4% decrease, largest monthly decline since April 2020",
+      "details": "The Consumer Price Index for All Urban Consumers (CPI-U) decreased by 0.4 percent on a seasonally adjusted basis in June, following a 0.5 percent rise in May. This marked the largest one-month decrease since April 2020. The decline was significantly driven by a 9.7 percent decrease in the gasoline index. This positive inflation news could have temporarily boosted consumer confidence, but its impact might have been short-lived given other economic indicators and subsequent gas price increases. The CPI for July 2026 was scheduled for release on August 12, 2026.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "Bureau of Labor Statistics"
+    },
+    {
+      "date": "2026-07-16",
+      "description": "Meta Ads Delivery incident reported for 2+ hours",
+      "details": "Meta's status page logged an Ads Delivery incident on July 16, acknowledged for 2 hours and 7 minutes, though the actual start was likely earlier. This type of platform issue can disrupt ad delivery and pacing, leading to decreased impressions, inefficient spending, and lower conversion rates. For a DTC brand, this directly translates to reduced ROAS and increased CPA due to impaired ad performance. This incident directly correlates with the anomalous bad performance on July 16th.",
+      "intensity": 3,
+      "category": "platform",
+      "icon": "🔴",
+      "mood_impact": "neutral",
+      "feed_dominance": "low",
+      "source": "Meta Status Page / AdMake AI Blog"
+    },
+    {
+      "date": "2026-07-21",
+      "description": "National average gas price jumps 15 cents to $4.09, crude oil hits $90/barrel",
+      "details": "The national average for a gallon of regular gasoline surged by 15 cents from the previous week, reaching $4.09 and officially crossing the $4.00 mark on July 20. This spike was attributed to rising crude oil prices, which entered the $90 per barrel range due to instability along the Strait of Hormuz. Higher gas prices reduce consumers' discretionary income, leading to suppressed spending on non-essential items like specialty food gifts. This event likely contributed to the poor performance on July 21st.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "AAA / CarBuzz"
+    },
+    {
+      "date": "2026-07-28",
+      "description": "Conference Board Consumer Confidence declines to 90.8 in July",
+      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from an upwardly revised 92.2 in June. The Present Situation Index fell for the third consecutive month to 114.9, indicating worsening views of current business and labor market conditions. The Expectations Index remained unchanged at 74.7, staying below the recession signal threshold of 80. This overall decline in consumer confidence, particularly concerning present economic conditions, suggests increased financial anxiety, which typically suppresses discretionary spending and gifting. This aligns with the poor performance on July 27th and 28th.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "low",
+      "source": "The Conference Board / PR Newswire"
+    },
+    {
+      "date": "2026-07-31",
+      "description": "U of Michigan Consumer Sentiment rises to 55.2 in July, a 5-month high",
+      "details": "The University of Michigan's final Consumer Sentiment Index for July 2026 rose to 55.2, a significant increase from 49.5 in June and the highest level since February. Both current conditions and expectations improved, and one-year inflation expectations eased to 4.2% from 4.6%. Despite remaining below its historical average, this broad-based improvement in sentiment suggests consumers felt more optimistic about their financial situation. This positive shift in consumer mood likely contributed to the excellent ROAS and low CPA observed on July 31st, as consumers were more willing to spend.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "University of Michigan"
+    },
+    {
+      "date": "2026-08-06",
+      "description": "Meta Ads Insights API breakdowns sunset, impacting reporting",
+      "details": "Beginning August 6, 2026, several Ads Insights API breakdowns, including 'impression_device' and 'hourly_stats_aggregated_by_audience_time_zone', require enablement for certain ad accounts. This change means that advertisers may lose access to granular reporting data if not properly configured, making it harder to analyze campaign performance and optimize bids. While not directly impacting ad delivery, the loss of detailed insights can hinder effective campaign management, potentially leading to less optimized spending and poorer ROAS/higher CPA as advertisers fly blind. This could contribute to the poor performance on August 4th.",
       "intensity": 2,
       "category": "platform",
       "icon": "🔴",
       "mood_impact": "neutral",
       "feed_dominance": "low",
-      "source": "AdMake AI Blog"
+      "source": "Meta for Developers / AdMake AI Blog"
     },
     {
-      "date": "2026-07-14",
-      "description": "June CPI Shows Unexpected Decline, Energy Prices Fall",
-      "details": "The U.S. Bureau of Labor Statistics reported that the Consumer Price Index for All Urban Consumers (CPI-U) decreased 0.4% on a seasonally adjusted basis in June, the largest one-month decrease since April 2020. The energy index notably fell by 5.7%. This unexpected decline in inflation, particularly in energy, could alleviate consumer financial anxiety and potentially boost discretionary spending.",
+      "date": "2026-08-07",
+      "description": "July US jobs report: Unemployment falls to 4.1%, but 23,000 jobs lost",
+      "details": "The US unemployment rate decreased to 4.1% in July from 4.2% in June, reaching its lowest level since June 2025. However, nonfarm payroll employment unexpectedly contracted by 23,000 jobs in July, against economists' expectations for a gain. Additionally, job gains for May and June were revised down sharply by a combined 103,000 jobs. This mixed report, with a falling unemployment rate but actual job losses and downward revisions, presents a complex picture of the labor market. While a lower unemployment rate can signal economic health, the job losses and revisions suggest underlying weakness, potentially leading to consumer caution. This could explain the very good performance on August 7th, as the headline unemployment drop might have been perceived positively by consumers, temporarily boosting confidence and spending.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
-      "mood_impact": "boosts_spending",
+      "mood_impact": "neutral",
       "feed_dominance": "medium",
-      "source": "Bureau of Labor Statistics"
+      "source": "Bureau of Labor Statistics / Trading Economics"
     },
     {
-      "date": "2026-07-16",
-      "description": "Meta Ads Delivery Incident Reported",
-      "details": "Meta's status page logged an Ads Delivery incident, indicating potential issues with ad delivery and pacing. Such incidents can lead to disruptions in campaign performance, where impressions may still serve but conversion intent drops due to underlying platform instability. Advertisers are advised to annotate these dates in their reporting dashboards.",
-      "intensity": 2,
-      "category": "platform",
-      "icon": "🔴",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "low",
-      "source": "Meta Status Page (reported by Meta Ads Updates)"
-    },
-    {
-      "date": "2026-07-19",
-      "description": "Global Meta Outage Disrupts Facebook and Instagram",
-      "details": "Thousands of Facebook and Instagram users worldwide reported service outages, including login failures, inaccessible accounts, and difficulties loading content. This global disruption, which also affected ad delivery, was significant enough to cause widespread 'doomscrolling' on other platforms and displace product discovery, sharply reducing conversion intent for ads.",
-      "intensity": 3,
-      "category": "platform",
-      "icon": "🔴",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "Evrim Ağacı, TNW"
-    },
-    {
-      "date": "2026-07-21",
-      "description": "National Average Gas Price Crosses $4 Mark",
-      "details": "The national average for regular gasoline officially crossed the $4.00 per gallon mark, reaching $4.019, a substantial jump of 16 cents in one week. This increase, driven by rising crude oil prices and geopolitical tensions, signals increased financial pressure on consumers. Higher gas prices typically reduce disposable income, leading to decreased discretionary spending and potentially lower ROAS for DTC brands.",
-      "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "CarBuzz"
-    },
-    {
-      "date": "2026-07-28",
-      "description": "Conference Board Consumer Confidence Declines in July",
-      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from a revised 92.2 in June and below expectations. The Present Situation Index fell for the third consecutive month to 114.9, while the Expectations Index remained unchanged at 74.7, staying below the 80-point threshold often signaling a potential recession. This sustained decline in confidence indicates growing consumer pessimism, likely leading to reduced discretionary spending.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "The Conference Board"
-    },
-    {
-      "date": "2026-07-31",
-      "description": "UofM Consumer Sentiment Rises to Five-Month High",
-      "details": "The University of Michigan Consumer Sentiment Index was revised higher to 55.2 in July, up 11.5% from June's 49.5 and reaching its highest level since February. This improvement, attributed partly to easing gas prices, suggests a modest recovery in consumer optimism. While still below historical averages, this positive shift could encourage a slight boost in discretionary spending.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "boosts_spending",
-      "feed_dominance": "medium",
-      "source": "University of Michigan"
-    },
-    {
-      "date": "2026-08-04",
-      "description": "Back-to-School Shopping Season Underway",
-      "details": "Early August marks the peak of the back-to-school shopping season across the US. This period sees a significant shift in consumer spending towards school supplies, clothing, and electronics for children and college students. For a gifting-heavy brand like Gardner's Wisconsin Cheese, this seasonal shift means increased competition for consumer wallets and attention, potentially diverting funds from discretionary purchases like specialty food gifts.",
+      "date": "2026-08-09",
+      "description": "Back-to-School shopping season in full swing",
+      "details": "August is widely recognized as 'Back-to-School Month' in the US, with parents and students actively preparing for the upcoming academic year. This period is characterized by increased spending on school supplies, clothing, and electronics. For a gifting-heavy brand like Gardner's Wisconsin Cheese, this seasonal shift means consumers' focus and budgets are diverted towards essential back-to-school purchases, reducing discretionary spending on gifts. This can lead to decreased ROAS and higher CPA as competition for consumer attention and wallet share intensifies. The impact would be felt throughout the latter half of the date range.",
       "intensity": 2,
       "category": "seasonal",
       "icon": "🗓️",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "low",
-      "source": "National Retail Federation (projected)"
-    },
-    {
-      "date": "2026-08-07",
-      "description": "US Economy Unexpectedly Loses 23,000 Jobs in July",
-      "details": "The U.S. Bureau of Labor Statistics reported that the economy unexpectedly lost 23,000 nonfarm payroll jobs in July, contrary to economists' projections for gains. Additionally, May and June payrolls were revised down by a combined 103,000 jobs, painting a weaker labor market picture. Although the unemployment rate held steady at 4.1%, labor force participation fell to 61.4%, its lowest since February 2021. This negative employment news signals economic weakness and increased financial anxiety, likely suppressing consumer spending.",
-      "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "Bureau of Labor Statistics"
+      "source": "4AllPromos / Hallmark Ideas & Inspiration"
     }
   ],
   "holidays": [],
