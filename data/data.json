@@ -1,36 +1,36 @@
 {
   "meta": {
-    "updatedAt": "2026-08-12T13:05:33.290Z",
+    "updatedAt": "2026-08-13T13:02:08.192Z",
     "dateRange": {
-      "start": "2026-07-13",
-      "end": "2026-08-11"
+      "start": "2026-07-14",
+      "end": "2026-08-12"
     },
     "monthLabel": "August 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-08-12T13:05:33.290Z",
+        "updatedAt": "2026-08-13T13:02:08.192Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-08-12T13:05:33.290Z",
+        "updatedAt": "2026-08-13T13:02:08.192Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-08-12T13:05:33.290Z",
+        "updatedAt": "2026-08-13T13:02:08.192Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-08-12T13:05:33.290Z",
+        "updatedAt": "2026-08-13T13:02:08.192Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
-        "updatedAt": "2026-08-12T13:05:33.290Z",
+        "updatedAt": "2026-08-13T13:02:08.192Z",
         "stale": false
       },
       "googleTrends": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-07-13",
-      "revenue": 19773.389999999996,
-      "orders": 268,
-      "blendedRoas": 2.642777077578351,
-      "metaSpend": 5354.960007099435,
-      "metaRoas": 2.2213013670528747,
-      "metaCpa": 30.953526052597887,
-      "metaCpm": 10.453230486375434
-    },
     {
       "date": "2026-07-14",
       "revenue": 18470.930000000015,
@@ -293,7 +283,7 @@
     },
     {
       "date": "2026-08-07",
-      "revenue": 14520.13000000001,
+      "revenue": 14520.130000000012,
       "orders": 194,
       "blendedRoas": 2.9016942934382226,
       "metaSpend": 2913.0500133112073,
@@ -313,9 +303,9 @@
     },
     {
       "date": "2026-08-09",
-      "revenue": 22058.039999999997,
+      "revenue": 22058.04,
       "orders": 272,
-      "blendedRoas": 3.538143284091853,
+      "blendedRoas": 3.5381432840918534,
       "metaSpend": 3878.5799305904657,
       "metaRoas": 3.22273364012672,
       "metaCpa": 24.24112456619041,
@@ -323,25 +313,26 @@
     },
     {
       "date": "2026-08-10",
-      "revenue": 14823.099999999999,
+      "revenue": 14823.099999999995,
       "orders": 199,
-      "blendedRoas": 2.628912560059083,
+      "blendedRoas": 2.628912560059082,
       "metaSpend": 3780.0100188069046,
       "metaRoas": 2.415713161330391,
       "metaCpa": 29.531328271928942,
       "metaCpm": 13.435115384612585
+    },
+    {
+      "date": "2026-08-11",
+      "revenue": 19834.370000000014,
+      "orders": 256,
+      "blendedRoas": 3.6952769436339565,
+      "metaSpend": 4157.919984435663,
+      "metaRoas": 2.6424029470809,
+      "metaCpa": 26.999480418413395,
+      "metaCpm": 13.366294251983163
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-07-13",
-      "status": "normal",
-      "cpa_z": -0.272,
-      "n_biz": 51,
-      "dow": "Mon",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-07-14",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Tue",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-08-12",
+      "status": "normal",
+      "cpa_z": 0.239,
+      "n_biz": 51,
+      "dow": "Wed",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
@@ -657,42 +657,42 @@
   "outages": [],
   "macroEvents": [
     {
+      "date": "2026-07-14",
+      "description": "June CPI shows inflation cooling as energy prices plunge.",
+      "details": "The Consumer Price Index (CPI) measures the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services. The June 2026 CPI report indicated that inflation was cooling, largely due to a significant plunge in energy prices. This news typically signals a more stable economic environment, potentially easing financial pressure on consumers. For a DTC food gifting brand, this could lead to a slight boost in consumer confidence and discretionary spending, resulting in improved ROAS and lower CPA as consumers feel more secure about their finances.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
+      "source": "Bureau of Labor Statistics"
+    },
+    {
       "date": "2026-07-16",
-      "description": "Gas prices jump 10 cents to $3.94 amid Strait of Hormuz instability.",
-      "details": "The national average for a gallon of regular gasoline increased by 10 cents to $3.94, driven by instability along the Strait of Hormuz and crude oil prices nearing $80 per barrel. This price hike impacts consumer budgets, as gasoline is a significant discretionary expense. Higher fuel costs can reduce disposable income available for other purchases, including premium food items. The ongoing geopolitical tensions affecting oil supply directly influence consumer sentiment and spending on non-essential goods.",
+      "description": "National gas average rises 10 cents, nearing $4 per gallon.",
+      "details": "Gas prices are a significant factor in consumer discretionary spending, as higher fuel costs reduce the amount of money available for other purchases. On July 16, 2026, the national average for a gallon of regular gasoline increased by 10 cents to $3.94, inching closer to the psychologically important $4 mark. This upward trend in gas prices can lead to increased financial anxiety among consumers, potentially suppressing discretionary spending on non-essential items like specialty food gifts, resulting in lower ROAS and higher CPA.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "AAA Fuel Prices"
-    },
-    {
-      "date": "2026-07-21",
-      "description": "Back-to-school shopping begins early; clothing surpasses supplies as top category.",
-      "details": "The back-to-school shopping season commenced earlier than usual in 2026, with nearly half of shoppers starting by July. Clothing and shoes have emerged as the top spending category, surpassing traditional school supplies. This shift indicates a change in consumer priorities, with a greater emphasis on apparel. While back-to-school spending can be a significant driver, the focus on clothing might divert some discretionary funds from other gift-oriented categories. The overall concern for consumers is managing the total budget rather than individual item costs.",
-      "intensity": 2,
-      "category": "seasonal",
-      "icon": "🗓️",
-      "mood_impact": "neutral",
       "feed_dominance": "low",
-      "source": "RetailMeNot / Mashable"
+      "source": "AAA"
     },
     {
       "date": "2026-07-23",
-      "description": "National average gas price jumps 15 cents to $4.09 due to Strait of Hormuz volatility.",
-      "details": "The national average for gasoline surged by 15 cents to $4.09 per gallon, with most states now averaging $4 or higher. This increase is attributed to rising crude oil prices, exacerbated by volatility along the Strait of Hormuz and regional instability. Such a significant jump in fuel costs directly impacts household budgets, potentially curtailing discretionary spending on non-essential items like premium specialty foods. Consumers facing higher essential costs may reduce spending on gifts and treats.",
+      "description": "National gas average jumps 15 cents to $4.09, most states above $4.",
+      "details": "Continuing the upward trend, the national average for a gallon of regular gasoline surged by 15 cents to $4.09, with most states now seeing prices at or above $4 per gallon. This significant jump in fuel costs, driven by crude oil price volatility along the Strait of Hormuz, directly impacts household budgets. Such a sharp increase in a necessary expense like gas can severely dampen consumer sentiment and reduce discretionary income, leading to a notable decrease in ROAS and an increase in CPA for a premium gifting brand.",
       "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "AAA Newsroom"
+      "feed_dominance": "medium",
+      "source": "AAA"
     },
     {
-      "date": "2026-07-27",
-      "description": "Conference Board Consumer Confidence Index dips to 90.8 in July.",
-      "details": "The Conference Board Consumer Confidence Index decreased to 90.8 in July, down from 92.2 in June, indicating a slight softening in consumer sentiment. This decline, influenced by ongoing conflict in the Middle East, suggests consumers are becoming more cautious about the present economic situation and future outlook. A reading below 70 typically signals pessimism, but the downward trend itself can lead to reduced discretionary spending as consumers prioritize essentials and become more hesitant about non-essential purchases like premium food gifts.",
+      "date": "2026-07-28",
+      "description": "Conference Board Consumer Confidence Index falls to 90.8 in July.",
+      "details": "The Conference Board Consumer Confidence Index measures consumers' attitudes and buying intentions, reflecting prevailing business conditions and likely developments. In July 2026, the index decreased by 1.4 points to 90.8 from an upwardly revised 92.2 in June, marking its third consecutive monthly decline in the Present Situation Index. This decline, surveyed between July 1-22 amidst ongoing Middle East conflict, indicates growing consumer pessimism about current and future economic conditions. Reduced confidence typically translates to less discretionary spending, negatively impacting ROAS and increasing CPA for a gifting brand.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
@@ -701,53 +701,42 @@
       "source": "The Conference Board"
     },
     {
-      "date": "2026-07-28",
-      "description": "US retail sales growth slows in July, annual increase drops from 9.41% to 5.15%.",
-      "details": "Total U.S. retail sales, excluding auto and gas, increased 5.15% year-over-year in July, a significant slowdown from June's 9.41% growth. While sales continued to grow for the tenth consecutive month, the deceleration suggests a potential cooling in consumer spending momentum. This moderation, coupled with ongoing inflation and economic uncertainties, could lead consumers to become more budget-conscious, impacting discretionary purchases and gifting behavior.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "CNBC/NRF Retail Monitor"
-    },
-    {
       "date": "2026-07-31",
-      "description": "Gas prices remain high at $4.09, impacting consumer budgets.",
-      "details": "The national average for gasoline held steady at $4.09 per gallon, continuing the trend of elevated fuel costs. This sustained high price at the pump directly affects household budgets, potentially reducing the amount of discretionary income available for non-essential purchases. For a premium DTC food brand, this means consumers may be less inclined to spend on specialty items or gifts due to increased spending on necessities like fuel.",
+      "description": "U of Michigan Consumer Sentiment rises to 55.2 in July, beating preliminary.",
+      "details": "The University of Michigan Consumer Sentiment Index is a key indicator of consumer attitudes toward the economy, personal finances, and buying conditions. The final July 2026 reading for the index rose to 55.2, a significant 15.7% increase from June and surpassing the preliminary estimate of 54.4. This improvement was largely attributed to easing gas prices, despite sentiment remaining historically low. An uptick in consumer sentiment, even from a low base, can encourage discretionary spending, leading to improved ROAS and lower CPA for a premium food gifting brand.",
       "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "University of Michigan"
+    },
+    {
+      "date": "2026-08-05",
+      "description": "July US Jobs Report shows unexpected decline of 23,000 nonfarm jobs.",
+      "details": "The US Jobs Report, released by the Bureau of Labor Statistics, provides crucial insights into the health of the labor market. The July 2026 report revealed an unexpected decline of 23,000 nonfarm payroll jobs, falling short of economists' forecasts for job growth. Additionally, May and June payrolls were revised down by a combined 103,000 jobs, indicating a deeper softness in the labor market than initially reported. This news can heighten economic uncertainty and consumer anxiety, leading to reduced discretionary spending and negatively impacting ROAS and CPA for a gifting brand.",
+      "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "medium",
-      "source": "AAA Fuel Prices"
-    },
-    {
-      "date": "2026-08-04",
-      "description": "Back-to-school sales peak for clothing and supplies; tax holidays boost demand.",
-      "details": "The peak week for back-to-school shopping began, with significant sales on clothing and school supplies. Several states offered tax holidays, further incentivizing purchases. This period typically sees increased consumer spending, but the focus is on educational and apparel needs. While it drives overall retail activity, it might not directly translate to increased demand for specialty food gifts unless positioned as a complementary purchase or part of a larger gifting occasion.",
-      "intensity": 2,
-      "category": "seasonal",
-      "icon": "🗓️",
-      "mood_impact": "neutral",
-      "feed_dominance": "low",
-      "source": "Mashable / Redbook Research"
-    },
-    {
-      "date": "2026-08-06",
-      "description": "Gas prices fall to $4.06 as Strait of Hormuz optimism grows.",
-      "details": "The national average for gasoline dropped to $4.06 per gallon, a decrease attributed to growing optimism about the resumption of normal operations at the Strait of Hormuz. This slight decrease in fuel costs could offer minor relief to consumer budgets, potentially freeing up a small amount of discretionary spending. However, prices remain significantly higher than a year ago, and the overall economic climate still suggests cautious consumer behavior.",
-      "intensity": 1,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "neutral",
-      "feed_dominance": "low",
-      "source": "AAA Fuel Prices"
+      "source": "Bureau of Labor Statistics / Staffing Industry Analysts"
     },
     {
       "date": "2026-08-07",
-      "description": "US retail sales growth maintained in July, but annual pace slows.",
-      "details": "U.S. retail sales continued their upward trend in July, marking the tenth consecutive month of growth. However, the annual growth rate slowed to 5.15% from 9.41% in June. This indicates that while consumers are still spending, the pace of spending has moderated. The NRF noted that consumers remained budget-conscious, taking advantage of sales and promotions. This sustained but slower growth suggests consumers are being more selective with their purchases, potentially impacting impulse buys or premium gifting.",
+      "description": "US gas prices forecast at $4.095, with sustained high-tension scenario at $4.40.",
+      "details": "Gas prices directly influence consumer purchasing power and sentiment. On August 7, 2026, the national average gas price was reported at $4.095 per gallon, with forecasts suggesting a 'sustained high-tension' scenario could push prices to $4.40 by year-end due to ongoing geopolitical conflicts. This continued high cost of fuel, coupled with an outlook for further increases, reinforces financial strain on consumers. For a DTC food gifting brand, this sustained pressure on household budgets is likely to suppress discretionary spending, leading to lower ROAS and higher CPA.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "low",
+      "source": "GEF / AAA"
+    },
+    {
+      "date": "2026-08-10",
+      "description": "July Retail Sales show modest 0.30% month-over-month growth.",
+      "details": "Retail sales data provides a real-time snapshot of consumer spending habits. The CNBC/NRF Retail Monitor, powered by anonymized credit and debit card transaction data, reported that core retail sales (excluding autos and gas) grew by a modest 0.30% month-over-month in July 2026. While showing continued growth, this moderate increase suggests consumers are remaining budget-conscious. For a DTC food gifting brand, this indicates a market where consumers are spending, but perhaps with more deliberation, suggesting a neutral to slightly positive impact on ROAS and CPA, especially if promotions are compelling.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
@@ -756,36 +745,14 @@
       "source": "CNBC/NRF Retail Monitor"
     },
     {
-      "date": "2026-08-10",
-      "description": "NRF reports July retail sales up 5.15% YoY, but growth pace cools.",
-      "details": "The National Retail Federation (NRF) reported that U.S. retail sales increased 5.15% year-over-year in July, marking the tenth consecutive monthly gain. However, the pace of annual growth significantly cooled compared to June's 9.41% increase. This suggests a moderation in consumer spending momentum, with consumers remaining budget-conscious despite steady wage gains and low unemployment. The slower growth indicates a potentially more cautious consumer, which could affect discretionary spending on premium food items.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "low",
-      "source": "NRF / Affinity Solutions"
-    },
-    {
-      "date": "2026-08-11",
-      "description": "US retail sales for first week of August show 8.3% YoY growth, boosted by back-to-school.",
-      "details": "U.S. retail sales for the first week of August showed a strong 8.3% year-over-year increase, driven by back-to-school demand and tax holidays in several states. This indicates robust consumer spending in specific categories like apparel and school supplies. While this surge is positive for overall retail, its direct impact on specialty food gifting might be limited as consumer focus is on essential back-to-school purchases.",
-      "intensity": 2,
-      "category": "seasonal",
-      "icon": "🗓️",
-      "mood_impact": "neutral",
-      "feed_dominance": "low",
-      "source": "Redbook Research"
-    },
-    {
       "date": "2026-08-12",
-      "description": "US inflation cools to 3.4% in July; core inflation eases to 2.5%.",
-      "details": "The U.S. inflation rate cooled slightly to 3.4% in July, down from 3.5% in June, according to the Bureau of Labor Statistics. Core inflation, excluding volatile food and energy prices, also decreased to 2.5% from 2.6%. This trend of moderating inflation, despite ongoing geopolitical impacts on energy prices, suggests a potential stabilization in consumer price pressures. While still elevated compared to pre-conflict levels, the cooling inflation may offer some relief and slightly improve consumer confidence in discretionary spending.",
-      "intensity": 2,
+      "description": "July CPI shows inflation slowing to 3.4% annually, core CPI at 2.5%.",
+      "details": "The July 2026 Consumer Price Index (CPI) report, released by the Bureau of Labor Statistics, indicated that overall inflation slowed to a 3.4% annual rate, down from 3.5% in June. Core CPI, which excludes volatile food and energy prices, also eased to 2.5% annually from 2.6%. This continued moderation in inflation, particularly the core rate, suggests that price pressures are easing, which can improve consumer purchasing power and sentiment. This positive economic signal could boost discretionary spending, leading to higher ROAS and lower CPA for a premium gifting brand.",
+      "intensity": 3,
       "category": "wallet",
       "icon": "💰",
-      "mood_impact": "neutral",
-      "feed_dominance": "low",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
       "source": "Bureau of Labor Statistics"
     }
   ],
