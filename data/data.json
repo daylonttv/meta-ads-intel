@@ -1,36 +1,36 @@
 {
   "meta": {
-    "updatedAt": "2026-08-14T12:59:20.755Z",
+    "updatedAt": "2026-08-15T12:30:39.541Z",
     "dateRange": {
-      "start": "2026-07-15",
-      "end": "2026-08-13"
+      "start": "2026-07-16",
+      "end": "2026-08-14"
     },
     "monthLabel": "August 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-08-14T12:59:20.755Z",
+        "updatedAt": "2026-08-15T12:30:39.541Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-08-14T12:59:20.755Z",
+        "updatedAt": "2026-08-15T12:30:39.541Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-08-14T12:59:20.755Z",
+        "updatedAt": "2026-08-15T12:30:39.541Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-08-14T12:59:20.755Z",
+        "updatedAt": "2026-08-15T12:30:39.541Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
-        "updatedAt": "2026-08-14T12:59:20.755Z",
+        "updatedAt": "2026-08-15T12:30:39.541Z",
         "stale": false
       },
       "googleTrends": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-07-15",
-      "revenue": 19710.540000000005,
-      "orders": 254,
-      "blendedRoas": 2.9231027848538793,
-      "metaSpend": 4641.820000948384,
-      "metaRoas": 2.496932233051778,
-      "metaCpa": 31.36364865505665,
-      "metaCpm": 11.194765607315189
-    },
     {
       "date": "2026-07-16",
       "revenue": 14716.6,
@@ -243,9 +233,9 @@
     },
     {
       "date": "2026-08-04",
-      "revenue": 13130.820000000002,
+      "revenue": 13130.820000000003,
       "orders": 158,
-      "blendedRoas": 2.007327039231384,
+      "blendedRoas": 2.0073270392313844,
       "metaSpend": 4197.289987353608,
       "metaRoas": 1.5114943146021385,
       "metaCpa": 49.3798822041601,
@@ -263,9 +253,9 @@
     },
     {
       "date": "2026-08-06",
-      "revenue": 14542.650000000003,
+      "revenue": 14542.650000000001,
       "orders": 184,
-      "blendedRoas": 2.9292934302089275,
+      "blendedRoas": 2.929293430208927,
       "metaSpend": 2828.0000230502337,
       "metaRoas": 2.582033192282674,
       "metaCpa": 28.000000228220134,
@@ -293,9 +283,9 @@
     },
     {
       "date": "2026-08-09",
-      "revenue": 22058.04,
+      "revenue": 22058.039999999997,
       "orders": 272,
-      "blendedRoas": 3.5381462727811552,
+      "blendedRoas": 3.538146272781155,
       "metaSpend": 3878.5799305904657,
       "metaRoas": 3.22273364012672,
       "metaCpa": 24.24112456619041,
@@ -313,9 +303,9 @@
     },
     {
       "date": "2026-08-11",
-      "revenue": 19834.370000000014,
+      "revenue": 19834.370000000006,
       "orders": 256,
-      "blendedRoas": 3.695737371677576,
+      "blendedRoas": 3.6957373716775748,
       "metaSpend": 4157.919984435663,
       "metaRoas": 2.6424029470809,
       "metaCpa": 26.999480418413395,
@@ -323,25 +313,26 @@
     },
     {
       "date": "2026-08-12",
-      "revenue": 19106.01000000001,
+      "revenue": 19106.010000000006,
       "orders": 230,
-      "blendedRoas": 3.492563143489278,
+      "blendedRoas": 3.4925631434892774,
       "metaSpend": 4145.58993358165,
       "metaRoas": 2.7148005935270025,
       "metaCpa": 28.394451599874316,
       "metaCpm": 13.8381910886775
+    },
+    {
+      "date": "2026-08-13",
+      "revenue": 16041.630000000005,
+      "orders": 212,
+      "blendedRoas": 2.790859862522574,
+      "metaSpend": 4581.1900123711675,
+      "metaRoas": 2.2944169490693223,
+      "metaCpa": 30.953986570075458,
+      "metaCpm": 14.272953897159136
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-07-15",
-      "status": "normal",
-      "cpa_z": -0.211,
-      "n_biz": 52,
-      "dow": "Wed",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-07-16",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Thu",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-08-14",
+      "status": "normal",
+      "cpa_z": -0.254,
+      "n_biz": 52,
+      "dow": "Fri",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
@@ -658,8 +658,8 @@
   "macroEvents": [
     {
       "date": "2026-07-16",
-      "description": "Gas prices rise, national average reaches $3.94/gallon.",
-      "details": "The national average for a gallon of regular gasoline increased by 10 cents from the previous week, reaching $3.94. This rise was attributed to instability along the Strait of Hormuz, pushing crude oil prices towards $80 per barrel. Higher gas prices typically reduce discretionary spending, leading to suppressed ROAS and increased CPA for non-essential goods like specialty food.",
+      "description": "National Average Gas Price Rises to $3.94",
+      "details": "The national average price for a gallon of regular gasoline increased by 10 cents from the previous week, reaching $3.94. Gas prices are a key consumer financial signal, as higher prices at the pump reduce discretionary income. This increase, driven by instability along the Strait of Hormuz, likely contributed to consumer financial anxiety. For a DTC food gifting brand, rising gas prices typically suppress discretionary spending, leading to lower ROAS and higher CPA.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
@@ -669,91 +669,124 @@
     },
     {
       "date": "2026-07-21",
-      "description": "TikTok 'Give Me 10' trend goes viral.",
-      "details": "The 'Give Me 10' trend, originating from the reality show Love Island, gained significant traction on TikTok. Creators used an audio clip to react to moments of pressure or decision-making, signaling a need for '10 minutes' to cool down or think. Viral trends like this can increase engagement on social platforms but divert user attention from product discovery, potentially leading to lower conversion intent and thus suppressed ROAS and higher CPA.",
+      "description": "Meta Removes 'Off-Meta Activity' Opt-Out, Expands Retargeting",
+      "details": "Meta completed the rollout of a significant change by removing the 'Your activity off Meta technologies' opt-out setting. This means that user activity from external websites, previously disconnected by some users, is now visible again for Website Custom Audiences and lookalike seeds. For advertisers, this change should theoretically lead to larger and more complete retargeting pools and potentially improved audience quality. The expected impact on ROAS and CPA is generally positive due to more effective targeting, though initial algorithm adjustments could cause volatility.",
       "intensity": 2,
-      "category": "feed",
-      "icon": "📱",
+      "category": "platform",
+      "icon": "🔴",
       "mood_impact": "neutral",
-      "feed_dominance": "medium",
-      "source": "Drizzle Digital, Influential"
+      "feed_dominance": "low",
+      "source": "AdBeacon, Common Thread Collective"
     },
     {
       "date": "2026-07-23",
-      "description": "National average gas price jumps 15 cents to $4.09/gallon.",
-      "details": "The national average for regular gasoline surged by 15 cents in one week, reaching $4.09 per gallon, with most states now averaging $4 or higher. This spike was driven by rising crude oil prices and continued volatility along the Strait of Hormuz, pushing crude into the $90 per barrel range. Such a significant increase in a visible cost-of-living expense like gas can heighten consumer financial anxiety, leading to reduced discretionary spending and negatively impacting ROAS and CPA.",
+      "description": "Gas Prices Jump 15 Cents to $4.09 National Average",
+      "details": "The national average for a gallon of regular gasoline surged by 15 cents in one week, reaching $4.09, with most states now averaging $4 or higher. This spike was attributed to rising crude oil prices and volatility in the Strait of Hormuz. Such a rapid increase in a highly visible cost of living typically heightens consumer financial anxiety. For a discretionary gifting brand, this would likely suppress spending, resulting in lower ROAS and higher CPA.",
       "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "medium",
-      "source": "AAA Newsroom"
+      "source": "AAA Fuel Prices"
     },
     {
       "date": "2026-07-28",
-      "description": "Conference Board Consumer Confidence Index falls to 90.8 in July.",
-      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from an upwardly revised 92.2 in June. The Expectations Index remained unchanged at 74.7, staying below the 80.0 threshold historically associated with recession risk since February 2025. This sustained pessimism about future economic conditions can lead consumers to pull back on discretionary purchases, negatively affecting ROAS and increasing CPA for premium brands.",
-      "intensity": 2,
+      "description": "Conference Board Consumer Confidence Falls to 90.8 in July",
+      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from an upwardly revised 92.2 in June. This marked the third consecutive monthly decline in the Present Situation Index, reflecting softened consumer assessments of current business and labor market conditions. An Expectations Index below 80, which it has been for most of 2025 and 2026, is often associated with recession risk. This decline in confidence suggests increased consumer pessimism, likely suppressing discretionary spending and leading to lower ROAS and higher CPA for a gifting brand.",
+      "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
-      "feed_dominance": "low",
-      "source": "The Conference Board, PR Newswire"
+      "feed_dominance": "medium",
+      "source": "The Conference Board"
     },
     {
       "date": "2026-07-31",
-      "description": "U of Michigan Consumer Sentiment Index rises to 55.2 in July.",
-      "details": "The final reading of the University of Michigan Consumer Sentiment Index for July increased to 55.2, an 11.5% rise from June's 49.5. This improvement, reaching its highest level since March, was partly driven by easing gas prices. Increased consumer confidence can lead to a greater willingness to spend on discretionary items, potentially boosting ROAS and lowering CPA for a gifting-heavy brand.",
+      "description": "U of Michigan Consumer Sentiment Rises to 55.2 in July",
+      "details": "The University of Michigan Consumer Sentiment Index rose to 55.2 in its final July reading, an 11.5% increase from June and its highest level since March. This improvement was largely driven by easing gas prices and improved views on personal finances and business conditions. While still historically low, this positive shift in consumer sentiment indicates a slight reduction in financial anxiety. For a DTC food gifting brand, improved sentiment can boost discretionary spending, potentially leading to higher ROAS and lower CPA.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "boosts_spending",
       "feed_dominance": "low",
-      "source": "University of Michigan, ABA Banking Journal"
+      "source": "University of Michigan"
+    },
+    {
+      "date": "2026-08-01",
+      "description": "Actor Vincent Pastore (Sopranos) Dies at 80",
+      "details": "Vincent Pastore, widely known for his role as Salvatore 'Big Pussy' Bonpensiero in 'The Sopranos,' was found dead at age 80, believed to have died of natural causes. Celebrity deaths, especially of well-known figures, can lead to significant social media discussion and news coverage. Such events can dominate social feeds, diverting attention from advertising and potentially reducing conversion intent. This would likely result in lower ROAS and higher CPA.",
+      "intensity": 2,
+      "category": "feed",
+      "icon": "📱",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "Us Weekly, Legacy.com"
     },
     {
       "date": "2026-08-04",
-      "description": "July average gas price reported at $3.93/gallon, still elevated year-over-year.",
-      "details": "The Bureau of Transportation Statistics reported that the average price for regular motor gasoline in July 2026 was $3.93 per gallon, a 2.9% decrease from June but still 25.8% higher than July 2025. While a slight monthly dip, the high year-over-year price and continued volatility in early August (as seen in later reports) likely sustained consumer caution. Persistent high gas prices can erode disposable income, leading to reduced gifting and lower ROAS.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "low",
-      "source": "Bureau of Transportation Statistics"
-    },
-    {
-      "date": "2026-08-07",
-      "description": "US economy sheds 23,000 jobs in July, below forecasts.",
-      "details": "The US economy shed 23,000 jobs in July, a figure sharply below forecasts and indicating a potential weakening in the labor market. This news, often released alongside other economic data, can increase consumer uncertainty about job security and future income. Heightened economic anxiety typically leads to a reduction in discretionary spending, which can negatively impact ROAS and increase CPA for premium food brands.",
+      "description": "Zillow Lays Off Over 500 Employees",
+      "details": "Online real estate platform Zillow announced layoffs of 'just over 500 employees,' representing approximately 7% of its workforce. The company cited the need for a disciplined cost structure and increased efficiency. Major layoff announcements, particularly from well-known tech companies, can signal broader economic uncertainty and contribute to consumer financial anxiety. This type of news can suppress discretionary spending, negatively impacting ROAS and increasing CPA for a gifting brand.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "medium",
-      "source": "Morningstar, Bureau of Labor Statistics"
+      "source": "Fast Company"
+    },
+    {
+      "date": "2026-08-07",
+      "description": "July US Jobs Report Shows Unexpected Decline of 23,000 Jobs",
+      "details": "The U.S. economy unexpectedly shed 23,000 nonfarm payroll jobs in July, marking the second monthly job loss in 2026, with prior months also revised down. The unemployment rate held at 4.1%. While wage growth remained resilient, the overall report indicated a softening labor market. Unexpected job losses can heighten economic anxiety among consumers. For a discretionary brand, this typically leads to reduced spending, negatively impacting ROAS and increasing CPA.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "high",
+      "source": "Bureau of Labor Statistics"
+    },
+    {
+      "date": "2026-08-09",
+      "description": "Actor Ben Jones ('Cooter' from Dukes of Hazzard) Dies at 84",
+      "details": "Ben Jones, best known for playing Cooter Davenport in 'The Dukes of Hazzard' and a former U.S. Congressman, died at age 84 from a heart attack. The passing of beloved public figures often generates significant social media engagement and news coverage. These events can temporarily dominate social feeds, diverting user attention from advertising content. This 'feed domination' typically leads to a decrease in ad conversion intent, resulting in lower ROAS and higher CPA.",
+      "intensity": 2,
+      "category": "feed",
+      "icon": "📱",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "Us Weekly, Legacy.com"
     },
     {
       "date": "2026-08-12",
-      "description": "July CPI report shows inflation slowing to 3.4% annually.",
-      "details": "The Bureau of Labor Statistics released the July 2026 CPI report, showing overall inflation slowing to 3.4% year-over-year (down from 3.5% in June) and a monthly increase of 0.1%. Core CPI rose 0.2% monthly, with the annual rate at 2.5%. Notably, gasoline prices fell 2.9% in July, and grocery prices decreased by 0.1%. This easing of inflation, particularly in food and energy, can alleviate consumer financial pressure, potentially boosting confidence and discretionary spending, leading to improved ROAS and lower CPA.",
-      "intensity": 3,
+      "description": "July CPI Shows Inflation Slows as Gas Prices Fall",
+      "details": "The U.S. Consumer Price Index (CPI) for July showed overall consumer prices rose a mild 0.1%, with falling gasoline prices (down 2.9% in July after a 9.7% plunge in June) helping to temper inflation. Core CPI rose 0.2%. While gas prices remained higher year-over-year, the monthly decline in energy costs can alleviate some immediate financial pressure on consumers. Positive inflation news can slightly boost consumer confidence, potentially leading to increased discretionary spending and improved ROAS/CPA for a gifting brand.",
+      "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "boosts_spending",
       "feed_dominance": "medium",
-      "source": "Bureau of Labor Statistics, Morningstar, Yahoo Finance"
+      "source": "Bureau of Labor Statistics"
     },
     {
       "date": "2026-08-13",
-      "description": "Gas prices hit record seasonal highs, national average $4.07/gallon.",
-      "details": "Despite a slight dip earlier in the week, the national average for regular gasoline climbed back to $4.07 per gallon, marking the highest August on record for pump prices. Crude oil prices remained in the $80 per barrel range due to continued uncertainty along the Strait of Hormuz. Persistently high and record-setting gas prices directly impact consumer budgets, leading to a tightening of discretionary spending and potentially suppressing ROAS and increasing CPA for non-essential purchases.",
+      "description": "Gas Prices Hit Record August Highs, Averaging $4.07",
+      "details": "The national average for a gallon of regular gasoline rose to $4.07, marking the highest August on record for pump prices. This surge is attributed to constrained global fuel supplies due to ongoing conflicts and a critical shortage of refining capacity. Record-high seasonal gas prices significantly impact consumer budgets and confidence, especially for discretionary purchases. This sustained financial pressure would likely suppress consumer spending on non-essentials, leading to lower ROAS and higher CPA for a gifting brand.",
       "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "AAA Fuel Prices, Rigzone, Quartz"
+      "feed_dominance": "high",
+      "source": "AAA Fuel Prices, Forbes"
+    },
+    {
+      "date": "2026-08-14",
+      "description": "U of Michigan Consumer Sentiment Falls to 51.0 in August (Preliminary)",
+      "details": "The preliminary University of Michigan Consumer Sentiment Index for August fell to 51.0, down from 55.2 in July, ending two months of improvement. Consumers expressed increased concerns about worsening business conditions and rising inflation, with particularly sharp declines among older, lower-income, and less-educated groups. This significant drop indicates renewed consumer pessimism and heightened financial anxiety. Such a negative shift in sentiment is expected to suppress discretionary spending, leading to lower ROAS and higher CPA for a gifting brand.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "high",
+      "source": "University of Michigan"
     }
   ],
   "holidays": [],
