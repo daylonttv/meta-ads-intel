@@ -1,36 +1,36 @@
 {
   "meta": {
-    "updatedAt": "2026-08-16T12:32:14.681Z",
+    "updatedAt": "2026-08-17T12:37:43.067Z",
     "dateRange": {
-      "start": "2026-07-17",
-      "end": "2026-08-15"
+      "start": "2026-07-18",
+      "end": "2026-08-16"
     },
     "monthLabel": "August 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-08-16T12:32:14.681Z",
+        "updatedAt": "2026-08-17T12:37:43.067Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-08-16T12:32:14.681Z",
+        "updatedAt": "2026-08-17T12:37:43.067Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-08-16T12:32:14.681Z",
+        "updatedAt": "2026-08-17T12:37:43.067Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-08-16T12:32:14.681Z",
+        "updatedAt": "2026-08-17T12:37:43.067Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
-        "updatedAt": "2026-08-16T12:32:14.681Z",
+        "updatedAt": "2026-08-17T12:37:43.067Z",
         "stale": false
       },
       "googleTrends": {
@@ -42,22 +42,12 @@
   },
   "tripleWhale": [
     {
-      "date": "2026-07-17",
-      "revenue": 16691.47000000001,
-      "orders": 214,
-      "blendedRoas": 2.462886438131908,
-      "metaSpend": 4634.470012806356,
-      "metaRoas": 2.0576225627246103,
-      "metaCpa": 36.206796975049656,
-      "metaCpm": 12.01449165968361
-    },
-    {
       "date": "2026-07-18",
       "revenue": 19440.750000000004,
       "orders": 240,
       "blendedRoas": 2.999451544541434,
       "metaSpend": 4388.670013306662,
-      "metaRoas": 2.336094976973197,
+      "metaRoas": 2.3360949504621433,
       "metaCpa": 32.997518897042575,
       "metaCpm": 11.297640197052102
     },
@@ -67,7 +57,7 @@
       "orders": 205,
       "blendedRoas": 2.318354108144525,
       "metaSpend": 4861.550068927929,
-      "metaRoas": 2.2091740132774604,
+      "metaRoas": 2.2091739834601194,
       "metaCpa": 36.011481992058734,
       "metaCpm": 10.499019688947861
     },
@@ -77,7 +67,7 @@
       "orders": 229,
       "blendedRoas": 2.908552410121807,
       "metaSpend": 4705.969966573641,
-      "metaRoas": 1.9783785511877612,
+      "metaRoas": 1.9783785455135046,
       "metaCpa": 37.95137069817452,
       "metaCpm": 11.06074273049701
     },
@@ -87,7 +77,7 @@
       "orders": 166,
       "blendedRoas": 2.118811903873532,
       "metaSpend": 4061.2999782562256,
-      "metaRoas": 1.8408022196148617,
+      "metaRoas": 1.840802217736302,
       "metaCpa": 45.63258402535085,
       "metaCpm": 11.170275614666954
     },
@@ -97,7 +87,7 @@
       "orders": 242,
       "blendedRoas": 2.6272155936784594,
       "metaSpend": 4760.08002108708,
-      "metaRoas": 1.889810671406526,
+      "metaRoas": 1.889810649768901,
       "metaCpa": 37.480945047929765,
       "metaCpm": 12.670031145093587
     },
@@ -117,7 +107,7 @@
       "orders": 198,
       "blendedRoas": 2.203367775900551,
       "metaSpend": 4708.039948677644,
-      "metaRoas": 1.8083640107147918,
+      "metaRoas": 1.808364007473785,
       "metaCpa": 40.239657681005504,
       "metaCpm": 12.668826417770768
     },
@@ -127,7 +117,7 @@
       "orders": 210,
       "blendedRoas": 2.4115411451513387,
       "metaSpend": 4220.630001746118,
-      "metaRoas": 1.8373820916701156,
+      "metaRoas": 1.8373820998045114,
       "metaCpa": 39.817264167416205,
       "metaCpm": 11.578088314312216
     },
@@ -137,7 +127,7 @@
       "orders": 228,
       "blendedRoas": 2.342620228749021,
       "metaSpend": 5700.199980996549,
-      "metaRoas": 2.080474355323052,
+      "metaRoas": 2.0804743720535934,
       "metaCpa": 38.776870619024145,
       "metaCpm": 10.529349033821205
     },
@@ -147,7 +137,7 @@
       "orders": 182,
       "blendedRoas": 1.7708730299094277,
       "metaSpend": 5277.5799366068095,
-      "metaRoas": 1.428073113516416,
+      "metaRoas": 1.4280731149620396,
       "metaCpa": 51.740979770654995,
       "metaCpm": 10.533334803500765
     },
@@ -157,7 +147,7 @@
       "orders": 162,
       "blendedRoas": 2.102535554263887,
       "metaSpend": 4435.889959294349,
-      "metaRoas": 1.5461068714823578,
+      "metaRoas": 1.5461069067408042,
       "metaCpa": 48.74604350872911,
       "metaCpm": 11.507534714896995
     },
@@ -167,7 +157,7 @@
       "orders": 194,
       "blendedRoas": 3.503199284751495,
       "metaSpend": 2949.9400067757815,
-      "metaRoas": 2.7089635474003506,
+      "metaRoas": 2.708963555159215,
       "metaCpa": 29.797373805815976,
       "metaCpm": 12.522243381226362
     },
@@ -177,7 +167,7 @@
       "orders": 190,
       "blendedRoas": 3.519398343069861,
       "metaSpend": 2896.620000347495,
-      "metaRoas": 2.436978253813789,
+      "metaRoas": 2.436978264349371,
       "metaCpa": 31.83098901480764,
       "metaCpm": 12.53996909120916
     },
@@ -187,7 +177,7 @@
       "orders": 183,
       "blendedRoas": 2.760147041941937,
       "metaSpend": 3416.0299800932407,
-      "metaRoas": 3.4420043254495254,
+      "metaRoas": 3.44200437011772,
       "metaCpa": 22.622715099955236,
       "metaCpm": 11.68988532683565
     },
@@ -197,7 +187,7 @@
       "orders": 223,
       "blendedRoas": 3.441430881756364,
       "metaSpend": 3306.020033083856,
-      "metaRoas": 2.7549409598430366,
+      "metaRoas": 2.7549409586891724,
       "metaCpa": 27.55016694236547,
       "metaCpm": 12.452662590197848
     },
@@ -207,7 +197,7 @@
       "orders": 274,
       "blendedRoas": 3.505943849880273,
       "metaSpend": 4190.759956523776,
-      "metaRoas": 2.6686257606802615,
+      "metaRoas": 2.6686257643213165,
       "metaCpa": 28.703835318656,
       "metaCpm": 10.671956577657577
     },
@@ -217,7 +207,7 @@
       "orders": 206,
       "blendedRoas": 2.3300227534706472,
       "metaSpend": 4338.580029092729,
-      "metaRoas": 1.978444549871787,
+      "metaRoas": 1.978444574490792,
       "metaCpa": 38.05771955344499,
       "metaCpm": 10.74147896950236
     },
@@ -227,7 +217,7 @@
       "orders": 158,
       "blendedRoas": 2.0073428165561396,
       "metaSpend": 4197.289987353608,
-      "metaRoas": 1.5114943146021385,
+      "metaRoas": 1.511494330052549,
       "metaCpa": 49.3798822041601,
       "metaCpm": 12.055046678423928
     },
@@ -237,7 +227,7 @@
       "orders": 203,
       "blendedRoas": 2.7280103928249835,
       "metaSpend": 3428.5499548241496,
-      "metaRoas": 2.374925278781018,
+      "metaRoas": 2.3749252999209314,
       "metaCpa": 31.745832915038424,
       "metaCpm": 14.230658891797722
     },
@@ -247,7 +237,7 @@
       "orders": 184,
       "blendedRoas": 2.9279734645626037,
       "metaSpend": 2828.0000230502337,
-      "metaRoas": 2.582033192282674,
+      "metaRoas": 2.5820331868870623,
       "metaCpa": 28.000000228220134,
       "metaCpm": 12.208230726278492
     },
@@ -257,7 +247,7 @@
       "orders": 194,
       "blendedRoas": 2.900162468814149,
       "metaSpend": 2913.0500133112073,
-      "metaRoas": 4.761768550501269,
+      "metaRoas": 4.7617684863347876,
       "metaCpa": 15.093523385032162,
       "metaCpm": 13.238909880207453
     },
@@ -267,7 +257,7 @@
       "orders": 228,
       "blendedRoas": 3.1148158588981807,
       "metaSpend": 3341.2899369485676,
-      "metaRoas": 3.4201611303481982,
+      "metaRoas": 3.4201611805822942,
       "metaCpa": 20.753353645643276,
       "metaCpm": 13.926973873866025
     },
@@ -277,7 +267,7 @@
       "orders": 272,
       "blendedRoas": 3.538146272781155,
       "metaSpend": 3878.5799305904657,
-      "metaRoas": 3.22273364012672,
+      "metaRoas": 3.2227336322584854,
       "metaCpa": 24.24112456619041,
       "metaCpm": 13.187111103296509
     },
@@ -285,63 +275,64 @@
       "date": "2026-08-10",
       "revenue": 14823.099999999999,
       "orders": 199,
-      "blendedRoas": 2.629617536148432,
-      "metaSpend": 3780.0100188069046,
-      "metaRoas": 2.415713161330391,
-      "metaCpa": 29.531328271928942,
-      "metaCpm": 13.435115384612585
+      "blendedRoas": 2.6295568910389737,
+      "metaSpend": 3780.140023689717,
+      "metaRoas": 2.406339458700918,
+      "metaCpa": 29.764882076296985,
+      "metaCpm": 13.434908939888889
     },
     {
       "date": "2026-08-11",
       "revenue": 19834.370000000006,
       "orders": 256,
-      "blendedRoas": 3.6957373716775748,
-      "metaSpend": 4157.919984435663,
-      "metaRoas": 2.6424029470809,
-      "metaCpa": 26.999480418413395,
-      "metaCpm": 13.366294251983163
+      "blendedRoas": 3.695496419040979,
+      "metaSpend": 4158.269910430536,
+      "metaRoas": 2.6421805932286837,
+      "metaCpa": 27.00175266513335,
+      "metaCpm": 13.366301974055164
     },
     {
       "date": "2026-08-12",
       "revenue": 19106.010000000006,
       "orders": 230,
-      "blendedRoas": 3.4934423076750436,
-      "metaSpend": 4145.58993358165,
-      "metaRoas": 2.7148005935270025,
-      "metaCpa": 28.394451599874316,
-      "metaCpm": 13.8381910886775
+      "blendedRoas": 3.493616031596095,
+      "metaSpend": 4146.199949450791,
+      "metaRoas": 2.714401187309736,
+      "metaCpa": 28.398629790758843,
+      "metaCpm": 13.839488202124192
     },
     {
       "date": "2026-08-13",
-      "revenue": 16041.630000000005,
-      "orders": 212,
-      "blendedRoas": 2.790859862522574,
-      "metaSpend": 4581.1900123711675,
-      "metaRoas": 2.2944169490693223,
-      "metaCpa": 30.953986570075458,
-      "metaCpm": 14.272953897159136
+      "revenue": 16286.820000000005,
+      "orders": 213,
+      "blendedRoas": 2.8334036874623547,
+      "metaSpend": 4581.419996654615,
+      "metaRoas": 2.2943017641799375,
+      "metaCpa": 30.955540517936587,
+      "metaCpm": 14.272603215806573
     },
     {
       "date": "2026-08-14",
       "revenue": 18510.379999999994,
       "orders": 249,
-      "blendedRoas": 3.51398486346824,
-      "metaSpend": 4161.899996487424,
-      "metaRoas": 2.6862610777964533,
-      "metaCpa": 26.508917175079134,
-      "metaCpm": 13.84710590025793
+      "blendedRoas": 3.514338837725672,
+      "metaSpend": 4162.009989468381,
+      "metaRoas": 2.6861900746896152,
+      "metaCpa": 26.509617767314527,
+      "metaCpm": 13.84691901624025
+    },
+    {
+      "date": "2026-08-15",
+      "revenue": 22954.050000000017,
+      "orders": 279,
+      "blendedRoas": 4.043684961517715,
+      "metaSpend": 4445.849968332797,
+      "metaRoas": 3.2152749956472015,
+      "metaCpa": 25.4048569619017,
+      "metaCpm": 14.865036456119904
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-07-17",
-      "status": "normal",
-      "cpa_z": -0.077,
-      "n_biz": 51,
-      "dow": "Fri",
-      "incident_source": null,
-      "incident_description": null
-    },
     {
       "date": "2026-07-18",
       "status": "normal",
@@ -602,6 +593,15 @@
       "dow": "Sat",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-08-16",
+      "status": "normal",
+      "cpa_z": 0.149,
+      "n_biz": 54,
+      "dow": "Sun",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
@@ -657,21 +657,10 @@
   "outages": [],
   "macroEvents": [
     {
-      "date": "2026-07-19",
-      "description": "Widespread Facebook & Instagram Outage",
-      "details": "A major outage affected Facebook and Instagram on July 19, 2026, lasting approximately 3.7 hours. Users reported being locked out of accounts, unable to access features, and experiencing ad delivery disruptions. This widespread technical issue would have severely limited ad visibility and user engagement on the platform, leading to poor ad performance. For a brand reliant on Meta ads, this directly translates to lost impressions and conversions, resulting in lower ROAS and higher CPA.",
-      "intensity": 3,
-      "category": "platform",
-      "icon": "🔴",
-      "mood_impact": "neutral",
-      "feed_dominance": "high",
-      "source": "IsDown"
-    },
-    {
       "date": "2026-07-23",
-      "description": "Gas Prices Jump to $4.09/gallon Amid Volatility",
-      "details": "The national average for a gallon of regular gasoline surged by 15 cents from the prior week to $4.09 on July 23, 2026. This increase was attributed to rising crude oil prices and volatility along the Strait of Hormuz. Sustained high gas prices erode consumer purchasing power, making discretionary items like specialty food gifts less appealing. This continued financial pressure would likely contribute to suppressed spending, leading to lower ROAS and elevated CPA for a DTC brand.",
-      "intensity": 2,
+      "description": "National average gas price jumps 15 cents to $4.09/gallon.",
+      "details": "The national average price for a gallon of regular gasoline increased by 15 cents from the previous week, reaching $4.09. This surge pushed most states to an average of $4 per gallon or higher. The increase was attributed to rising crude oil prices, driven by volatility along the Strait of Hormuz and instability in the region, which pushed crude oil prices into the $90 per barrel range. This significant increase in a discretionary spending input like gas prices likely suppressed consumer spending on non-essential items, leading to lower ROAS and higher CPA for a DTC food gifting brand.",
+      "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
@@ -679,114 +668,81 @@
       "source": "AAA Newsroom"
     },
     {
-      "date": "2026-07-27",
-      "description": "Meta Launches 2026 Holiday Insights Center",
-      "details": "Meta introduced its 2026 Holiday Insights Center on July 27, a resource for advertisers to prepare for the upcoming holiday season. While a helpful tool, this launch signals the unofficial start of the competitive holiday ad season. Brands begin planning and increasing budgets, leading to higher CPMs and increased competition in the ad auction. For a gifting-heavy brand, this early ramp-up in competition can prematurely drive down ROAS and increase CPA as ad costs rise.",
+      "date": "2026-07-31",
+      "description": "U. of Michigan Consumer Sentiment rises to 55.2, a five-month high.",
+      "details": "The University of Michigan Consumer Sentiment Index's final reading for July rose to 55.2, an 11.5% increase from June, marking a five-month high. This improvement was largely driven by easing gas prices earlier in the month and broad-based improvements across various demographic groups. Despite the gain, overall sentiment remained historically depressed. Improved consumer confidence can lead to a boost in discretionary spending, positively impacting ROAS and lowering CPA for a DTC food gifting brand.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "University of Michigan"
+    },
+    {
+      "date": "2026-08-02",
+      "description": "National Friendship Day celebrates platonic bonds in the US.",
+      "details": "National Friendship Day is observed annually on the first Sunday of August in the United States, falling on August 2nd in 2026. This day encourages people to connect with friends and celebrate the value of companionship. As a gifting-heavy brand, this occasion could inspire consumers to purchase gifts for friends, potentially boosting ROAS and lowering CPA.",
+      "intensity": 2,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "medium",
+      "source": "National Day Calendar"
+    },
+    {
+      "date": "2026-08-07",
+      "description": "US economy loses 23,000 jobs in July; unemployment rate dips to 4.1%.",
+      "details": "The US Bureau of Labor Statistics reported that nonfarm payroll employment decreased by 23,000 in July, contrary to expectations for job growth. The unemployment rate, however, dipped slightly to 4.1% from 4.2% in June, primarily because people left the labor force. This unexpected job loss, coupled with a shrinking labor force, signals economic weakness and potential consumer anxiety. Such news typically suppresses discretionary spending, leading to lower ROAS and higher CPA.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "Bureau of Labor Statistics"
+    },
+    {
+      "date": "2026-08-10",
+      "description": "National S'mores Day encourages enjoyment of the classic campfire treat.",
+      "details": "National S'mores Day is celebrated annually on August 10th, recognizing the popular campfire treat of roasted marshmallow, chocolate, and graham crackers. This unofficial holiday encourages people to make and share s'mores. While not directly a gifting holiday for cheese, it promotes a general celebratory and indulgent mood around food, which could indirectly benefit a specialty food brand through increased social activity and a positive association with treats.",
+      "intensity": 1,
+      "category": "seasonal",
+      "icon": "🗓️",
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "National Day Calendar"
+    },
+    {
+      "date": "2026-08-12",
+      "description": "US July CPI shows inflation cools slightly to 3.4%; gas prices fall.",
+      "details": "The US Consumer Price Index (CPI) for July 2026 was released, showing the annual inflation rate cooled slightly to 3.4% from 3.5% in June, in line with expectations. Core inflation (excluding food and energy) rose 2.5% year-over-year. Gasoline prices decreased 2.9% over the month. While inflation remains elevated compared to pre-war levels, the slight cooling and falling gas prices could alleviate some consumer financial pressure. This could lead to a neutral to slightly positive impact on discretionary spending, potentially improving ROAS and CPA.",
+      "intensity": 2,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "neutral",
+      "feed_dominance": "medium",
+      "source": "Bureau of Labor Statistics"
+    },
+    {
+      "date": "2026-08-14",
+      "description": "US retail sales unexpectedly fall 0.6% in July, worst drop since May 2025.",
+      "details": "US retail and food services sales unexpectedly fell by 0.6% in July from June, marking the sharpest monthly decline since May 2025. This decline was broad-based and missed economists' expectations for a slight increase. Online sales, in particular, fell 2.2%, potentially due to spending being pulled forward by Amazon's Prime Day in June. This report suggests consumer fatigue and could lead to reduced discretionary spending, negatively impacting ROAS and increasing CPA for a DTC food gifting brand.",
+      "intensity": 3,
+      "category": "wallet",
+      "icon": "💰",
+      "mood_impact": "suppresses_spending",
+      "feed_dominance": "medium",
+      "source": "US Census Bureau"
+    },
+    {
+      "date": "2026-08-16",
+      "description": "Back-to-School shopping season peaks in mid-August.",
+      "details": "The Back-to-School shopping season typically peaks in mid-August, as families prepare for the academic year. This period sees significant consumer spending on school supplies, clothing, and electronics. While not directly related to specialty food gifting, the focus on essential back-to-school purchases can divert household budgets from discretionary items. This shift in spending priorities could lead to a neutral to slightly negative impact on ROAS and CPA for a premium food brand.",
       "intensity": 2,
       "category": "seasonal",
       "icon": "🗓️",
       "mood_impact": "neutral",
       "feed_dominance": "low",
-      "source": "Meta Business Blog"
-    },
-    {
-      "date": "2026-07-28",
-      "description": "Consumer Confidence Declines in July",
-      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from 92.2 in June, with the Present Situation Index falling for the third consecutive month. The Expectations Index remained below the recessionary 80.0 threshold, indicating persistent consumer pessimism. This decline in confidence suggests consumers are feeling less secure about the economy and their financial future, leading to reduced discretionary spending. For a premium food gifting brand, this translates to lower conversion intent, negatively impacting ROAS and increasing CPA.",
-      "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "The Conference Board"
-    },
-    {
-      "date": "2026-07-31",
-      "description": "Consumer Sentiment Rises to Five-Month High",
-      "details": "The University of Michigan Consumer Sentiment Index's final July reading, released on July 31, rose to 55.2, an 11.5% increase from June and a five-month high. This improvement was driven by easing gas prices and a more positive outlook on personal finances. An uptick in consumer sentiment can lead to increased willingness to spend on discretionary items. For a DTC food gifting brand, this positive shift in consumer mood could boost conversion rates, resulting in higher ROAS and lower CPA.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "boosts_spending",
-      "feed_dominance": "medium",
-      "source": "University of Michigan"
-    },
-    {
-      "date": "2026-08-06",
-      "description": "US Economy Adds 79.2K Jobs in July, but Retail Declines",
-      "details": "The Revelio Public Labor Statistics (RPLS) reported that the US economy added 79.2 thousand jobs in July 2026, driven by healthcare and manufacturing. However, the Leisure and Hospitality and Retail Trade sectors saw declines in employment. While overall job growth is positive, the decline in retail employment suggests a cautious consumer environment. For a DTC food brand, this mixed signal could mean continued pressure on discretionary spending, potentially leading to lower ROAS and higher CPA, especially if consumers are cutting back on non-essential purchases.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "Revelio Labs"
-    },
-    {
-      "date": "2026-08-07",
-      "description": "July Jobs Report Shows Unexpected Job Losses",
-      "details": "The Bureau of Labor Statistics reported that nonfarm payroll employment declined by 23,000 jobs in July 2026, and the unemployment rate held at 4.1%. This was a significant decrease from June and below expectations. Unexpected job losses and a weak hiring report can signal economic uncertainty and cause consumers to pull back on spending. For a premium gifting brand, this negative employment news could lead to reduced consumer confidence and discretionary purchases, contributing to lower ROAS and higher CPA.",
-      "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "Bureau of Labor Statistics"
-    },
-    {
-      "date": "2026-08-01",
-      "description": "August Social Media Trends Highlight 'Things Worth Every Penny'",
-      "details": "August 2026 social media trends, particularly on TikTok and Instagram, include 'Things that are worth every penny' content. This trend features creators sharing genuinely valuable purchases. For a premium DTC specialty food brand like Gardner's Wisconsin Cheese, this trend presents an opportunity to align content with consumer desire for quality and value, potentially boosting engagement and conversion. Brands that can tap into this sentiment with authentic content may see improved ROAS and CPA.",
-      "intensity": 2,
-      "category": "feed",
-      "icon": "📱",
-      "mood_impact": "boosts_spending",
-      "feed_dominance": "medium",
-      "source": "Startups"
-    },
-    {
-      "date": "2026-08-12",
-      "description": "July CPI Slows to 3.4%, But Real Earnings Fall",
-      "details": "The Consumer Price Index (CPI) report for July 2026, released on August 12, showed headline inflation cooling to 3.4% year-over-year, down from 3.5% in June. However, real earnings fell by 0.1% in July, as wage growth did not keep pace with prices. While a slight easing of inflation is positive, declining real earnings mean consumers' purchasing power is still eroding. This could lead to continued caution in discretionary spending, potentially suppressing ROAS and increasing CPA for a premium brand.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "Bureau of Labor Statistics"
-    },
-    {
-      "date": "2026-08-12",
-      "description": "National Gas Prices Hit Record High for Calendar Year",
-      "details": "On August 12, 2026, the national average price of gas rose above $4 per gallon for the third time this year, setting a new record for this late in the calendar year. High and sustained gas prices, exacerbated by the ongoing conflict in the Middle East, significantly impact household budgets and reduce discretionary income. This continued financial strain makes consumers more hesitant to spend on non-essential items, leading to suppressed demand for premium food gifts, thus negatively affecting ROAS and increasing CPA.",
-      "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "Washington Examiner"
-    },
-    {
-      "date": "2026-08-14",
-      "description": "US Retail Sales Unexpectedly Fall 0.6% in July",
-      "details": "US retail sales unexpectedly dropped by 0.6% in July 2026, the biggest slide in over a year, according to a Census Bureau report released on August 14. This decline, which missed expectations for a rise, suggests consumers are showing signs of fatigue with persistent inflation. A significant drop in retail sales indicates a broad pullback in consumer spending, especially on discretionary goods. For a DTC food gifting brand, this directly signals a challenging sales environment, likely leading to lower ROAS and higher CPA.",
-      "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "high",
-      "source": "The Washington Post"
-    },
-    {
-      "date": "2026-08-01",
-      "description": "Back-to-School Shopping Season Peaks in August",
-      "details": "August marks the peak of the back-to-school shopping season in the US, with consumers focusing on necessities like clothing, supplies, and electronics for students returning to school or college. This seasonal shift in spending priorities means a significant portion of household budgets is allocated to educational needs. For a premium DTC food gifting brand, this period typically sees a diversion of consumer spending away from discretionary gifts, leading to increased competition for attention and budget, potentially resulting in lower ROAS and higher CPA.",
-      "intensity": 2,
-      "category": "seasonal",
-      "icon": "🗓️",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "New Engen"
+      "source": "National Retail Federation"
     }
   ],
   "holidays": [],
