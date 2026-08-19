@@ -1,36 +1,36 @@
 {
   "meta": {
-    "updatedAt": "2026-08-18T12:38:32.537Z",
+    "updatedAt": "2026-08-19T12:38:54.200Z",
     "dateRange": {
-      "start": "2026-07-19",
-      "end": "2026-08-17"
+      "start": "2026-07-20",
+      "end": "2026-08-18"
     },
     "monthLabel": "August 2026",
     "timezone": "America/Chicago",
     "sources": {
       "tripleWhale": {
         "ok": true,
-        "updatedAt": "2026-08-18T12:38:32.537Z",
+        "updatedAt": "2026-08-19T12:38:54.200Z",
         "stale": false
       },
       "breezeway": {
         "ok": true,
-        "updatedAt": "2026-08-18T12:38:32.537Z",
+        "updatedAt": "2026-08-19T12:38:54.200Z",
         "stale": false
       },
       "gasPrices": {
         "ok": true,
-        "updatedAt": "2026-08-18T12:38:32.537Z",
+        "updatedAt": "2026-08-19T12:38:54.200Z",
         "stale": false
       },
       "outages": {
         "ok": true,
-        "updatedAt": "2026-08-18T12:38:32.537Z",
+        "updatedAt": "2026-08-19T12:38:54.200Z",
         "stale": false
       },
       "macroEvents": {
         "ok": true,
-        "updatedAt": "2026-08-18T12:38:32.537Z",
+        "updatedAt": "2026-08-19T12:38:54.200Z",
         "stale": false
       },
       "googleTrends": {
@@ -41,16 +41,6 @@
     }
   },
   "tripleWhale": [
-    {
-      "date": "2026-07-19",
-      "revenue": 16170.769999999999,
-      "orders": 205,
-      "blendedRoas": 2.318354108144525,
-      "metaSpend": 4861.550068927929,
-      "metaRoas": 2.2091739834601194,
-      "metaCpa": 36.011481992058734,
-      "metaCpm": 10.499019688947861
-    },
     {
       "date": "2026-07-20",
       "revenue": 19316.30000000001,
@@ -223,9 +213,9 @@
     },
     {
       "date": "2026-08-06",
-      "revenue": 14542.65,
+      "revenue": 14542.650000000001,
       "orders": 184,
-      "blendedRoas": 2.927973464562603,
+      "blendedRoas": 2.9279734645626037,
       "metaSpend": 2828.0000230502337,
       "metaRoas": 2.5820331868870623,
       "metaCpa": 28.000000228220134,
@@ -243,9 +233,9 @@
     },
     {
       "date": "2026-08-08",
-      "revenue": 17228.080000000005,
+      "revenue": 17228.08,
       "orders": 228,
-      "blendedRoas": 3.1148158588981816,
+      "blendedRoas": 3.1148158588981807,
       "metaSpend": 3341.2899369485676,
       "metaRoas": 3.4201611805822942,
       "metaCpa": 20.753353645643276,
@@ -273,9 +263,9 @@
     },
     {
       "date": "2026-08-11",
-      "revenue": 19834.37000000001,
+      "revenue": 19834.370000000006,
       "orders": 256,
-      "blendedRoas": 3.1055288635103935,
+      "blendedRoas": 3.105528863510393,
       "metaSpend": 4158.269910430536,
       "metaRoas": 2.6421805932286837,
       "metaCpa": 27.00175266513335,
@@ -283,9 +273,9 @@
     },
     {
       "date": "2026-08-12",
-      "revenue": 19106.010000000006,
+      "revenue": 19106.010000000002,
       "orders": 230,
-      "blendedRoas": 2.9536165747989904,
+      "blendedRoas": 2.9536165747989895,
       "metaSpend": 4146.199949450791,
       "metaRoas": 2.714401187309736,
       "metaCpa": 28.398629790758843,
@@ -293,9 +283,9 @@
     },
     {
       "date": "2026-08-13",
-      "revenue": 16286.819999999998,
+      "revenue": 16286.82,
       "orders": 213,
-      "blendedRoas": 2.4055057856226543,
+      "blendedRoas": 2.4055057856226547,
       "metaSpend": 4581.419996654615,
       "metaRoas": 2.2943017641799375,
       "metaCpa": 30.955540517936587,
@@ -303,9 +293,9 @@
     },
     {
       "date": "2026-08-14",
-      "revenue": 18903.98,
+      "revenue": 18903.979999999996,
       "orders": 250,
-      "blendedRoas": 3.0099370208463228,
+      "blendedRoas": 3.009937020846322,
       "metaSpend": 4162.009989468381,
       "metaRoas": 2.6861900746896152,
       "metaCpa": 26.509617767314527,
@@ -313,9 +303,9 @@
     },
     {
       "date": "2026-08-15",
-      "revenue": 23407.190000000013,
+      "revenue": 23407.190000000017,
       "orders": 281,
-      "blendedRoas": 3.4976500621881472,
+      "blendedRoas": 3.497650062188148,
       "metaSpend": 4445.849968332797,
       "metaRoas": 3.2152749956472015,
       "metaCpa": 25.4048569619017,
@@ -323,25 +313,26 @@
     },
     {
       "date": "2026-08-16",
-      "revenue": 24018.609999999986,
-      "orders": 314,
-      "blendedRoas": 2.912798076797093,
+      "revenue": 24109.089999999993,
+      "orders": 316,
+      "blendedRoas": 2.9237708171009085,
       "metaSpend": 6031.889984171838,
       "metaRoas": 3.2528560868843814,
       "metaCpa": 22.4233828407875,
       "metaCpm": 14.133189899861144
+    },
+    {
+      "date": "2026-08-17",
+      "revenue": 19603.250000000015,
+      "orders": 250,
+      "blendedRoas": 2.3113127150478574,
+      "metaSpend": 5253.519993495196,
+      "metaRoas": 2.0707735041597806,
+      "metaCpa": 34.33673198362873,
+      "metaCpm": 14.155356687481836
     }
   ],
   "breezeway": [
-    {
-      "date": "2026-07-19",
-      "status": "normal",
-      "cpa_z": 0.076,
-      "n_biz": 51,
-      "dow": "Sun",
-      "incident_source": "Meta",
-      "incident_description": "Meta reported an ads delivery error across Meta's platform and services at 6:34 AM EDT. Reported that this was resolved at 9:06 AM EDT."
-    },
     {
       "date": "2026-07-20",
       "status": "normal",
@@ -602,9 +593,22 @@
       "dow": "Mon",
       "incident_source": null,
       "incident_description": null
+    },
+    {
+      "date": "2026-08-18",
+      "status": "normal",
+      "cpa_z": -0.037,
+      "n_biz": 54,
+      "dow": "Tue",
+      "incident_source": null,
+      "incident_description": null
     }
   ],
   "gasPrices": [
+    {
+      "date": "2026-08-17",
+      "price": 4.049
+    },
     {
       "date": "2026-08-10",
       "price": 4.006
@@ -648,19 +652,26 @@
     {
       "date": "2026-06-01",
       "price": 4.305
-    },
-    {
-      "date": "2026-05-25",
-      "price": 4.475
     }
   ],
   "outages": [],
   "macroEvents": [
     {
-      "date": "2026-07-23",
-      "description": "National average gas price jumps to $4.09/gallon, highest since 2022.",
-      "details": "The national average for a gallon of regular gasoline increased by 15 cents from the previous week, reaching $4.09. This marks the highest price point since 2022, driven by rising crude oil prices and volatility in the Strait of Hormuz. For a premium DTC food brand, higher gas prices reduce discretionary income, leading to suppressed spending on non-essential items like artisan cheese.",
+      "date": "2026-07-21",
+      "description": "Meta launches Generative Recommender, an LLM-powered ad ranking system.",
+      "details": "Meta announced the launch of its Generative Recommender, an AI-driven ad ranking system, on its Q2 2026 earnings call. This new system uses a large language model to evaluate ad creative and user preferences, aiming to improve ad delivery and conversion rates. Early trials showed a 15.7% increase in conversions on Facebook and a 1% lift in app-event conversions on Instagram. Expected impact: Potentially volatile in the short term as the algorithm adjusts, but long-term positive for ROAS and CPA for advertisers who adapt to creative-based targeting. Initial dips could be due to system recalibration.",
       "intensity": 2,
+      "category": "platform",
+      "icon": "🔴",
+      "mood_impact": "neutral",
+      "feed_dominance": "low",
+      "source": "Common Thread Collective, AdBeacon"
+    },
+    {
+      "date": "2026-07-23",
+      "description": "US national average gas price jumps 15 cents to $4.09/gallon.",
+      "details": "The national average for a gallon of regular gasoline surged by 15 cents from the previous week, reaching $4.09. This increase pushed most states to $4 per gallon or higher, driven by rising crude oil prices and instability in the Strait of Hormuz. Specialty food, being a discretionary purchase, is highly sensitive to increased household expenses like fuel. Expected impact: Suppresses Meta ROAS and increases CPA as consumers face higher discretionary spending costs and may reduce non-essential purchases.",
+      "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
@@ -668,114 +679,81 @@
       "source": "AAA Newsroom"
     },
     {
-      "date": "2026-07-28",
-      "description": "Conference Board Consumer Confidence declines to 90.8 in July.",
-      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from an upwardly revised 92.2 in June. The Present Situation Index fell for the third consecutive month, and the Expectations Index remained below 80, a level historically associated with recession risk. This sustained decline in confidence indicates growing consumer pessimism about current and future economic conditions, likely reducing willingness to spend on discretionary luxury items.",
+      "date": "2026-07-27",
+      "description": "Meta removes 'Your activity off Meta technologies' opt-out, expanding retargeting pools.",
+      "details": "Meta began rolling out a significant change by removing the 'Your activity off Meta technologies' opt-out setting. This privacy control previously allowed users to disconnect their off-platform activity from their Meta accounts. Its removal means that data from previously opted-out users can now be linked to their profiles, potentially expanding retargeting audience sizes and improving audience quality for advertisers. Expected impact: Boosts Meta ROAS and lowers CPA for brands utilizing retargeting and Custom Audiences, as more complete user data becomes available for optimization.",
       "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "low",
-      "source": "The Conference Board"
-    },
-    {
-      "date": "2026-07-29",
-      "description": "Federal Reserve holds interest rates steady amid inflation concerns.",
-      "details": "The Federal Reserve voted 9-3 to maintain the benchmark federal funds rate at 3.5% to 3.75% for the fifth consecutive meeting. Despite the hold, three members dissented, preferring a rate hike due to elevated inflation, which remains above the Fed's 2% target. This decision signals ongoing economic uncertainty and persistent inflation, which can make consumers hesitant about discretionary spending.",
-      "intensity": 2,
-      "category": "wallet",
-      "icon": "💰",
+      "category": "platform",
+      "icon": "🔴",
       "mood_impact": "neutral",
-      "feed_dominance": "medium",
-      "source": "Federal Reserve / Fox Business"
+      "feed_dominance": "low",
+      "source": "AdBeacon, Meta Business Blog"
     },
     {
-      "date": "2026-07-30",
-      "description": "US Q2 GDP advance estimate shows slower 1.5% growth.",
-      "details": "The U.S. Bureau of Economic Analysis (BEA) released its advance estimate for Q2 2026 GDP, showing an annual growth rate of 1.5%, a slowdown from 2.1% in Q1 and below economist forecasts. While consumer spending and investment increased, overall growth was partly offset by decreased government spending. Slower economic growth can temper consumer optimism and lead to more cautious spending habits, especially for premium goods.",
-      "intensity": 2,
+      "date": "2026-07-28",
+      "description": "Conference Board Consumer Confidence Index falls to 90.8 in July.",
+      "details": "The Conference Board Consumer Confidence Index decreased by 1.4 points to 90.8 in July, down from an upwardly revised 92.2 in June. The Present Situation Index fell for the third consecutive month, and the Expectations Index remained at 74.7, below the 80-point threshold often associated with recession risk. This indicates a continued erosion of consumer optimism about current and future economic conditions. Expected impact: Suppresses Meta ROAS and increases CPA as consumers become more cautious with discretionary spending due to economic anxiety.",
+      "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "medium",
-      "source": "U.S. Bureau of Economic Analysis (BEA)"
+      "source": "The Conference Board, PR Newswire"
     },
     {
       "date": "2026-07-31",
-      "description": "U of M Consumer Sentiment revised up to 55.2 in July.",
-      "details": "The University of Michigan Consumer Sentiment Index was revised higher to 55.2 in July, up from a preliminary 54.0 and reaching its highest level since February. This improvement was primarily attributed to easing gas prices earlier in the month and improved outlooks across various demographic groups. An uptick in consumer sentiment can lead to increased confidence in personal finances and a greater willingness to make discretionary purchases.",
+      "description": "U of Michigan Consumer Sentiment revised up to 55.2 in July, a five-month high.",
+      "details": "The University of Michigan Consumer Sentiment Index was revised higher to 55.2 in July 2026, up from a preliminary reading of 54.0 and reaching its highest level since February. This improvement was attributed to easing gas prices earlier in the month and broad-based gains across demographic groups. Year-ahead inflation expectations also eased slightly to 4.2%. Expected impact: Boosts Meta ROAS and lowers CPA as improved consumer sentiment and slightly reduced inflation concerns encourage discretionary spending, including gifting.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "boosts_spending",
       "feed_dominance": "low",
-      "source": "University of Michigan"
+      "source": "University of Michigan, Trading Economics"
     },
     {
       "date": "2026-08-07",
-      "description": "July US unemployment rate dips to 4.1%, but payrolls fall by 23,000.",
-      "details": "The U.S. Bureau of Labor Statistics reported that the unemployment rate slightly decreased to 4.1% in July from 4.2% in June. However, nonfarm payroll employment declined by 23,000, with notable decreases in local government education and retail trade, while temporary layoffs increased. A mixed employment picture, with job losses despite a lower unemployment rate, can create economic uncertainty and make consumers more hesitant to spend on non-essential items.",
+      "description": "US economy sheds 23,000 jobs in July, unemployment rate at 4.1%.",
+      "details": "The Bureau of Labor Statistics reported that nonfarm payroll employment decreased by 23,000 jobs in July 2026, a weaker-than-expected performance. The unemployment rate, however, edged down slightly to 4.1% from 4.2% in June, partly due to a contraction in the labor force. This indicates a softening labor market, which can heighten consumer anxiety. Expected impact: Suppresses Meta ROAS and increases CPA as job market uncertainty leads consumers to tighten their belts and reduce non-essential spending.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "medium",
-      "source": "Bureau of Labor Statistics"
+      "source": "Bureau of Labor Statistics, Robert Half"
     },
     {
       "date": "2026-08-12",
-      "description": "July CPI shows inflation cooling slightly to 3.4% year-over-year.",
-      "details": "The Consumer Price Index (CPI) for July 2026 showed headline inflation cooled to 3.4% year-over-year, down from 3.5% in June, and core CPI eased to 2.5%. While gasoline prices saw a monthly decline in early July, this trend later reversed. Real average weekly earnings, however, declined by 0.1%. A slight easing of inflation could provide some relief, but declining real earnings still suggest reduced purchasing power for consumers.",
+      "description": "July CPI report shows inflation at 3.4% annual rate, a slight decrease.",
+      "details": "The Bureau of Labor Statistics released the July 2026 CPI report, showing the annual inflation rate slowed to 3.4%, down from 3.5% in June. Core CPI, excluding volatile food and energy, also eased to 2.5%. This slight moderation in inflation, while still elevated, could offer some relief to consumers. Expected impact: Boosts Meta ROAS and lowers CPA as a perceived easing of inflationary pressures may encourage consumers to feel more comfortable with discretionary purchases.",
       "intensity": 2,
       "category": "wallet",
       "icon": "💰",
-      "mood_impact": "neutral",
-      "feed_dominance": "medium",
-      "source": "Bureau of Labor Statistics"
+      "mood_impact": "boosts_spending",
+      "feed_dominance": "low",
+      "source": "Morningstar, USAFacts"
     },
     {
       "date": "2026-08-14",
-      "description": "US retail sales unexpectedly fall 0.6% in July, sharpest drop since May 2025.",
-      "details": "Advance estimates for US retail and food services sales in July 2026 showed an unexpected 0.6% decrease from June, marking the sharpest monthly decline since May 2025. This broad pullback in consumer spending, despite a year-over-year increase, indicates a softening demand. A significant drop in retail sales suggests consumers are tightening their belts, directly impacting discretionary spending on premium food items.",
+      "description": "US retail sales fall 0.6% in July, sharpest monthly drop since May 2025.",
+      "details": "Advance estimates from the US Census Bureau showed that retail and food services sales in July 2026 decreased by 0.6% from June, marking the sharpest monthly decline since May 2025. This broad pullback in consumer spending, following a bump in previous months, raised concerns about consumer resiliency despite nagging inflation and high gas prices. Expected impact: Suppresses Meta ROAS and increases CPA as consumers reduce overall spending, directly impacting sales for DTC brands.",
       "intensity": 3,
       "category": "wallet",
       "icon": "💰",
       "mood_impact": "suppresses_spending",
       "feed_dominance": "medium",
-      "source": "US Census Bureau / Nova Analytics"
-    },
-    {
-      "date": "2026-08-15",
-      "description": "University of Michigan Consumer Sentiment falls to 51 in early August.",
-      "details": "The preliminary University of Michigan Consumer Sentiment Index for August 2026 fell to 51, down from 55.2 in July, ending two months of improvement. Both current conditions and expectations weakened, with significant declines among older, lower-income, and less-educated consumers. This renewed decline in consumer confidence, coupled with rising year-ahead inflation expectations, signals increasing financial anxiety and a likely reduction in discretionary spending.",
-      "intensity": 3,
-      "category": "wallet",
-      "icon": "💰",
-      "mood_impact": "suppresses_spending",
-      "feed_dominance": "medium",
-      "source": "University of Michigan"
-    },
-    {
-      "date": "2026-08-26",
-      "description": "National Dog Day approaches, boosting pet-related gifting.",
-      "details": "National Dog Day, celebrated annually on August 26, encourages dog ownership and celebrates the bond between humans and dogs. This day often prompts consumers to purchase gifts for their pets or for other dog lovers. For a specialty food brand, this could present an opportunity for pet-themed or pet-owner-focused gifting, potentially boosting sales.",
-      "intensity": 1,
-      "category": "seasonal",
-      "icon": "🗓️",
-      "mood_impact": "boosts_spending",
-      "feed_dominance": "low",
-      "source": "National Day Calendar"
+      "source": "US Census Bureau, Nova Analytics"
     },
     {
       "date": "2026-09-07",
-      "description": "Labor Day weekend marks unofficial end of summer and gifting occasion.",
-      "details": "Labor Day, observed on the first Monday of September (September 7, 2026), provides a long weekend for many Americans and is widely considered the unofficial end of summer. This holiday is a common occasion for gatherings, travel, and last-minute summer celebrations, often involving food and beverages. It can also be a gifting occasion for hosts or as a 'thank you' for summer hospitality.",
+      "description": "Labor Day 2026 approaches, signaling end of summer gifting.",
+      "details": "Labor Day, observed on the first Monday of September, falls on September 7, 2026. This federal holiday marks the unofficial end of summer and is often associated with back-to-school preparations and end-of-summer sales. For a gifting-heavy specialty food brand, this period can see a shift in consumer behavior as summer travel concludes and people return to routines, with a potential for increased gifting for teachers or early fall occasions. Expected impact: Boosts Meta ROAS and lowers CPA as consumers look for end-of-summer deals or prepare for early fall gifting occasions.",
       "intensity": 2,
       "category": "seasonal",
       "icon": "🗓️",
       "mood_impact": "boosts_spending",
       "feed_dominance": "low",
-      "source": "Farmers' Almanac / Federal Holidays"
+      "source": "Farmers' Almanac, Awareness Days"
     }
   ],
   "holidays": [],
